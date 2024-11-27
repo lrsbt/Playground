@@ -1,0 +1,136 @@
+:root {
+  --padding: 5px;
+  --border-radius: 10px;
+  --box-shadow: 0px 3px 8px #0000003b;
+  /* Using generated Color-scheme */
+  --color-text: var(--grey200);
+  --color-text-darker: var(--grey400);
+  --color-fill: var(--grey800);
+  --color-hover: var(--grey700);
+  --color-border: var(--grey700);
+}
+
+body {
+  background-color: var(--grey900);
+}
+
+.container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  color: black;
+  padding: 20px;
+}
+
+.popover {
+  background: var(--color-fill);
+  border-radius: var(--border-radius);
+  width: 216px;
+  font-size: 1.3rem;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
+}
+
+.popover-group {
+  display: flex;
+  flex-direction: column;
+  padding: var(--padding);
+}
+
+.popover-group:not(:last-of-type) {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.popover-link {
+  color: var(--color-text);
+  padding: var(--padding) calc(var(--padding) + 4px);
+  border-radius: calc(var(--border-radius) - 4px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+
+.popover-link:hover {
+  background: var(--color-hover);
+  color: var(--color-text);
+}
+
+.popover-shortCut {
+  font-size: 0.85em;
+  color: var(--color-text-darker);
+  padding-left: 4px;
+}
+
+.popover-showMore {
+  stroke: var(--color-text-darker);
+  width: 15px;
+  height: 15px;
+  position: relative;
+  left: 6px;
+}
+
+.roster {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+  width: 220px;
+}
+
+.roster-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.roster-title {
+  color: white;
+  text-align: center;
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: var(--grey300);
+}
+
+.roster-color {
+  width: 15px;
+  height: 15px;
+  border-radius: 15px;
+}
+
+[data-index="0"] {
+  background-color: var(--grey50);
+}
+[data-index="1"] {
+  background-color: var(--grey100);
+}
+[data-index="2"] {
+  background-color: var(--grey200);
+}
+[data-index="3"] {
+  background-color: var(--grey300);
+}
+[data-index="4"] {
+  background-color: var(--grey400);
+}
+[data-index="5"] {
+  background-color: var(--grey500);
+}
+[data-index="6"] {
+  background-color: var(--grey600);
+}
+[data-index="7"] {
+  background-color: var(--grey700);
+}
+[data-index="8"] {
+  background-color: var(--grey800);
+}
+[data-index="9"] {
+  background-color: var(--grey900);
+}

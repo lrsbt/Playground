@@ -1,0 +1,131 @@
+:root {
+  --app-padding: 6px;
+  --app-padding-lg: 12px;
+}
+
+/* Util */
+
+._flip-h {
+  transform: rotateY(190deg);
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.4rem;
+  line-height: 1.4;
+  font-family: "Outfit", sans-serif;
+}
+
+h1 {
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.page {
+  width: 100%;
+  height: 100%;
+  background-color: #16171e;
+  display: flex;
+}
+
+.fullScreen {
+  width: 100%;
+  height: 100%;
+  padding: var(--app-padding-lg);
+  position: relative;
+}
+
+.fullScreen--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar {
+  background: #191a23;
+  width: 216px;
+  padding: 14px 20px;
+  border-right: 1px solid #2c2e3b;
+  color: white;
+  height: 100%;
+  margin-left: -216px;
+  min-width: 216px;
+}
+
+.sidebar-name {
+  background-color: #21222e;
+  padding: 5px 11px;
+  border-radius: 8px;
+  margin-left: -11px;
+}
+
+.sidebar-name:before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(180deg, #ffb55b 0%, #ff7300 100%);
+  display: inline-block;
+  border-radius: 100%;
+  margin-right: 8px;
+}
+
+.sidebar-header {
+  margin-bottom: 25px;
+}
+
+.sidebar-info {
+  color: white;
+}
+
+.sidebar-info h1,
+.sidebar-info h2,
+.sidebar-info h3 {
+  margin-bottom: 6px;
+}
+
+.sidebar-info p {
+  opacity: 0.6;
+}
+
+.iconButton {
+  background-color: #1f202b;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton svg {
+  opacity: 0.6;
+}
+
+.iconButton:hover svg {
+  opacity: 0.8;
+}
+
+.iconButton--sidebar {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+
+.page-nav {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+}
+
+.page-nav a:last-of-type {
+  margin-left: 6px;
+}
