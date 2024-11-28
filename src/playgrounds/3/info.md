@@ -1,4 +1,3 @@
-# This is awesome
+# Greys generator
 
-This is the first playground. Showing off some
-some react-spring and ref maneuvers.
+Color generator using the LCH colour system which apparenly makes for more even colours.
