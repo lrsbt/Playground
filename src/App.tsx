@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, useRef } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export const PLAYGROUNDS = [
@@ -8,13 +8,15 @@ export const PLAYGROUNDS = [
 ];
 
 const App = () => {
+  const Pages = useRef(
+    PLAYGROUNDS.map((Playground, i) => (
+      <Route key={i} path={(i + 1).toString()} element={<Playground />} />
+    ))
+  ).current;
+
   return (
     <BrowserRouter>
-      <Routes>
-        {PLAYGROUNDS.map((Playground, i) => (
-          <Route key={i} path={(i + 1).toString()} element={<Playground />} />
-        ))}
-      </Routes>
+      <Routes>{...Pages}</Routes>
     </BrowserRouter>
   );
 };
