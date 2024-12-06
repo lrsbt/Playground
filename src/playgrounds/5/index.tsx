@@ -29,7 +29,7 @@ const Playground = () => {
   const timer = useRef(0);
   const isRunning = useRef(false);
   const [currentShape, setCurrentShape] = useState(0);
-  const baseHues = [0, 30, 60, 90, 120, 150, 180, 210];
+  const baseHues = useRef([0, 30, 60, 90, 120, 150, 180, 210]).current;
 
   const offsetStyles = useTrail(baseHues.length, {
     from: { translateY: -20 },
@@ -42,12 +42,23 @@ const Playground = () => {
     to: { opacity: 1 }
   });
 
-  const [locationStyles, api] = useSprings(
+  const [locationStyles, locationsAPI] = useSprings(
     baseHues.length,
     () => ({
       to: {
         translateX: 10,
         translateY: 0
+      }
+    }),
+    []
+  );
+
+  const [floats, floatsAPI] = useTrail(
+    baseHues.length,
+    () => ({
+      from: {
+        x: 0,
+        y: 0
       }
     }),
     []
@@ -72,7 +83,7 @@ const Playground = () => {
   };
 
   const animateToLocations = (locations: (Location | undefined)[]) => {
-    api.start((i) => {
+    locationsAPI.start((i) => {
       const loc = locations[i];
       if (loc)
         return {
@@ -84,6 +95,14 @@ const Playground = () => {
             friction: 20
           }
         };
+    });
+    floatsAPI.start({
+      x: Math.random() * 15,
+      y: Math.random() * 15,
+      config: {
+        tension: 300
+        // friction: 20
+      }
     });
   };
 
@@ -121,7 +140,8 @@ const Playground = () => {
               style={{
                 ...offsetStyles[i],
                 ...opacityStyles[i],
-                ...locationStyles[i]
+                ...locationStyles[i],
+                ...floats[i]
               }}
             >
               <div
