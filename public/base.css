@@ -58,6 +58,8 @@ h1 {
   height: 100%;
   margin-left: -216px;
   min-width: 216px;
+  overflow-x: hidden;
+  word-wrap: break-word;
 }
 
 .sidebar-name {
