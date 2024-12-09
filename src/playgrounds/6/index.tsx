@@ -37,6 +37,9 @@ const Playground = () => {
       min: 0,
       max: 1,
       step: 0.1
+    },
+    test: {
+      value: true
     }
   });
 

@@ -62,6 +62,10 @@ h1 {
   word-wrap: break-word;
 }
 
+.sidebar a {
+  color: #c9fdff;
+}
+
 .sidebar-name {
   background-color: #21222e;
   padding: 5px 11px;
