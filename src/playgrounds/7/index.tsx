@@ -24,19 +24,21 @@ aromatic skins that offer a pleasant chewiness.
 `;
 
 const Playground = () => {
-  const isRunning = useRef(false);
   const toolTipRef = useRef<any>(null);
+  const textAreaRef = useRef<any>(null);
 
   const [state, setState] = useState<States>();
   const [selection, setSelection] = useState<string>();
   const [position, setPosition] = useState<Position>();
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(""); // Text tp be annotated
+  const [annotationText, setAnnotationText] = useState("");
 
   const [rating, setRating] = useLocalStorage("rating", 2);
-  const [annotations, setAnnotations, clearAnnotation] = useLocalStorage<
-    string[]
-  >("annotations", []);
+  const [annotations, setAnnotations] = useLocalStorage<string[]>(
+    "annotations",
+    []
+  );
 
   const [toolTipStyle, api] = useSpring(() => ({
     translateX: 0,
@@ -44,7 +46,8 @@ const Playground = () => {
     opacity: 0
   }));
 
-  const event_sToolTipClickEvent = (e: any) => {
+  const isToolTipClickEvent = (e: any) => {
+    // return !!e.target.closest(".toolTip");
     return (
       e.target?.className === "toolTip" ||
       e.target?.parentElement?.className === "toolTip" ||
@@ -55,9 +58,9 @@ const Playground = () => {
   const onSelectStart = (e: any) => {
     // Allow for tooltip clicks
     // also keep the selected text selected.
-    if (event_sToolTipClickEvent(e)) {
-      e.preventDefault();
+    if (isToolTipClickEvent(e)) {
       return;
+      e.preventDefault();
     }
     hideToolTip();
     setState(States.SELECTING);
@@ -68,9 +71,24 @@ const Playground = () => {
     setPosition(undefined);
   };
 
+  const highlightSelection = () => {
+    const selection = document.getSelection()?.getRangeAt(0);
+    const selectedContent = selection?.extractContents();
+    const span = document.createElement("span");
+    span.className = "box-annotation";
+    if (selectedContent) {
+      span.appendChild(selectedContent);
+      selection?.insertNode(span);
+    }
+  };
+
   const onMouseUp = (e: any) => {
+    if (position) {
+      console.log("click");
+    }
+
     // Allow for tooltip clicks
-    if (event_sToolTipClickEvent(e)) {
+    if (isToolTipClickEvent(e)) {
       e.preventDefault();
       return;
     }
@@ -96,14 +114,15 @@ const Playground = () => {
     setSelection(text);
 
     const toolTipWidth = toolTipRef.current?.clientWidth || 110;
+    const toolTipHeight = toolTipRef.current?.clientHeight || 50;
 
     setPosition({
       x: rect.left + rect.width / 2 - toolTipWidth / 2,
-      y: rect.top + window.scrollY - 53
+      y: rect.top + window.scrollY - toolTipHeight - 8
     });
   };
 
-  const addAnnotation = async () => {
+  const addAnnotation = () => {
     if (selection) {
       setAnnotations([...annotations, selection]);
       window?.getSelection()?.empty();
@@ -116,13 +135,17 @@ const Playground = () => {
     return string.split(regex);
   };
 
+  const sanitize = (string: string) => {
+    return string.replace(/(\r\n|\n|\r)/gm, " ");
+  };
+
   const applyAnnotations = () => {
-    let newText = myText;
+    let newText = sanitize(myText); // Currently breaks if the text contains \n etc
 
     annotations.map((a) => {
-      const splitParts = split(newText, a);
-      splitParts[1] = `<span className="box-annotation">${splitParts[1]}</span>`;
-      newText = splitParts.join("");
+      const parts = split(newText, a);
+      parts[1] = `<span className="box-annotation">${parts[1]}</span>`;
+      newText = parts.join("");
     });
 
     setText(newText);
@@ -131,15 +154,6 @@ const Playground = () => {
   const clearAnnotations = async () => {
     setAnnotations([]);
   };
-
-  useEffect(() => {
-    applyAnnotations();
-  }, [annotations]);
-
-  useEffect(() => {
-    if (isRunning.current === false) applyAnnotations();
-    isRunning.current = true;
-  }, []);
 
   useEffect(() => {
     document.addEventListener("selectstart", onSelectStart);
@@ -152,7 +166,13 @@ const Playground = () => {
   }, []);
 
   useEffect(() => {
+    applyAnnotations();
+  }, [annotations]);
+
+  useEffect(() => {
     if (position) {
+      highlightSelection();
+      textAreaRef.current.focus();
       toolTipRef.current.style.pointerEvents = "auto";
       api.start({
         from: {
@@ -162,14 +182,17 @@ const Playground = () => {
         },
         to: { opacity: 1, translateX: position.x, translateY: position.y },
         config: {
-          friction: 16
+          friction: 12
         }
       });
     }
     if (!position) {
       toolTipRef.current.style.pointerEvents = "none";
       api.start({
-        opacity: 0
+        opacity: 0,
+        config: {
+          friction: 20
+        }
       });
     }
   }, [position]);
@@ -177,7 +200,16 @@ const Playground = () => {
   return (
     <FullScreen centerContent info={info}>
       <animated.div className="toolTip" style={toolTipStyle} ref={toolTipRef}>
-        <a onClick={addAnnotation}>Annotate</a>
+        <textarea
+          className="toolTip-textarea"
+          value={annotationText}
+          onChange={(e) => setAnnotationText(e.target.value)}
+          placeholder="Type something"
+          ref={textAreaRef}
+        ></textarea>
+        {/* <a className="button button--sm">Save</a> */}
+        {/* <a onClick={addAnnotation} >
+        </a> */}
       </animated.div>
       <section className="box">
         <header className="box-header">

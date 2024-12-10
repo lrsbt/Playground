@@ -3,6 +3,7 @@
   --border-radius-xl: 25px;
   --color-primary: #803ded;
   --color-secondary: #eb586e;
+  --color-tercery: #803deee8;
   --color-black: #222327;
   --color-border: #403e49;
   --color-white: #ffffff;
@@ -88,7 +89,7 @@ body {
 
 .box-annotation {
   background-color: var(--color-primary);
-  padding: 3px 5px;
+  padding: 2px 4px;
   border-radius: var(--border-radius-sm);
 }
 
@@ -166,11 +167,13 @@ body {
   width: 100%;
 }
 
+.button--sm {
+  padding: 4px 9px;
+}
+
 .toolTip {
-  /* background-color: var(--color-primary); */
-  background-color: #79c02f;
+  background-color: var(--color-tercery);
   position: absolute;
-  /* width: 110px; */
   border-radius: var(--border-radius-sm);
   top: 0px;
   left: 0px;
@@ -178,4 +181,30 @@ body {
   border: 1px solid var(--border-radius-sm);
   box-shadow: 0px 8px 20px hsl(from var(--color-primary) h s 20 / 0.6);
   color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.toolTip:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid var(--color-tercery);
+  position: absolute;
+  bottom: -5px;
+  left: calc(50% - 7px);
+}
+
+.toolTip-textarea {
+  background: #ffffff;
+  width: 240px;
+  height: 70px;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 8px;
+  display: flex;
+  font-size: 1.6rem;
+  outline: none;
 }
