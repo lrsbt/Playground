@@ -72,6 +72,12 @@ body {
   background-color: var(--color-primary);
 }
 
+.box-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .box-footer {
   margin-top: 25px;
 }

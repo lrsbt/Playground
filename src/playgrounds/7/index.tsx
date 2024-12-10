@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import parse from "html-react-parser";
 import { FullScreen } from "@app/components";
 import { animated, useSpring } from "@react-spring/web";
 
@@ -6,6 +7,7 @@ import "./styles.css";
 import info from "./info.md";
 import { Star } from "@app/components/Icons/Star";
 import { useLocalStorage } from "@app/hooks";
+
 enum States {
   SELECTING,
   READY
@@ -14,39 +16,35 @@ enum States {
 interface Position {
   x: number;
   y: number;
-  width: number;
-  height: number;
 }
 
-const text = `Black seedless grapes are prized for their lush, juicy pulp, very
+const myText = `Black seedless grapes are prized for their lush, juicy pulp, very
 sweet flavors, and highly
 aromatic skins that offer a pleasant chewiness.
 `;
 
 const Playground = () => {
-  const textRef = useRef<HTMLDivElement>(null);
+  const isRunning = useRef(false);
   const toolTipRef = useRef<any>(null);
-  const selectableContainerClasses = useRef(["box-text"]).current;
 
   const [state, setState] = useState<States>();
   const [selection, setSelection] = useState<string>();
   const [position, setPosition] = useState<Position>();
-  const [annotations, setAnnotations] = useState<string[]>(["flavors"]);
-  const isRunning = useRef(false);
 
-  // const regexp = new RegExp("(" + annotations.join("|") + ")", "ig");
-  // const myText = text.replace(regexp, '<span class="$&">$&</span>');
+  const [text, setText] = useState("");
 
   const [rating, setRating] = useLocalStorage("rating", 2);
+  const [annotations, setAnnotations, clearAnnotation] = useLocalStorage<
+    string[]
+  >("annotations", []);
 
-  // useEffect(() => {
-  //   if (textRef?.current) {
-  //     console.log({ x: textRef?.current });
-  //     // textRef?.current?.innerHTML(myText);
-  //   }
-  // }, [textRef.current]);
+  const [toolTipStyle, api] = useSpring(() => ({
+    translateX: 0,
+    translateY: 0,
+    opacity: 0
+  }));
 
-  const isToolTipClickEvent = (e: any) => {
+  const event_sToolTipClickEvent = (e: any) => {
     return (
       e.target?.className === "toolTip" ||
       e.target?.parentElement?.className === "toolTip" ||
@@ -55,9 +53,9 @@ const Playground = () => {
   };
 
   const onSelectStart = (e: any) => {
-    // If clicking the annotation, don't hide tooltip
+    // Allow for tooltip clicks
     // also keep the selected text selected.
-    if (isToolTipClickEvent(e)) {
+    if (event_sToolTipClickEvent(e)) {
       e.preventDefault();
       return;
     }
@@ -71,8 +69,8 @@ const Playground = () => {
   };
 
   const onMouseUp = (e: any) => {
-    // If clicking the annotation, don't hide tooltip
-    if (isToolTipClickEvent(e)) {
+    // Allow for tooltip clicks
+    if (event_sToolTipClickEvent(e)) {
       e.preventDefault();
       return;
     }
@@ -82,17 +80,18 @@ const Playground = () => {
 
     if (!activeSelection) return;
     if (!parentEl) return;
-    if (!selectableContainerClasses?.includes(parentEl.className)) return;
+    if (!["box-text"]?.includes(parentEl.className)) return;
 
     const text = activeSelection.toString();
+    const activeRange = activeSelection.getRangeAt(0);
+    const rect = activeRange.getBoundingClientRect(); // for tooltip
+    const content = activeRange.cloneContents(); // prevent selecing spans
 
-    if (!text) {
+    if (!text || content.querySelector("span")) {
       setState(States.READY);
       setSelection(undefined);
       return;
     }
-
-    const rect = activeSelection.getRangeAt(0).getBoundingClientRect();
 
     setSelection(text);
 
@@ -104,42 +103,38 @@ const Playground = () => {
     });
   };
 
-  const highlightSelection = () => {
-    const selection = document.getSelection()?.getRangeAt(0);
-    const selectedContent = selection?.extractContents();
-    const span = document.createElement("span");
-    span.className = "box-annotation";
-    if (selectedContent) {
-      span.appendChild(selectedContent);
-      selection?.insertNode(span);
-    }
-  };
-
-  const addAnnotation = () => {
+  const addAnnotation = async () => {
     if (selection) {
-      highlightSelection();
       setAnnotations([...annotations, selection]);
       window?.getSelection()?.empty();
       hideToolTip();
     }
   };
 
-  const applyAnnotations = () => {
-    const range = document.createRange();
-    const text = document.getElementsByClassName("box-text")?.[0];
-    if (text && text.firstChild) {
-      const leftIndex = text.innerText.indexOf(annotations?.[0]);
-      range.setStart(text.firstChild, leftIndex);
-      range.setEnd(text.firstChild, leftIndex + annotations?.[0].length);
-      const selectedContent = range?.extractContents();
-      const span = document.createElement("span");
-      span.className = "box-annotation";
-      if (selectedContent) {
-        span.appendChild(selectedContent);
-        range?.insertNode(span);
-      }
-    }
+  const split = (string: string, separator: string) => {
+    const regex = new RegExp(`(${separator})`, "");
+    return string.split(regex);
   };
+
+  const applyAnnotations = () => {
+    let newText = myText;
+
+    annotations.map((a) => {
+      const splitParts = split(newText, a);
+      splitParts[1] = `<span className="box-annotation">${splitParts[1]}</span>`;
+      newText = splitParts.join("");
+    });
+
+    setText(newText);
+  };
+
+  const clearAnnotations = async () => {
+    setAnnotations([]);
+  };
+
+  useEffect(() => {
+    applyAnnotations();
+  }, [annotations]);
 
   useEffect(() => {
     if (isRunning.current === false) applyAnnotations();
@@ -155,12 +150,6 @@ const Playground = () => {
       document.removeEventListener("mouseup", onMouseUp);
     };
   }, []);
-
-  const [toolTipStyle, api] = useSpring(() => ({
-    translateX: 0,
-    translateY: 0,
-    opacity: 0
-  }));
 
   useEffect(() => {
     if (position) {
@@ -185,8 +174,6 @@ const Playground = () => {
     }
   }, [position]);
 
-  // https://stackoverflow.com/questions/6328718/how-to-wrap-surround-highlighted-text-with-an-element
-
   return (
     <FullScreen centerContent info={info}>
       <animated.div className="toolTip" style={toolTipStyle} ref={toolTipRef}>
@@ -199,15 +186,17 @@ const Playground = () => {
           <div className="box-title">What happens when I eat grape seeds?</div>
         </header>
         <main className="box-content">
-          <div className="box-text" ref={textRef}>
-            Black seedless grapes are prized for their lush, juicy pulp, very
-            sweet flavors, and highly aromatic skins that offer a pleasant
-            chewiness.
-            {/* <span className="box-annotation">flavors</span> */}
+          <div className="box-text" id="box-text">
+            {parse(text)}
           </div>
         </main>
         <footer className="box-footer">
-          <a className="button">Comments (4)</a>
+          <div className="box-buttons">
+            <a className="button">Comments (4)</a>
+            <a className="button" onClick={clearAnnotations}>
+              Clear
+            </a>
+          </div>
           <div className="box-extra">
             <div>
               <div className="box-extra-label">Rate the answer</div>
