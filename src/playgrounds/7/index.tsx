@@ -24,6 +24,7 @@ aromatic skins that offer a pleasant chewiness.
 `;
 
 const Playground = () => {
+  const textRef = useRef<any>(null);
   const toolTipRef = useRef<any>(null);
   const textAreaRef = useRef<any>(null);
 
@@ -72,14 +73,20 @@ const Playground = () => {
   };
 
   const highlightSelection = () => {
-    const selection = document.getSelection()?.getRangeAt(0);
-    const selectedContent = selection?.extractContents();
-    const span = document.createElement("span");
-    span.className = "box-annotation";
-    if (selectedContent) {
-      span.appendChild(selectedContent);
-      selection?.insertNode(span);
+    let newText = sanitize(myText); // Currently breaks if the text contains \n etc
+
+    if (selection) {
+      [...annotations, selection.toString()].map((a) => {
+        const parts = split(newText, a);
+        parts[1] = `<span className="box-annotation">${parts[1]}</span>`;
+        newText = parts.join("");
+      });
+      setText(newText);
     }
+  };
+
+  const removeHighlighting = () => {
+    applyAnnotations();
   };
 
   const onMouseUp = (e: any) => {
@@ -144,6 +151,7 @@ const Playground = () => {
 
     annotations.map((a) => {
       const parts = split(newText, a);
+      console.log(parts);
       parts[1] = `<span className="box-annotation">${parts[1]}</span>`;
       newText = parts.join("");
     });
@@ -158,7 +166,6 @@ const Playground = () => {
   useEffect(() => {
     document.addEventListener("selectstart", onSelectStart);
     document.addEventListener("mouseup", onMouseUp);
-
     return () => {
       document.removeEventListener("selectstart", onSelectStart);
       document.removeEventListener("mouseup", onMouseUp);
@@ -187,6 +194,7 @@ const Playground = () => {
       });
     }
     if (!position) {
+      removeHighlighting();
       toolTipRef.current.style.pointerEvents = "none";
       api.start({
         opacity: 0,
@@ -206,10 +214,10 @@ const Playground = () => {
           onChange={(e) => setAnnotationText(e.target.value)}
           placeholder="Type something"
           ref={textAreaRef}
-        ></textarea>
-        {/* <a className="button button--sm">Save</a> */}
-        {/* <a onClick={addAnnotation} >
-        </a> */}
+        />
+        <a className="button button--sm" onClick={addAnnotation}>
+          Save
+        </a>
       </animated.div>
       <section className="box">
         <header className="box-header">
@@ -218,7 +226,7 @@ const Playground = () => {
           <div className="box-title">What happens when I eat grape seeds?</div>
         </header>
         <main className="box-content">
-          <div className="box-text" id="box-text">
+          <div className="box-text" id="box-text" ref={textRef}>
             {parse(text)}
           </div>
         </main>
