@@ -63,3 +63,15 @@
   box-shadow: lch(0 0 0 / 0.04) 0px 4px 4px -1px,
     lch(0 0 0 / 0.08) 0px 1px 1px 0px;
 }
+
+.colors {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 16px;
+}
+
+.color {
+  flex: 1;
+  border-radius: 5px;
+  aspect-ratio: 1;
+}

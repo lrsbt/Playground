@@ -1,3 +1,4 @@
+import { folder } from "leva";
 import { colorNames } from "./constants";
 
 interface Preset {
@@ -7,6 +8,14 @@ interface Preset {
     spread: number;
     offset: number;
     hue: number;
+    addWhite: boolean;
+    background: string;
+    border: string;
+    p: string;
+    btnBg: string;
+    btnText: string;
+    btnHovBg: string;
+    btnHovTxt: string;
   };
 }
 
@@ -16,8 +25,17 @@ export const presets = <Preset[]>[
     values: {
       chroma: 11,
       spread: -4.3,
-      offset: -20,
-      hue: 284
+      leftPush: 4.7,
+      offset: -19,
+      hue: 284,
+      addWhite: true,
+      background: "grey900",
+      border: "grey800",
+      p: "grey400",
+      btnBg: "grey800",
+      btnText: "grey50",
+      btnHovBg: "grey700",
+      btnHovTxt: "grey50"
     }
   },
   {
@@ -26,7 +44,15 @@ export const presets = <Preset[]>[
       chroma: 20,
       spread: -1.9,
       offset: -4,
-      hue: 284
+      hue: 284,
+      addWhite: true,
+      background: "grey900",
+      border: "grey800",
+      p: "grey400",
+      btnBg: "grey800",
+      btnText: "grey50",
+      btnHovBg: "grey700",
+      btnHovTxt: "grey50"
     }
   },
   {
@@ -35,7 +61,33 @@ export const presets = <Preset[]>[
       chroma: 14,
       spread: 0,
       offset: 16,
-      hue: 272
+      hue: 272,
+      addWhite: true,
+      background: "grey900",
+      border: "grey800",
+      p: "grey400",
+      btnBg: "grey800",
+      btnText: "grey50",
+      btnHovBg: "grey700",
+      btnHovTxt: "grey50"
+    }
+  },
+  {
+    name: "Noodle King",
+    values: {
+      chroma: 4,
+      spread: -0.39999999999999947,
+      leftPush: 0,
+      offset: 10,
+      hue: 371,
+      addWhite: true,
+      background: "grey900",
+      border: "grey800",
+      p: "grey400",
+      btnBg: "grey800",
+      btnText: "grey50",
+      btnHovBg: "grey700",
+      btnHovTxt: "grey50"
     }
   }
 ];
@@ -53,10 +105,16 @@ export const levaSetup = () => ({
     max: 8,
     step: 0.1
   },
+  leftPush: {
+    value: presets[0].values.leftPush,
+    min: -8,
+    max: 8,
+    step: 0.1
+  },
   offset: {
     value: presets[0].values.offset,
-    min: -50,
-    max: 50,
+    min: -100,
+    max: 100,
     step: 1
   },
   hue: {
@@ -65,32 +123,37 @@ export const levaSetup = () => ({
     max: 371,
     step: 1
   },
-  background: {
-    value: "grey900",
-    options: colorNames
-  },
-  border: {
-    value: "grey800",
-    options: colorNames
-  },
-  p: {
-    value: "grey400",
-    options: colorNames
-  },
-  btnBg: {
-    value: "grey800",
-    options: colorNames
-  },
-  btnText: {
-    value: "grey50",
-    options: colorNames
-  },
-  btnHovBg: {
-    value: "grey700",
-    options: colorNames
-  },
-  btnHovTxt: {
-    value: "grey50",
-    options: colorNames
-  }
+  values: folder({
+    addWhite: {
+      value: true
+    },
+    background: {
+      value: "grey900",
+      options: colorNames
+    },
+    border: {
+      value: "grey800",
+      options: colorNames
+    },
+    p: {
+      value: "grey400",
+      options: colorNames
+    },
+    btnBg: {
+      value: "grey800",
+      options: colorNames
+    },
+    btnText: {
+      value: "grey50",
+      options: colorNames
+    },
+    btnHovBg: {
+      value: "grey700",
+      options: colorNames
+    },
+    btnHovTxt: {
+      value: "grey50",
+      options: colorNames
+    }
+  })
 });

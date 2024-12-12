@@ -25,7 +25,6 @@ const Playground = () => {
 
   addToStylesheet({ name: "white", color: `#ffffff` });
   addToStylesheet({ name: "black", color: `#000000` });
-  //
   addToStylesheet({ name: "background", color: `var(--${values.background})` });
   addToStylesheet({ name: "border", color: `var(--${values.border})` });
   addToStylesheet({ name: "p", color: `var(--${values.p})` });
@@ -37,7 +36,7 @@ const Playground = () => {
   const prev = (color: string, by: number) => {
     const index = colorNames.indexOf(color);
     if (index - by < 0) {
-      return "white"; // colorNames[0]
+      return values.addWhite ? "white" : colorNames[0];
     } else {
       return colorNames[index - by];
     }
@@ -70,6 +69,10 @@ const Playground = () => {
     })
     .join("");
 
+  const exportSetting = () => {
+    console.log(values);
+  };
+
   return (
     <FullScreen centerContent info={info}>
       <style>{styles}</style>
@@ -81,6 +84,16 @@ const Playground = () => {
           <a key={i} onClick={() => api.start(presets[i].values)}>
             {presets[i].name}
           </a>
+        ))}
+        <a onClick={exportSetting}>Export Setting</a>
+      </div>
+      <div className="colors">
+        {colorNames.map((c) => (
+          <div
+            key={c}
+            className="color"
+            style={{ background: `var(--${c})` }}
+          />
         ))}
       </div>
       {[...Array(4)].map((_, i) => (
