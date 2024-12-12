@@ -1,0 +1,153 @@
+/* These should be generated with a hue and contrast parameter involved */
+
+.leva {
+  width: 260px;
+  position: absolute;
+  z-index: 100;
+  right: 20px;
+  top: 92px;
+}
+
+.presets {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 10px;
+  gap: 5px;
+}
+
+.presets a {
+  background-color: #1f202b;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.presets a:hover {
+  color: rgba(255, 255, 255, 1);
+}
+
+.container--md {
+  width: 290px;
+}
+
+.box {
+  box-shadow: lch(0 0 0 / 0.04) 0px 4px 4px -1px,
+    lch(0 0 0 / 0.08) 0px 1px 1px 0px;
+  border-radius: 6px;
+  padding: 12px;
+  color: white;
+  font-size: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.box h1 {
+  font-size: 1.3rem;
+}
+
+.box footer {
+  display: flex;
+}
+
+.button {
+  padding: 6px 8px;
+  cursor: pointer;
+}
+
+.button--primary {
+  border-radius: 5px;
+  box-shadow: lch(0 0 0 / 0.04) 0px 4px 4px -1px,
+    lch(0 0 0 / 0.08) 0px 1px 1px 0px;
+}
+
+/* ELEVATION 0 */
+
+.box--elevation-0 {
+  background-color: var(--grey900);
+}
+.box--elevation-0 p {
+  color: var(--grey400);
+}
+.box--elevation-0 .button--primary {
+  background-color: var(--grey800);
+}
+.box--elevation-0 .button {
+  color: var(--grey50);
+}
+.box--elevation-0 .button--primary:hover {
+  background-color: var(--grey700);
+  color: white;
+}
+.box--elevation-0 .button--secondary:hover {
+  color: white;
+}
+
+/* ELEVATION 1 */
+
+.box--elevation-1 {
+  background-color: var(--grey800);
+}
+.box--elevation-1 p {
+  color: var(--grey300);
+}
+.box--elevation-1 .button--primary {
+  background-color: var(--grey700);
+}
+.box--elevation-1 .button {
+  color: white;
+}
+.box--elevation-1 .button--primary:hover {
+  background-color: var(--grey600);
+  color: white;
+}
+.box--elevation-1 .button--secondary:hover {
+  color: white;
+}
+
+/* ELEVATION 2 */
+
+.box--elevation-2 {
+  background-color: var(--grey700);
+}
+.box--elevation-2 p {
+  color: var(--grey200);
+}
+.box--elevation-2 .button--primary {
+  background-color: var(--grey600);
+}
+.box--elevation-2 .button {
+  color: white;
+}
+.box--elevation-2 .button--primary:hover {
+  background-color: var(--grey500);
+  color: white;
+}
+.box--elevation-2 .button--secondary:hover {
+  color: white;
+}
+
+/* ELEVATION 3 */
+
+.box--elevation-3 {
+  background-color: var(--grey600);
+}
+.box--elevation-3 p {
+  color: var(--grey100);
+}
+.box--elevation-3 .button--primary {
+  background-color: var(--grey500);
+}
+.box--elevation-3 .button {
+  color: white;
+}
+.box--elevation-3 .button--primary:hover {
+  background-color: var(--grey400);
+  color: white;
+}
+.box--elevation-3 .button--secondary:hover {
+  color: white;
+}

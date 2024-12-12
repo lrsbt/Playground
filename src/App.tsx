@@ -8,7 +8,8 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/4")),
   lazy(() => import("./playgrounds/5")),
   lazy(() => import("./playgrounds/6")),
-  lazy(() => import("./playgrounds/7"))
+  lazy(() => import("./playgrounds/7")),
+  lazy(() => import("./playgrounds/8"))
 ];
 
 const App = () => {

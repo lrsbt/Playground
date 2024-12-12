@@ -91,6 +91,17 @@ body {
   background-color: var(--color-primary);
   padding: 2px 4px;
   border-radius: var(--border-radius-sm);
+  animation: open 0.15s;
+}
+
+@keyframes open {
+  from {
+    padding: 0;
+  }
+
+  to {
+    padding: 2px 4px;
+  }
 }
 
 .box-extra {
