@@ -6,8 +6,10 @@ interface Preset {
   values: {
     chroma: number;
     spread: number;
+    leftPush: number;
     offset: number;
     hue: number;
+    //
     addWhite: boolean;
     background: string;
     border: string;
@@ -43,6 +45,7 @@ export const presets = <Preset[]>[
     values: {
       chroma: 20,
       spread: -1.9,
+      leftPush: 4.7,
       offset: -4,
       hue: 284,
       addWhite: true,
@@ -61,6 +64,7 @@ export const presets = <Preset[]>[
       chroma: 14,
       spread: 0,
       offset: 16,
+      leftPush: 3.4,
       hue: 272,
       addWhite: true,
       background: "grey900",
@@ -84,6 +88,24 @@ export const presets = <Preset[]>[
       background: "grey900",
       border: "grey800",
       p: "grey400",
+      btnBg: "grey800",
+      btnText: "grey50",
+      btnHovBg: "grey700",
+      btnHovTxt: "grey50"
+    }
+  },
+  {
+    name: "Taxi Driver",
+    values: {
+      chroma: 17,
+      spread: 0.3000000000000007,
+      leftPush: -1.4000000000000004,
+      offset: -7,
+      hue: 272,
+      addWhite: true,
+      background: "grey900",
+      border: "grey900",
+      p: "grey300",
       btnBg: "grey800",
       btnText: "grey50",
       btnHovBg: "grey700",

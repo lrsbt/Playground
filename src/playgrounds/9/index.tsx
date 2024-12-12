@@ -77,7 +77,7 @@ const Playground = () => {
     <FullScreen centerContent info={info}>
       <style>{styles}</style>
       <div className="leva">
-        <Leva fill />
+        <Leva fill collapsed />
       </div>
       <div className="presets">
         {presets.map((_, i) => (
