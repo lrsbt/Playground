@@ -1,4 +1,23 @@
-export const presets = [
+interface Preset {
+  name: string;
+  values: {
+    chroma: number;
+    spread: number;
+    offset: number;
+    hue: number;
+  };
+}
+
+export const presets = <Preset[]>[
+  {
+    name: "Starry Night",
+    values: {
+      chroma: 11,
+      spread: -4.3,
+      offset: -20,
+      hue: 284
+    }
+  },
   {
     name: "Salty Spitoon",
     values: {
