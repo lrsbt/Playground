@@ -12,7 +12,7 @@ interface Props extends React.ComponentProps<"div"> {
   info?: string;
 }
 
-const FullScreen = ({ centerContent, info, children }: Props) => {
+const FullScreen = ({ centerContent, info, children, className }: Props) => {
   const id = useRef(window.location.pathname.replace(/\D/g, "")).current;
   const prevId = Number(id) > 1 && Number(id) - 1;
   const nextId = Number(id) < PLAYGROUNDS.length && Number(id) + 1;
@@ -61,7 +61,7 @@ const FullScreen = ({ centerContent, info, children }: Props) => {
             </a>
           )}
         </nav>
-        <div>{children}</div>
+        <div className={className}>{children}</div>
       </div>
     </div>
   );
