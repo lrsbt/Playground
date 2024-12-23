@@ -15,7 +15,7 @@ const Flux = ({ className }: Props) => {
 
   const minX = useRef(-6).current;
   const maxX = useRef(48).current;
-  const speed = useRef(1).current;
+  const speed = useRef(0.5).current;
 
   const onPointerDown = (event: any) => {
     document.addEventListener("pointermove", OnPointerMove);
