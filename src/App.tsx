@@ -11,7 +11,8 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/7")),
   lazy(() => import("./playgrounds/8")),
   lazy(() => import("./playgrounds/9")),
-  lazy(() => import("./playgrounds/10"))
+  lazy(() => import("./playgrounds/10")),
+  lazy(() => import("./playgrounds/11"))
 ];
 
 const App = () => {
