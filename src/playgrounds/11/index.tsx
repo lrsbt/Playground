@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { FullScreen } from "@app/components";
 
-import { Curve } from "./Curve";
-import { Knob } from "./Knob";
-import { Slider } from "./Slider";
+import { Curve } from "./Components/Curve";
+import { Knob } from "./Components/Knob";
+import { Slider } from "./Components/Slider";
 
 import "./styles.css";
 import info from "./info.md";
+import { Flux } from "./Components/Flux";
+import { Button } from "./Components/Button";
+import { Level } from "./Components/Level";
 
 const Playground = () => {
   const [wowRate, setWowRate] = useState(50);
@@ -29,11 +32,16 @@ const Playground = () => {
             <Knob label="RATE" isConnected />
           </div>
           <div className="effect-mix-container">
-            <Knob />
+            <Button label="STEREO" />
             <Knob label="MIX" />
           </div>
+          <div className="effect-flux-container">
+            <Flux />
+          </div>
         </div>
-        <div className="effect-amount"></div>
+        <div className="effect-amount">
+          <Level label="WOBBLE" />
+        </div>
       </div>
     </FullScreen>
   );

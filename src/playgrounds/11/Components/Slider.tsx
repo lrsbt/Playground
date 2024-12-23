@@ -1,5 +1,6 @@
 import classNames from "classNames";
 import React, { useRef } from "react";
+import { X } from "./Icons/X";
 
 interface Props extends React.ComponentProps<"div"> {}
 
@@ -12,7 +13,7 @@ const Slider = ({ className }: Props) => {
 
   const minX = useRef(-10).current;
   const maxX = useRef(82).current;
-  const speed = useRef(1).current;
+  const speed = useRef(0.75).current;
 
   const onPointerDown = (event: any) => {
     document.addEventListener("pointermove", OnPointerMove);
@@ -50,6 +51,9 @@ const Slider = ({ className }: Props) => {
           ref={trackRef}
           style={{ left: `${startX.current}px` }}
         />
+      </div>
+      <div className="slider-label">
+        WOW <X className="x" /> FLUTTER
       </div>
     </div>
   );
