@@ -1,7 +1,5 @@
-// html5 canvas noise generation by subz
-// https://codepen.io/subz/pen/qEWmmqP
-
 import { useEffect, useRef } from "react";
+import { useAnimationFrame } from "@app/hooks";
 
 interface Props extends React.ComponentProps<"canvas"> {
   width: number;
@@ -22,21 +20,23 @@ const Curve = ({
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const context = useRef<any>(null);
   const offset = useRef(0);
+  const resolution = useRef(5);
   // const speed = useRef(3);
 
   useEffect(() => {
-    if (canvasRef?.current) {
-      canvasRef.current.width = width;
-      canvasRef.current.height = height;
-      context.current = canvasRef.current.getContext("2d");
-      triggerDraw();
-    }
+    initCanvas();
   }, [canvasRef.current]);
 
-  const triggerDraw = () => {
+  const initCanvas = () => {
+    if (!canvasRef?.current) return;
+    canvasRef.current.width = width;
+    canvasRef.current.height = height;
+    context.current = canvasRef.current.getContext("2d");
+  };
+
+  const triggerDraw = (dt: number) => {
     offset.current += speed;
     drawCurve(amplitude, frequency, offset.current);
-    requestAnimationFrame(triggerDraw);
   };
 
   const drawCurve = (amplitude: number, frequency: number, offset: number) => {
@@ -57,17 +57,19 @@ const Curve = ({
     let x = 0;
     let y = 0;
 
-    while (x < canvasRef.current.width + 5) {
+    while (x < canvasRef.current.width + resolution.current) {
       y =
         canvasRef.current.height / 2 +
         amplitude * Math.sin((x + offset) / frequency);
       context.current.lineTo(x, y);
 
-      x += 5;
+      x += resolution.current;
     }
 
     context.current.stroke();
   };
+
+  useAnimationFrame(triggerDraw);
 
   return <canvas ref={canvasRef} className={className} />;
 };
