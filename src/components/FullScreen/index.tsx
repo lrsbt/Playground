@@ -9,10 +9,17 @@ import { PLAYGROUNDS } from "@app/App";
 
 interface Props extends React.ComponentProps<"div"> {
   centerContent?: boolean;
+  stretch?: boolean;
   info?: string;
 }
 
-const FullScreen = ({ centerContent, info, children, className }: Props) => {
+const FullScreen = ({
+  centerContent,
+  info,
+  children,
+  stretch,
+  className
+}: Props) => {
   const id = useRef(window.location.pathname.replace(/\D/g, "")).current;
   const prevId = Number(id) > 1 && Number(id) - 1;
   const nextId = Number(id) < PLAYGROUNDS.length && Number(id) + 1;
@@ -31,7 +38,7 @@ const FullScreen = ({ centerContent, info, children, className }: Props) => {
     <div className="page">
       <animated.div className="sidebar" style={sidebarStyles}>
         <header className="sidebar-header">
-          <div className="sidebar-name">Playground {padInt(id)}</div>
+          <div className="sidebar-name">Playground {padInt(Number(id))}</div>
         </header>
         <section className="sidebar-info">
           <Markdown>{info}</Markdown>
@@ -61,7 +68,11 @@ const FullScreen = ({ centerContent, info, children, className }: Props) => {
             </a>
           )}
         </nav>
-        <div className={className}>{children}</div>
+        <div
+          className={classNames(className, { "fullScreen--stretch": stretch })}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );

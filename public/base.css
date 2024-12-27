@@ -51,6 +51,11 @@ body {
   justify-content: center;
 }
 
+.fullScreen--stretch {
+  width: 100%;
+  height: 100%;
+}
+
 .sidebar {
   background: #191a23;
   width: 216px;

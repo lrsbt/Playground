@@ -4,12 +4,12 @@ import { FullScreen } from "@app/components";
 import { Curve } from "./Components/Curve";
 import { Knob } from "./Components/Knob";
 import { Slider } from "./Components/Slider";
-
-import "./styles.css";
-import info from "./info.md";
 import { Flux } from "./Components/Flux";
 import { Button } from "./Components/Button";
 import { Level } from "./Components/Level";
+
+import "./styles.css";
+import info from "./info.md";
 
 const Playground = () => {
   const [wowRate, setWowRate] = useState(50);

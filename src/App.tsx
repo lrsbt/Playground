@@ -13,16 +13,24 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/9")),
   lazy(() => import("./playgrounds/10")),
   lazy(() => import("./playgrounds/11")),
-  lazy(() => import("./playgrounds/12")),
-  lazy(() => import("./playgrounds/99 copy"))
+  lazy(() => import("./playgrounds/12"))
 ];
 
+export const TUTORIALS = [
+  lazy(() => import("./tutorials/1")),
+  lazy(() => import("./tutorials/2"))
+];
+
+const p = PLAYGROUNDS.map((Playground, i) => (
+  <Route key={i} path={(i + 1).toString()} element={<Playground />} />
+));
+
+const t = TUTORIALS.map((Playground, i) => (
+  <Route key={i} path={`tut/${(i + 1).toString()}`} element={<Playground />} />
+));
+
 const App = () => {
-  const Pages = useRef(
-    PLAYGROUNDS.map((Playground, i) => (
-      <Route key={i} path={(i + 1).toString()} element={<Playground />} />
-    ))
-  ).current;
+  const Pages = useRef([...p, ...t]).current;
 
   return (
     <BrowserRouter
