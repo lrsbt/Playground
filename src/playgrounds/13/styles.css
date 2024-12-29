@@ -1,0 +1,73 @@
+:root {
+  --color-primary: #6c37df;
+  --color-accent: #a16dff;
+  --color-bg: #191522;
+  --color-l1: #221e2b;
+  --color-l2: #27232f;
+  --color-l3: #2e2a36;
+  --color-l4: #393641;
+  --color-l5: #423f4a;
+}
+
+.area {
+  width: 500px;
+  height: 500px;
+  background-color: var(--color-l1);
+  border-radius: 24px;
+  position: relative;
+}
+
+.center {
+  width: 4px;
+  height: 4px;
+  border-radius: 100%;
+  background-color: orange;
+  position: absolute;
+  z-index: 1;
+  margin-left: -1px;
+  margin-right: -1px;
+}
+
+.node {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 100%;
+  position: absolute;
+  z-index: 1;
+}
+
+.node:before {
+  content: "";
+  width: 200%;
+  aspect-ratio: 1;
+  background-color: var(--color-primary);
+  opacity: 0.3;
+  border-radius: 100%;
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  z-index: -1;
+}
+
+.node:after {
+  content: "";
+  width: 300%;
+  aspect-ratio: 1;
+  background-color: var(--color-primary);
+  opacity: 0.1;
+  border-radius: 100%;
+  position: absolute;
+  left: -100%;
+  top: -100%;
+  z-index: -1;
+}
+
+.node--selected {
+  background: orange;
+}
+
+.rect {
+  position: absolute;
+  border: 1px solid red;
+}

@@ -13,7 +13,8 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/9")),
   lazy(() => import("./playgrounds/10")),
   lazy(() => import("./playgrounds/11")),
-  lazy(() => import("./playgrounds/12"))
+  lazy(() => import("./playgrounds/12")),
+  lazy(() => import("./playgrounds/13"))
 ];
 
 export const TUTORIALS = [
