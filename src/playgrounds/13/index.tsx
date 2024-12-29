@@ -27,40 +27,90 @@ const center = {
 };
 
 const Playground = () => {
-  const areaRef = useSpringRef();
+  const areaRef = useRef<HTMLDivElement>(null);
+  const areaSpringRef = useSpringRef();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [rect, setRect] = useState({ top: 0, left: 0, width: 0, height: 0 });
-  const [delta, setDelta] = useState({ x: 0, y: 0 });
+  const delta = useRef({ x: 0, y: 0 });
+
+  const areaStart = useRef([0, 0]);
+  const areaCurrent = useRef([0, 0]);
+  const areaLast = useRef([0, 0]);
 
   const style = useSpring({
     translateX: 0,
     translateY: 0,
-    ref: areaRef
+    ref: areaSpringRef
   });
 
   const panTo = (e, index) => {
-    setSelectedIndex(index);
-    const pos = e.target.getBoundingClientRect();
-    setRect(pos);
-
-    const d = {
-      x: window.innerWidth / 2 - pos.x + delta.x,
-      y: window.innerHeight / 2 - pos.y + delta.y
+    const startValues = {
+      x: style.translateX,
+      y: style.translateX
     };
 
-    areaRef.start({
+    setSelectedIndex(index);
+    const current = e.target.getBoundingClientRect();
+
+    const d = {
+      x: window.innerWidth / 2 - current.x + delta.current.x,
+      y: window.innerHeight / 2 - current.y + delta.current.y
+    };
+
+    areaSpringRef.start({
       translateX: d.x,
       translateY: d.y
     });
 
-    setDelta({ x: d.x, y: d.y });
+    delta.current = { x: d.x, y: d.y };
+    areaLast.current = [d.x, d.y]; // Draggable
+  };
+
+  const onPointerDown = (event: any) => {
+    if (event.target.className.indexOf("node") > -1) return;
+    document.addEventListener("pointermove", OnPointerMove);
+    document.addEventListener("pointerup", OnPointerUp);
+
+    areaStart.current = [event.clientX, event.clientY];
+  };
+
+  const OnPointerMove = (event: any) => {
+    const areaDelta = [
+      areaStart.current[0] - event.clientX,
+      areaStart.current[1] - event.clientY
+    ];
+
+    areaCurrent.current = [
+      areaLast.current[0] + areaDelta[0],
+      areaLast.current[1] + areaDelta[1]
+    ];
+
+    if (areaRef.current) {
+      areaRef.current.style.cssText = `
+        transform: translate(
+          ${areaCurrent.current[0]}px,
+          ${areaCurrent.current[1]}px
+        )
+      `;
+    }
+  };
+
+  const OnPointerUp = (event: any) => {
+    areaLast.current = areaCurrent.current;
+    console.log(areaLast.current);
+    document.removeEventListener("pointermove", OnPointerMove);
+    document.removeEventListener("pointerup", OnPointerUp);
   };
 
   return (
     <FullScreen centerContent info={info}>
       <div className="center" style={{ left: center.x, top: center.y }} />
 
-      <animated.div className="area" style={style}>
+      <animated.div
+        ref={areaRef}
+        className="area"
+        style={style}
+        onPointerDown={onPointerDown}
+      >
         {Locations.map(({ name, location: { x, y } }, i) => (
           <div
             key={name}
@@ -71,17 +121,6 @@ const Playground = () => {
             })}
           />
         ))}
-        {/* {rect && (
-          <div
-            className="rect"
-            style={{
-              top: rect.top,
-              left: rect.left,
-              width: rect.width,
-              height: rect.height
-            }}
-          />
-        )} */}
       </animated.div>
     </FullScreen>
   );
