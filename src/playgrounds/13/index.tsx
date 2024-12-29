@@ -21,11 +21,6 @@ const Locations = [
   }
 ];
 
-const center = {
-  x: window.innerWidth / 2,
-  y: window.innerHeight / 2
-};
-
 const Playground = () => {
   const areaRef = useRef<HTMLDivElement>(null);
   const areaSpringRef = useSpringRef();
@@ -36,18 +31,21 @@ const Playground = () => {
   const areaCurrent = useRef([0, 0]);
   const areaLast = useRef([0, 0]);
 
-  const style = useSpring({
+  const [pinStyle, pinRef] = useSpring(
+    () => ({
+      from: { scale: 2 },
+      to: { scale: 1 }
+    }),
+    []
+  );
+
+  const areaStyle = useSpring({
     translateX: 0,
     translateY: 0,
     ref: areaSpringRef
   });
 
   const panTo = (e, index) => {
-    const startValues = {
-      x: style.translateX,
-      y: style.translateX
-    };
-
     setSelectedIndex(index);
     const current = e.target.getBoundingClientRect();
 
@@ -62,7 +60,14 @@ const Playground = () => {
     });
 
     delta.current = { x: d.x, y: d.y };
-    areaLast.current = [d.x, d.y]; // Draggable
+    pinRef.start({
+      from: { scale: 2 },
+      to: { scale: 1 },
+      config: { friction: 6 }
+    });
+
+    // Pass to draggable as the last position
+    areaLast.current = [d.x, d.y];
   };
 
   const onPointerDown = (event: any) => {
@@ -96,31 +101,41 @@ const Playground = () => {
 
   const OnPointerUp = (event: any) => {
     areaLast.current = areaCurrent.current;
-    console.log(areaLast.current);
     document.removeEventListener("pointermove", OnPointerMove);
     document.removeEventListener("pointerup", OnPointerUp);
   };
 
   return (
     <FullScreen centerContent info={info}>
-      <div className="center" style={{ left: center.x, top: center.y }} />
+      {/* <div
+        className="center"
+        style={{ left: window.innerWidth / 2, top: window.innerHeight / 2 }}
+      /> */}
 
       <animated.div
         ref={areaRef}
         className="area"
-        style={style}
+        style={areaStyle}
         onPointerDown={onPointerDown}
       >
         {Locations.map(({ name, location: { x, y } }, i) => (
-          <div
+          <animated.div
             key={name}
-            style={{ top: x, left: y }}
+            style={{ top: x, left: y, ...(i === selectedIndex && pinStyle) }}
             onClick={(e) => panTo(e, i)}
             className={classNames(`node ${name}`, {
               "node--selected": i === selectedIndex
             })}
           />
         ))}
+        {/* Just an html node */}
+        <animated.div
+          style={{ top: 250, left: 25, ...(4 === selectedIndex && pinStyle) }}
+          onClick={(e) => panTo(e, 4)}
+          className={classNames(`node ${name}`, {
+            "node--selected": 4 === selectedIndex
+          })}
+        />
       </animated.div>
     </FullScreen>
   );
