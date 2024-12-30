@@ -1,13 +1,25 @@
-import classNames from "classNames";
 import React, { useEffect, useRef, useState } from "react";
-import { animated, useSpring, useSpringRef } from "@react-spring/web";
-
-import { Locations } from "./const";
-import { elHasClass } from "@app/utils";
 import { FullScreen } from "@app/components";
+import { animated, useSpring, useSpringRef } from "@react-spring/web";
 
 import "./styles.css";
 import info from "./info.md";
+import classNames from "classNames";
+
+const Locations = [
+  {
+    name: "node--one",
+    location: { x: 200, y: 450 }
+  },
+  {
+    name: "node--two",
+    location: { x: 400, y: 250 }
+  },
+  {
+    name: "node--three",
+    location: { x: 50, y: 50 }
+  }
+];
 
 const Playground = () => {
   const areaRef = useRef<HTMLDivElement>(null);
@@ -19,10 +31,13 @@ const Playground = () => {
   const areaCurrent = useRef([0, 0]);
   const areaLast = useRef([0, 0]);
 
-  const [locationStyle, locationApi] = useSpring(() => ({
-    from: { scale: 2 },
-    to: { scale: 1 }
-  }));
+  const [pinStyle, pinRef] = useSpring(
+    () => ({
+      from: { scale: 2 },
+      to: { scale: 1 }
+    }),
+    []
+  );
 
   const areaStyle = useSpring({
     translateX: 0,
@@ -45,7 +60,7 @@ const Playground = () => {
     });
 
     delta.current = { x: d.x, y: d.y };
-    locationApi.start({
+    pinRef.start({
       from: { scale: 2 },
       to: { scale: 1 },
       config: { friction: 6 }
@@ -55,23 +70,23 @@ const Playground = () => {
     areaLast.current = [d.x, d.y];
   };
 
-  const onPointerDown = (event: React.MouseEvent<Element, MouseEvent>) => {
-    if (elHasClass(event, "node")) return;
+  const onPointerDown = (event: any) => {
+    if (event.target.className.indexOf("node") > -1) return;
     document.addEventListener("pointermove", OnPointerMove);
     document.addEventListener("pointerup", OnPointerUp);
 
     areaStart.current = [event.clientX, event.clientY];
   };
 
-  const OnPointerMove = (event: MouseEvent) => {
+  const OnPointerMove = (event: any) => {
     const areaDelta = [
       areaStart.current[0] - event.clientX,
       areaStart.current[1] - event.clientY
     ];
 
     areaCurrent.current = [
-      areaLast.current[0] - areaDelta[0],
-      areaLast.current[1] - areaDelta[1]
+      areaLast.current[0] + areaDelta[0],
+      areaLast.current[1] + areaDelta[1]
     ];
 
     if (areaRef.current) {
@@ -84,7 +99,7 @@ const Playground = () => {
     }
   };
 
-  const OnPointerUp = (event: MouseEvent) => {
+  const OnPointerUp = (event: any) => {
     areaLast.current = areaCurrent.current;
     document.removeEventListener("pointermove", OnPointerMove);
     document.removeEventListener("pointerup", OnPointerUp);
@@ -106,17 +121,21 @@ const Playground = () => {
         {Locations.map(({ name, location: { x, y } }, i) => (
           <animated.div
             key={name}
-            style={{
-              top: x,
-              left: y,
-              ...(i === selectedIndex && locationStyle)
-            }}
+            style={{ top: x, left: y, ...(i === selectedIndex && pinStyle) }}
             onClick={(e) => panTo(e, i)}
             className={classNames(`node ${name}`, {
               "node--selected": i === selectedIndex
             })}
           />
         ))}
+        {/* Just an html node */}
+        <animated.div
+          style={{ top: 250, left: 25, ...(4 === selectedIndex && pinStyle) }}
+          onClick={(e) => panTo(e, 4)}
+          className={classNames(`node ${name}`, {
+            "node--selected": 4 === selectedIndex
+          })}
+        />
       </animated.div>
     </FullScreen>
   );
