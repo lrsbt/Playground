@@ -12,17 +12,11 @@ import info from "./info.md";
 const Playground = () => {
   const areaRef = useRef<HTMLDivElement>(null);
   const areaSpringRef = useSpringRef();
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const delta = useRef({ x: 0, y: 0 });
+  const [activeIndex, setAciveIndex] = useState<number | null>(null);
 
   const areaStart = useRef([0, 0]);
   const areaCurrent = useRef([0, 0]);
   const areaLast = useRef([0, 0]);
-
-  const [locationStyle, locationApi] = useSpring(() => ({
-    from: { scale: 2 },
-    to: { scale: 1 }
-  }));
 
   const areaStyle = useSpring({
     translateX: 0,
@@ -30,29 +24,41 @@ const Playground = () => {
     ref: areaSpringRef
   });
 
-  const panTo = (e, index) => {
-    setSelectedIndex(index);
-    const current = e.target.getBoundingClientRect();
+  const [locationStyle, locationApi] = useSpring(() => ({
+    from: { scale: 2 },
+    to: { scale: 1 }
+  }));
 
-    const d = {
-      x: window.innerWidth / 2 - current.x + delta.current.x,
-      y: window.innerHeight / 2 - current.y + delta.current.y
-    };
-
-    areaSpringRef.start({
-      translateX: d.x,
-      translateY: d.y
-    });
-
-    delta.current = { x: d.x, y: d.y };
+  const selectLocation = (index: number) => {
+    setAciveIndex(index);
     locationApi.start({
       from: { scale: 2 },
       to: { scale: 1 },
       config: { friction: 6 }
     });
+  };
 
-    // Pass to draggable as the last position
-    areaLast.current = [d.x, d.y];
+  const panTo = (event, index: number) => {
+    selectLocation(index);
+
+    const cam = [window.innerWidth / 2, window.innerHeight / 2];
+    const targetRect = event.target.getBoundingClientRect();
+    const areaDelta = [targetRect.x - cam[0] + 2, targetRect.y - cam[1] + 2];
+
+    areaCurrent.current = [
+      areaLast.current[0] - areaDelta[0],
+      areaLast.current[1] - areaDelta[1]
+    ];
+
+    areaSpringRef.start({
+      translateX: areaCurrent.current[0],
+      translateY: areaCurrent.current[1],
+      config: {
+        tension: 150
+      }
+    });
+
+    areaLast.current = areaCurrent.current;
   };
 
   const onPointerDown = (event: React.MouseEvent<Element, MouseEvent>) => {
@@ -86,16 +92,24 @@ const Playground = () => {
 
   const OnPointerUp = (event: MouseEvent) => {
     areaLast.current = areaCurrent.current;
+    areaSpringRef.set({
+      translateX: areaLast.current[0],
+      translateY: areaLast.current[1]
+    });
     document.removeEventListener("pointermove", OnPointerMove);
     document.removeEventListener("pointerup", OnPointerUp);
   };
 
   return (
     <FullScreen centerContent info={info}>
-      {/* <div
+      <div
         className="center"
-        style={{ left: window.innerWidth / 2, top: window.innerHeight / 2 }}
-      /> */}
+        style={{
+          position: "absolute",
+          left: window.innerWidth / 2,
+          top: window.innerHeight / 2
+        }}
+      />
 
       <animated.div
         ref={areaRef}
@@ -109,11 +123,11 @@ const Playground = () => {
             style={{
               top: x,
               left: y,
-              ...(i === selectedIndex && locationStyle)
+              ...(i === activeIndex && locationStyle)
             }}
             onClick={(e) => panTo(e, i)}
             className={classNames(`node ${name}`, {
-              "node--selected": i === selectedIndex
+              "node--selected": i === activeIndex
             })}
           />
         ))}
