@@ -1,5 +1,5 @@
 import classNames from "classNames";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { animated, useSpring, useSpringRef } from "@react-spring/web";
 
 import { Locations } from "./const";
@@ -31,6 +31,7 @@ const Playground = () => {
 
   const selectLocation = (index: number) => {
     setAciveIndex(index);
+    // Marker-Select Animation
     locationApi.start({
       from: { scale: 2 },
       to: { scale: 1 },
@@ -39,11 +40,13 @@ const Playground = () => {
   };
 
   const panTo = (event, index: number) => {
-    selectLocation(index);
-
+    const markerSize = 4;
     const cam = [window.innerWidth / 2, window.innerHeight / 2];
     const targetRect = event.target.getBoundingClientRect();
-    const areaDelta = [targetRect.x - cam[0] + 2, targetRect.y - cam[1] + 2];
+    const areaDelta = [
+      targetRect.x - cam[0] + markerSize / 2,
+      targetRect.y - cam[1] + markerSize / 2
+    ];
 
     areaCurrent.current = [
       areaLast.current[0] - areaDelta[0],
@@ -52,11 +55,10 @@ const Playground = () => {
 
     areaSpringRef.start({
       translateX: areaCurrent.current[0],
-      translateY: areaCurrent.current[1],
-      config: {
-        tension: 150
-      }
+      translateY: areaCurrent.current[1]
     });
+
+    selectLocation(index);
 
     areaLast.current = areaCurrent.current;
   };
@@ -102,14 +104,14 @@ const Playground = () => {
 
   return (
     <FullScreen centerContent info={info}>
-      <div
+      {/* <div
         className="center"
         style={{
           position: "absolute",
           left: window.innerWidth / 2,
           top: window.innerHeight / 2
         }}
-      />
+      /> */}
 
       <animated.div
         ref={areaRef}
@@ -117,14 +119,10 @@ const Playground = () => {
         style={areaStyle}
         onPointerDown={onPointerDown}
       >
-        {Locations.map(({ name, location: { x, y } }, i) => (
+        {Locations.map(({ name, location: { x: top, y: left } }, i) => (
           <animated.div
             key={name}
-            style={{
-              top: x,
-              left: y,
-              ...(i === activeIndex && locationStyle)
-            }}
+            style={{ top, left, ...(i === activeIndex && locationStyle) }}
             onClick={(e) => panTo(e, i)}
             className={classNames(`node ${name}`, {
               "node--selected": i === activeIndex
