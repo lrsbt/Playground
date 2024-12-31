@@ -40,12 +40,11 @@ const Playground = () => {
   };
 
   const panTo = (event, index: number) => {
-    const markerSize = 4;
     const cam = [window.innerWidth / 2, window.innerHeight / 2];
     const targetRect = event.target.getBoundingClientRect();
     const areaDelta = [
-      targetRect.x - cam[0] + markerSize / 2,
-      targetRect.y - cam[1] + markerSize / 2
+      targetRect.x - cam[0] + targetRect.width / 2,
+      targetRect.y - cam[1] + targetRect.height / 2
     ];
 
     areaCurrent.current = [
@@ -104,14 +103,14 @@ const Playground = () => {
 
   return (
     <FullScreen centerContent info={info}>
-      {/* <div
+      <div
         className="center"
         style={{
           position: "absolute",
           left: window.innerWidth / 2,
           top: window.innerHeight / 2
         }}
-      /> */}
+      />
 
       <animated.div
         ref={areaRef}
