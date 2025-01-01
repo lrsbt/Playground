@@ -24,7 +24,7 @@
   font-size: 42px;
   font-weight: 200;
   user-select: none;
-  box-shadow: inset 0px -4px 10px 0px #0000008f, 0px 0px 0px #5e6368,
+  box-shadow: inset 0px -4px 10px 0px #00000057, 0px 0px 0px #5e6368,
     0px 10px 15px #16171e;
   text-shadow: 0 2px 4px #ffffff61;
   margin-bottom: 12px;
@@ -35,12 +35,12 @@
 
 @keyframes animateSkill {
   from {
-    box-shadow: inset 0px -4px 10px 0px #0000008f, 0px 0px 0px #5e6368,
+    box-shadow: inset 0px -4px 10px 0px #00000057, 0px 0px 0px #5e6368,
       0px 10px 15px #16171e;
   }
 
   to {
-    box-shadow: inset 0px -4px 10px 0px #0000008f, 0px 6px 0px #5e6368,
+    box-shadow: inset 0px -4px 10px 0px #00000057, 0px 6px 0px #5e6368,
       0px 10px 15px #16171e;
   }
 }
