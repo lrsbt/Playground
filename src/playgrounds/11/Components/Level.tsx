@@ -252,9 +252,11 @@ const Level = ({ label }: Props) => {
 
     if (currentY.current > maxRot) currentY.current = maxRot;
     if (currentY.current < minRot) currentY.current = minRot;
-    if (valueRef.current) {
-      valueRef.current.style = `background: conic-gradient(from -160deg, #a8d4f9 ${currentY.current}deg, #3C4456 0deg)`;
-      knobRef.current.style = `transform: rotate(${currentY.current + 195}deg)`;
+    if (valueRef.current && knobRef.current) {
+      valueRef.current.style.cssText = `background: conic-gradient(from -160deg, #a8d4f9 ${currentY.current}deg, #3C4456 0deg)`;
+      knobRef.current.style.cssText = `transform: rotate(${
+        currentY.current + 195
+      }deg)`;
       position.set(currentY.current);
       console.log(currentY.current);
     }

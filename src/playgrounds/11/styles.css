@@ -377,19 +377,17 @@
   position: relative;
 }
 
-.level-base {
+/* .level-base {
   width: 54px;
   height: 54px;
   background-color: #c0bbb1;
   border-radius: 100%;
   box-shadow: 0px 14px 14px #00000033;
-}
+} */
 
 .level-value {
   padding: 3px;
   border-radius: 100%;
-  width: 64px;
-  height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -398,6 +396,8 @@
 .level-value svg {
   border: 2px solid #000000;
   border-radius: 100%;
+  width: 62px;
+  height: 62px;
 }
 
 .level-label {

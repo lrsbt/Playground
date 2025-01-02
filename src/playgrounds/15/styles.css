@@ -1,0 +1,37 @@
+.dragarea {
+  width: 100%;
+  height: 100%;
+  background: #1a1a23;
+  position: absolute;
+}
+
+.grid-container {
+  position: relative;
+  display: inline-flex;
+}
+
+.grid {
+  position: relative;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2em;
+  font-weight: 200;
+  user-select: none;
+  box-shadow: 0px 1px 0px 0px #47475d;
+  position: absolute;
+  border: 1px solid #31314f;
+  background: #2a2a38;
+}
+
+.cell--occupied {
+  background: linear-gradient(180deg, #fdfdfd 0%, #e3e6e8 10%);
+  box-shadow: inset 0px -4px 10px 0px #00000057, 0px 0px 0px #5e6368,
+    0px 10px 15px #16171e;
+}
