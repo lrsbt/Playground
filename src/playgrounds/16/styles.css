@@ -25,20 +25,26 @@
   font-size: 2.2em;
   font-weight: 200;
   user-select: none;
-  box-shadow: 0px 1px 0px 0px #47475d;
+  box-shadow: 0px 1px 0px 0px #47475d; /*  0px 7px 0px 0px #000000bf */
   position: absolute;
   /* border: 1px solid #31314f; */
   background: #2a2a38;
   overflow: hidden;
+  transition: none;
 }
 
 .cell--occupied {
   background: linear-gradient(180deg, #fdfdfd 0%, #e3e6e8 10%);
   box-shadow: inset 0px -4px 10px 0px #00000057, 0px 0px 0px #5e6368,
     0px 10px 15px #16171e;
+  transition: transform 0.35s, background 0.35s, box-shadow 0.35s;
+  transition-timing-function: cubic-bezier(0.04, 1.38, 0.83, 1.78);
 }
 
 .cell--selected {
   background: linear-gradient(180deg, #fdfdfd 0%, #e3e6e8 10%);
-  box-shadow: 0px 1px 20px 1px #9191cebf;
+  box-shadow: 0px 7px 0px 0px #00000052, 0px 1px 20px 1px #4d4d6bbf;
+  transform: translateY(-3px);
+  transition: transform 0.35s, background 0.35s, box-shadow 0.35s;
+  transition-timing-function: cubic-bezier(0.04, 1.38, 0.83, 1.78);
 }
