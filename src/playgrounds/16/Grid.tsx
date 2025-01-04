@@ -1,7 +1,7 @@
-import { animated } from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 import { Cell, Location } from "./types";
 import { CELLSIZE, CELLSPACING, GRID } from "./const";
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 import classNames from "classNames";
 
 interface Props extends React.ComponentProps<"div"> {
@@ -56,6 +56,8 @@ interface CellProps extends Location {
 }
 
 const Cell = ({ x, y, onSelect, selected, cellData }: CellProps) => {
+  const animateStyle = useSpring({ scale: 1 });
+
   const style = {
     width: CELLSIZE,
     height: CELLSIZE,
@@ -64,18 +66,32 @@ const Cell = ({ x, y, onSelect, selected, cellData }: CellProps) => {
   };
   const isSelected = x == selected?.[0] && y == selected?.[1];
   const data = hasCellData(x, y, cellData);
+
+  useEffect(() => {
+    if (data?.skillName) {
+      animateStyle.scale.start({
+        from: 1.2,
+        to: 1,
+        config: {
+          friction: 16
+        }
+      });
+    }
+  }, [data?.skillName]);
+
   return (
-    <div
+    <animated.div
       className={classNames(
         "cell",
         { "cell--selected": isSelected },
-        { "cell--occupied": data }
+        { "cell--occupied": data },
+        { "cell--hasImage": data?.icon }
       )}
-      style={style}
+      style={{ ...style, ...animateStyle }}
       onClick={onSelect}
     >
       <img src={data?.icon} />
-    </div>
+    </animated.div>
   );
 };
 

@@ -1,28 +1,33 @@
 import { Cell } from "./types";
-import icon from "./Assets/icon.png";
-import icon2 from "./Assets/icon2.png";
+import blenderIcon from "./Assets/Icons/blender.png";
+import duolingoIcon from "./Assets/Icons/duolingo.png";
+import liveIcon from "./Assets/Icons/live.png";
+import wokIcon from "./Assets/Icons/wok.png";
+import selectTileSound from "./Assets/Sounds/Audio/click_001.ogg";
+import selectedTileSound from "./Assets/Sounds/Audio/switch_005.ogg";
+import removeTileSound from "./Assets/Sounds/Audio/back_004.ogg";
 
 export const GRID = 5;
 export const CELLSIZE = 50;
-export const CELLSPACING = 25;
+export const CELLSPACING = 10;
+
+export const SOUNDS = {
+  selectTile: selectTileSound,
+  selectedTile: selectedTileSound,
+  removeTile: removeTileSound
+};
 
 export const initialData: Cell[] = [
   {
-    id: 1,
     skillName: "Blender",
     location: [1, 1],
-    icon: icon
-  },
-  {
-    id: 2,
-    skillName: "Blender",
-    location: [2, 1],
-    icon: icon2
-  },
-  {
-    id: 2,
-    skillName: "Blender",
-    location: [3, 1],
-    icon: ""
+    icon: duolingoIcon
   }
 ];
+
+export const ICONS = {
+  blender: blenderIcon,
+  duolingo: duolingoIcon,
+  live: liveIcon,
+  wok: wokIcon
+};

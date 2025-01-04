@@ -4,7 +4,6 @@ export type Location = {
 };
 
 export interface Cell {
-  id: number;
   skillName: string;
   location: [number, number];
   icon: string;

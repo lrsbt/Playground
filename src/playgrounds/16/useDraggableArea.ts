@@ -5,7 +5,9 @@ import { SpringRef, useSpring } from "@react-spring/web";
 const useDraggableArea = (
   areaRef: React.RefObject<HTMLDivElement>,
   areaSpringRef: SpringRef,
-  ignoreClass?: string
+  ignoreClass?: string,
+  deselectClass?: string,
+  deselectFn?: () => void
 ) => {
   const areaStyle = useSpring({
     translateX: 0,
@@ -52,6 +54,10 @@ const useDraggableArea = (
 
   const onPointerDown = (event: React.MouseEvent<Element, MouseEvent>) => {
     if (ignoreClass && elHasClass(event, ignoreClass)) return;
+    if (deselectClass && elHasClass(event, deselectClass)) {
+      if (typeof deselectFn === "function") deselectFn();
+      return;
+    }
     document.addEventListener("pointermove", OnPointerMove);
     document.addEventListener("pointerup", OnPointerUp);
 
