@@ -4,8 +4,8 @@ import duolingoIcon from "./Assets/Icons/duolingo.png";
 import liveIcon from "./Assets/Icons/live.png";
 import wokIcon from "./Assets/Icons/wok.png";
 import selectTileSound from "./Assets/Sounds/Audio/click_001.ogg";
-import selectedTileSound from "./Assets/Sounds/Audio/switch_005.ogg";
-import removeTileSound from "./Assets/Sounds/Audio/back_004.ogg";
+import selectedTileSound from "./Assets/Sounds/Audio/switch_003.ogg";
+import removeTileSound from "./Assets/Sounds/Audio/switch_005.ogg";
 
 export const GRID = 5;
 export const CELLSIZE = 50;
@@ -19,7 +19,7 @@ export const SOUNDS = {
 
 export const initialData: Cell[] = [
   {
-    skillName: "Blender",
+    skillName: "duolingo",
     location: [1, 1],
     icon: duolingoIcon
   }

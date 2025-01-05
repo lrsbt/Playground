@@ -1,32 +1,31 @@
 import React, { useRef, useState } from "react";
 import useSound from "use-sound";
 import { useSpringRef } from "@react-spring/web";
-import { FullScreen } from "@app/components";
 
-import { Grid } from "./Grid";
+import { FullScreen } from "@app/components";
+import { getRandomNumber } from "@app/utils";
+
 import { Cell } from "./types";
-import { CELLSIZE, CELLSPACING, initialData, SOUNDS } from "./const";
+import { Grid } from "./Grid";
+import { Toolbar } from "./Toolbar";
 import { useDraggableArea } from "./useDraggableArea";
+import { CELLSIZE, CELLSPACING, initialData, SOUNDS } from "./const";
 
 import "./styles.css";
 import info from "./info.md";
-import { Toolbar } from "./Toolbar";
+
+const soundProps = () => ({
+  playbackRate: getRandomNumber(0.9, 1),
+  volume: 0.5
+});
 
 const Playground = () => {
   const dragAreaRef = useRef<HTMLDivElement>(null);
   const dragAreaSpringRef = useSpringRef();
 
-  const [playSelectSound] = useSound(SOUNDS.selectTile, {
-    playbackRate: Math.random() * 0.3 + 0.7
-  });
-
-  const [playSelectedSound] = useSound(SOUNDS.selectedTile, {
-    playbackRate: Math.random() * 0.3 + 0.7
-  });
-
-  const [playRemoveSound] = useSound(SOUNDS.removeTile, {
-    playbackRate: Math.random() * 0.3 + 0.7
-  });
+  const [playSelectSound] = useSound(SOUNDS.selectTile, soundProps());
+  const [playSelectedSound] = useSound(SOUNDS.selectedTile, soundProps());
+  const [playRemoveSound] = useSound(SOUNDS.removeTile, soundProps());
 
   const [selectedCell, setSelectedCell] = useState<[number, number] | null>(
     null
@@ -39,9 +38,9 @@ const Playground = () => {
   const { areaStyle, onPointerDown, onPointerSelect, panTo } = useDraggableArea(
     dragAreaRef,
     dragAreaSpringRef,
-    undefined
-    // "dragarea",
-    // deselect
+    undefined,
+    "dragarea",
+    deselect
   );
 
   const [cellData, setCellData] = useState<Cell[]>(initialData);
@@ -72,15 +71,6 @@ const Playground = () => {
       ({ location }) => `${location}` === `${x},${y}`
     )?.[0];
 
-    console.log(existingCell, name);
-
-    if (existingCell?.skillName === name) {
-      playRemoveSound();
-      // remove
-    }
-
-    // playRemoveSound
-
     const myCellData = existingCell
       ? cellData.filter(({ location }) => `${location}` !== `${x},${y}`)
       : cellData;
@@ -91,9 +81,15 @@ const Playground = () => {
       icon: icon
     };
 
-    const newCellData = [...myCellData, newItem];
-    setCellData(newCellData);
-    playSelectedSound();
+    if (existingCell?.skillName === name) {
+      const newCellData = [...myCellData];
+      setCellData(newCellData);
+      playRemoveSound();
+    } else {
+      const newCellData = [...myCellData, newItem];
+      setCellData(newCellData);
+      playSelectedSound();
+    }
   };
 
   return (

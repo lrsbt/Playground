@@ -70,27 +70,29 @@ const Cell = ({ x, y, onSelect, selected, cellData }: CellProps) => {
   useEffect(() => {
     if (data?.skillName) {
       animateStyle.scale.start({
-        from: 1.2,
+        from: 0.95,
         to: 1,
         config: {
-          friction: 16
+          friction: 10
         }
       });
     }
   }, [data?.skillName]);
 
   return (
-    <animated.div
-      className={classNames(
-        "cell",
-        { "cell--selected": isSelected },
-        { "cell--occupied": data },
-        { "cell--hasImage": data?.icon }
-      )}
-      style={{ ...style, ...animateStyle }}
-      onClick={onSelect}
-    >
-      <img src={data?.icon} />
+    <animated.div className="cell-container" style={animateStyle}>
+      <div
+        className={classNames(
+          "cell",
+          { "cell--selected": isSelected },
+          { "cell--occupied": data },
+          { "cell--hasImage": data?.icon }
+        )}
+        style={style}
+        onClick={onSelect}
+      >
+        {data?.icon && <img src={data?.icon} className="cell-image" />}
+      </div>
     </animated.div>
   );
 };

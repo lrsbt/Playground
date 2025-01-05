@@ -1,3 +1,4 @@
+import { animated, useSpring } from "@react-spring/web";
 import { ICONS } from "./const";
 
 interface Props {
@@ -6,14 +7,25 @@ interface Props {
 }
 
 const Toolbar = ({ handeSetCellData, selectedCell }: Props) => {
-  if (!selectedCell) return;
+  const isSelected = typeof selectedCell?.[0] === "number";
 
-  const [x, y] = selectedCell;
+  const [style] = useSpring(
+    () => ({
+      translateY: isSelected ? 0 : 100,
+      opacity: isSelected ? 1 : 0,
+      config: {
+        friction: 16,
+        tension: 150
+      }
+    }),
+    [isSelected]
+  );
 
   return (
-    <div className="toolbar">
+    <animated.div className="toolbar" style={style}>
       {Object.entries(ICONS).map(([name, icon], v) => {
         const handleSelect = () => {
+          const [x, y] = selectedCell;
           handeSetCellData(x, y, name, icon);
         };
 
@@ -23,7 +35,7 @@ const Toolbar = ({ handeSetCellData, selectedCell }: Props) => {
           </a>
         );
       })}
-    </div>
+    </animated.div>
   );
 };
 
