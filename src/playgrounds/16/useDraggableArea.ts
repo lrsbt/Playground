@@ -53,6 +53,7 @@ const useDraggableArea = (
   };
 
   const onPointerDown = (event: React.MouseEvent<Element, MouseEvent>) => {
+    console.log(event.target);
     if (ignoreClass && elHasClass(event, ignoreClass, true)) return;
     if (deselectClass && elHasClass(event, deselectClass, false)) {
       if (typeof deselectFn === "function") deselectFn();

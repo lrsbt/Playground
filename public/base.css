@@ -69,10 +69,6 @@ body {
   word-wrap: break-word;
 }
 
-.sidebar a {
-  color: #c9fdff;
-}
-
 .sidebar-name {
   background-color: #21222e;
   padding: 5px 11px;
@@ -104,8 +100,38 @@ body {
   margin-bottom: 6px;
 }
 
+.sidebar a {
+  color: #c9fdff;
+  display: inline-flex;
+  background-color: #21222e;
+  padding: 5px 11px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 7px;
+  text-wrap-mode: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  align-items: center;
+  max-width: 100%;
+}
+
+.sidebar a:hover {
+  background-color: #2c2e3d;
+}
+
+.sidebar a:before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  background: linear-gradient(180deg, #5b76ff 0%, #0078ff 100%);
+  display: inline-block;
+  border-radius: 100%;
+  margin-right: 8px;
+}
+
 .sidebar-info p {
-  opacity: 0.6;
+  /* opacity: 0.6; */
+  margin-left: -11px;
 }
 
 .iconButton {

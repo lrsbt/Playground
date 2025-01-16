@@ -80,20 +80,26 @@ const Cell = ({ x, y, onSelect, selected, cellData }: CellProps) => {
   }, [data?.skillName]);
 
   return (
-    <animated.div className="cell-container" style={animateStyle}>
-      <div
-        className={classNames(
-          "cell",
-          { "cell--selected": isSelected },
-          { "cell--occupied": data },
-          { "cell--hasImage": data?.icon }
-        )}
-        style={style}
-        onClick={onSelect}
-      >
-        {data?.icon && <img src={data?.icon} className="cell-image" />}
-      </div>
-    </animated.div>
+    <div className="cell-wrap">
+      <animated.div className="cell-container" style={animateStyle}>
+        <div
+          className={classNames(
+            "cell",
+            { "cell--selected": isSelected },
+            { "cell--occupied": data },
+            { "cell--hasImage": data?.icon }
+          )}
+          style={style}
+          onClick={onSelect}
+        >
+          <div className="cell-navigation">
+            {/* <div className="cell-navigation-top" />
+            <div className="cell-navigation-left" /> */}
+          </div>
+          {data?.icon && <img src={data?.icon} className="cell-image" />}
+        </div>
+      </animated.div>
+    </div>
   );
 };
 

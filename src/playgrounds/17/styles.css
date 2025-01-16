@@ -1,0 +1,70 @@
+:root {
+  /* Spacing */
+  --spacing-md: 5px;
+  --spacing-lg: calc(var(--spacing-md) * 2);
+  --spacing-xl: calc(var(--spacing-md) * 3);
+  --spacing-xxl: calc(var(--spacing-md) * 4);
+  /* Shape */
+  --border-radius: 10px;
+  /* Colour */
+  --colour-darker: #282a37;
+  --colour-dark: #3034444f;
+  --colour-text: #c3e88d;
+}
+
+.terminal {
+  background: var(--colour-dark);
+  color: var(--colour-text);
+  width: 420px; /* 300px */
+  height: 190px;
+  max-width: 600px;
+  max-height: 270px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  font-family: monospace;
+}
+
+.terminal-header {
+  background: var(--colour-darker);
+  padding: var(--spacing-lg);
+  position: relative;
+  display: flex;
+  height: 40px;
+  background: var(--colour-darker)
+    url(data:image/svg+xml;base64,ICAgICAgICA8c3ZnCiAgICAgICAgICB3aWR0aD0iNTIiCiAgICAgICAgICBoZWlnaHQ9IjEyIgogICAgICAgICAgdmlld0JveD0iMCAwIDUyIDEyIgogICAgICAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICAgICAgID4KICAgICAgICAgIDxjaXJjbGUgY3g9IjQ2IiBjeT0iNiIgcj0iNiIgZmlsbD0iIzI4Qzg0MCIgLz4KICAgICAgICAgIDxjaXJjbGUgY3g9IjI2IiBjeT0iNiIgcj0iNiIgZmlsbD0iI0ZFQkMyRSIgLz4KICAgICAgICAgIDxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI2IiBmaWxsPSIjRkY1RjU3IiAvPgogICAgICAgIDwvc3ZnPg==)
+    no-repeat 15px center;
+  padding-left: 80px;
+  color: #ffffff57;
+}
+
+.terminal-content {
+  padding: var(--spacing-xl);
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+.terminal-line--active:after {
+  content: "_";
+  color: #88ce7b;
+  position: relative;
+  top: 1x;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+
+  49% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
