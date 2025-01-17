@@ -77,7 +77,7 @@ const Terminal = ({
     start();
   };
 
-  console.log(output);
+  // console.log(output);
 
   const start = async () => {
     await _wait(startDelay);
