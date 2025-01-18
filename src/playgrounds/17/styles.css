@@ -12,6 +12,10 @@
   --colour-text: #c3e88d;
 }
 
+.red {
+  color: red;
+}
+
 /* switch */
 
 .switch {
@@ -111,20 +115,28 @@
   animation: blink 1s infinite;
 }
 
+.cursor {
+  content: "_";
+  color: #88ce7b;
+  position: relative;
+  top: 1x;
+  animation: blink 1s infinite;
+}
+
 @keyframes blink {
   0% {
-    opacity: 0;
+    opacity: 1;
   }
 
   49% {
-    opacity: 0;
+    opacity: 1;
   }
 
   50% {
-    opacity: 1;
+    opacity: 0;
   }
 
   100% {
-    opacity: 1;
+    opacity: 0;
   }
 }

@@ -1,5 +1,5 @@
 import classNames from "classNames";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props extends React.ComponentProps<"div"> {
   startDelay?: number;
@@ -17,14 +17,11 @@ const Terminal = ({
   startDelay = 600,
   typeDelay = 50,
   lineDelay = 1500,
-  // progressLength = 40,
-  // progressChar = "█",
-  // progressPercent = 100,
-  // cursor = "▋",
   title,
   className,
   children
 }: Props) => {
+  const contentRef = useRef<HTMLElement>(null);
   const lines = React.Children.toArray(children);
   const [currentLine, setCurrentLine] = useState(0);
   const [output, setOutput] = useState<string[]>([""]);
@@ -36,10 +33,24 @@ const Terminal = ({
 
     for (const char of chars) {
       await _wait(delay);
-      setOutput((o) => {
-        o[lineIndex] = o[lineIndex] ? (o[lineIndex] += char) : char;
-        return [...o];
-      });
+      _write(lineIndex, char);
+    }
+  };
+
+  const _write = (lineIndex, text) => {
+    setOutput((o) => {
+      o[lineIndex] = o[lineIndex] ? (o[lineIndex] += text) : text;
+      return [...o];
+    });
+  };
+
+  const _typeWithChildren = async (line, lineIndex) => {
+    const children = line.props.children;
+
+    for (let i = 0; i < children.length; i++) {
+      _write(lineIndex, `<span class="${children[i]?.props?.className}">`);
+      await _type(children[i], lineIndex);
+      _write(lineIndex, `</span>`);
     }
   };
 
@@ -69,6 +80,42 @@ const Terminal = ({
     return new Promise((resolve) => setTimeout(resolve, time));
   };
 
+  const start = async () => {
+    await _wait(startDelay);
+
+    for (const [lineIndex, line] of lines.entries()) {
+      const type = line?.props.type;
+      const delay = line?.props.delay || lineDelay;
+      const hasChildren = typeof line?.props.children === "object";
+
+      _write(lineIndex, `<div class="terminal-line">`);
+
+      if (type == "input") {
+        if (hasChildren) {
+          await _typeWithChildren(line, lineIndex);
+        } else {
+          await _type(line, lineIndex);
+        }
+        await _wait(delay);
+      } else if (type == "progress") {
+        await _progress(line, lineIndex);
+        await _wait(delay);
+      } else {
+        // this.container.appendChild(line);
+        await _wait(delay);
+      }
+
+      _write(lineIndex, "</div>");
+    }
+  };
+
+  useEffect(() => {
+    if (contentRef.current) {
+      contentRef.current.innerHTML =
+        output.join("") + `<span class="cursor">_</span>`;
+    }
+  }, [output]);
+
   useEffect(() => {
     init();
   }, []);
@@ -77,43 +124,11 @@ const Terminal = ({
     start();
   };
 
-  // console.log(output);
-
-  const start = async () => {
-    await _wait(startDelay);
-
-    for (const [lineIndex, line] of lines.entries()) {
-      const type = line?.props.type;
-      const delay = line?.props.delay || lineDelay;
-
-      if (type == "input") {
-        await _type(line, lineIndex);
-        await _wait(delay);
-      } else if (type == "progress") {
-        await _progress(line, lineIndex);
-        await _wait(delay);
-      }
-
-      // if (type == "input") {
-      //   line.setAttribute(`${this.pfx}-cursor`, this.cursor);
-      //   await this.type(line);
-      //   await this._wait(delay);
-      // } else if (type == "progress") {
-      //   await this.progress(line);
-      //   await this._wait(delay);
-      // } else {
-      //   this.container.appendChild(line);
-      //   await this._wait(delay);
-      // }
-      // line.removeAttribute(`${this.pfx}-cursor`);
-    }
-  };
-
   return (
     <div className={classNames("terminal", className)}>
       <div className="terminal-header">{title}</div>
-      <div className="terminal-content">
-        {output.map((o, i) => (
+      <div className="terminal-content" ref={contentRef}>
+        {/* {output.map((o, i) => (
           <div
             key={i}
             className={classNames("terminal-line", {
@@ -122,7 +137,7 @@ const Terminal = ({
           >
             {o}
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );

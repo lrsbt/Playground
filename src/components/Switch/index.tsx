@@ -9,7 +9,7 @@ interface Location {
 
 const Switch = () => {
   const refs = useRef<any[]>([]);
-  const options = useRef(["Version1", "Vers22"]).current;
+  const options = useRef(["Version1", "Version2"]).current;
   const [locations, setLocations] = useState<Location[] | null>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -28,7 +28,7 @@ const Switch = () => {
       width: locations?.[selectedIndex]?.width,
       config: {
         tension: 300,
-        friction: 20
+        friction: 40
       }
     }),
     [selectedIndex, locations]

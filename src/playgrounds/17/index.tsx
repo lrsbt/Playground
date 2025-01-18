@@ -23,9 +23,13 @@ const Playground = () => {
 
       <div className="contentWrap">
         <Terminal>
-          <TerminalLine type="input">npm install react</TerminalLine>
+          <TerminalLine type="input">
+            <span className="red">npm </span>
+            <span>install </span>
+            <span>react</span>
+          </TerminalLine>
           <TerminalLine type="progress" data-ty-progressChar="·"></TerminalLine>
-          <TerminalLine>
+          <TerminalLine type="input">
             Are you sure you want to uninstall 'react'?
           </TerminalLine>
           <TerminalLine type="input" typeDelay="1000" prompt="(y/n)">
