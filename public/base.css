@@ -170,3 +170,46 @@ body {
 .page-nav a:last-of-type {
   margin-left: 6px;
 }
+
+/* switch */
+
+.switch {
+  background-color: #1f202b;
+  display: inline-flex;
+  padding: 4px;
+  border-radius: 8px;
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  z-index: 100;
+  user-select: none;
+  font-family: system-ui;
+  transform: translateX(-50%);
+  border: 1px solid #ffffff10;
+}
+
+.switch-content {
+  position: relative;
+}
+
+.switch-active {
+  background-color: white;
+  position: absolute;
+  height: 100%;
+  z-index: -1;
+  border-radius: 4px;
+}
+
+.switch-option {
+  color: #6d6f81;
+  text-decoration: none;
+  padding: 2px 12px;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.switch-option--active {
+  color: #1f202b;
+}
+
+/* /switch */

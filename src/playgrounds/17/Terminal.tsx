@@ -5,17 +5,13 @@ interface Props extends React.ComponentProps<"div"> {
   startDelay?: number;
   typeDelay?: number;
   lineDelay?: number;
-  progressLength?: number;
-  progressChar?: string;
-  progressPercent?: number;
-  cursor?: string;
   title?: string;
   children: React.ReactNode;
 }
 
 const Terminal = ({
   startDelay = 600,
-  typeDelay = 50,
+  typeDelay = 30,
   lineDelay = 1500,
   title,
   className,
@@ -26,6 +22,18 @@ const Terminal = ({
   const [currentLine, setCurrentLine] = useState(0);
   const [output, setOutput] = useState<string[]>([""]);
 
+  const _write = (lineIndex: number, text: string, replace?: boolean) => {
+    setOutput((o) => {
+      if (replace) {
+        o[lineIndex] = `<div class="terminal-line">${text}</div>`;
+        return [...o];
+      } else {
+        o[lineIndex] = o[lineIndex] ? (o[lineIndex] += text) : text;
+        return [...o];
+      }
+    });
+  };
+
   const _type = async (line, lineIndex) => {
     const chars = [...line.props.children];
     const delay = line?.props.delay || typeDelay;
@@ -35,13 +43,6 @@ const Terminal = ({
       await _wait(delay);
       _write(lineIndex, char);
     }
-  };
-
-  const _write = (lineIndex, text) => {
-    setOutput((o) => {
-      o[lineIndex] = o[lineIndex] ? (o[lineIndex] += text) : text;
-      return [...o];
-    });
   };
 
   const _typeWithChildren = async (line, lineIndex) => {
@@ -64,11 +65,8 @@ const Terminal = ({
     for (let i = 1; i < chars.length + 1; i++) {
       await _wait(typeDelay);
       const percent = Math.round((i / chars.length) * 100);
-
-      setOutput((o) => {
-        o[lineIndex] = `${chars.slice(0, i)} ${percent}%`;
-        return [...o];
-      });
+      const text = `${chars.slice(0, i)} ${percent}%`;
+      _write(lineIndex, text, true);
 
       if (percent > progressPercent) {
         break;
@@ -84,9 +82,10 @@ const Terminal = ({
     await _wait(startDelay);
 
     for (const [lineIndex, line] of lines.entries()) {
-      const type = line?.props.type;
-      const delay = line?.props.delay || lineDelay;
-      const hasChildren = typeof line?.props.children === "object";
+      const { props } = line;
+      const type = props?.type;
+      const delay = props?.delay || lineDelay;
+      const hasChildren = typeof props?.children === "object";
 
       _write(lineIndex, `<div class="terminal-line">`);
 
@@ -127,18 +126,7 @@ const Terminal = ({
   return (
     <div className={classNames("terminal", className)}>
       <div className="terminal-header">{title}</div>
-      <div className="terminal-content" ref={contentRef}>
-        {/* {output.map((o, i) => (
-          <div
-            key={i}
-            className={classNames("terminal-line", {
-              "terminal-line--active": i === currentLine
-            })}
-          >
-            {o}
-          </div>
-        ))} */}
-      </div>
+      <div className="terminal-content" ref={contentRef}></div>
     </div>
   );
 };
