@@ -17,7 +17,7 @@ const Terminal = ({
   className,
   children
 }: Props) => {
-  const contentRef = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const lines = React.Children.toArray(children);
   const [currentLine, setCurrentLine] = useState(0);
   const [output, setOutput] = useState<string[]>([""]);
@@ -126,7 +126,11 @@ const Terminal = ({
   return (
     <div className={classNames("terminal", className)}>
       <div className="terminal-header">{title}</div>
-      <div className="terminal-content" ref={contentRef}></div>
+      <div className="terminal-content" ref={contentRef}>
+        {React.Children.map(children, (child) => {
+          return React.cloneElement(child);
+        })}
+      </div>
     </div>
   );
 };

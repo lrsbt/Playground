@@ -1,0 +1,105 @@
+:root {
+  /* Spacing */
+  --spacing-md: 5px;
+  --spacing-lg: calc(var(--spacing-md) * 2);
+  --spacing-xl: calc(var(--spacing-md) * 3);
+  --spacing-xxl: calc(var(--spacing-md) * 4);
+  /* Shape */
+  --border-radius: 10px;
+  --border-width: 1px;
+  /* Colour */
+  /* --colour-darker: #282a37;
+  --colour-dark: #3034444f;
+  --colour-text: #c3e88d; */
+  --colour-darker: #1c1e2c;
+  --colour-dark: #272b3b;
+  --colour-text: #949dcb;
+  --colour-border: #ffffff1c;
+}
+
+.red {
+  color: #ef766d;
+}
+
+.canvasWrap {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.contentWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  position: relative;
+}
+
+.terminal {
+  background: rgb(from var(--colour-dark) r g b / 0.7);
+  backdrop-filter: blur(4px);
+  color: var(--colour-text);
+  width: 420px;
+  height: 190px;
+  max-width: 600px;
+  max-height: 270px;
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid rgb(from var(--colour-border) r g b / 0.01);
+  overflow: hidden;
+  font-family: monaco, monospace;
+  font-size: 1.2rem;
+  line-height: 1.42;
+  -webkit-font-smoothing: antialiased;
+}
+
+.terminal-header {
+  background: var(--colour-darker);
+  padding: var(--spacing-lg);
+  position: relative;
+  display: flex;
+  height: 38px;
+  background: rgb(from var(--colour-darker) r g b / 1)
+    url(data:image/svg+xml;base64,ICAgICAgICA8c3ZnCiAgICAgICAgICB3aWR0aD0iNTIiCiAgICAgICAgICBoZWlnaHQ9IjEyIgogICAgICAgICAgdmlld0JveD0iMCAwIDUyIDEyIgogICAgICAgICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICAgICAgID4KICAgICAgICAgIDxjaXJjbGUgY3g9IjQ2IiBjeT0iNiIgcj0iNiIgZmlsbD0iIzI4Qzg0MCIgLz4KICAgICAgICAgIDxjaXJjbGUgY3g9IjI2IiBjeT0iNiIgcj0iNiIgZmlsbD0iI0ZFQkMyRSIgLz4KICAgICAgICAgIDxjaXJjbGUgY3g9IjYiIGN5PSI2IiByPSI2IiBmaWxsPSIjRkY1RjU3IiAvPgogICAgICAgIDwvc3ZnPg==)
+    no-repeat 15px center;
+  padding-left: 80px;
+  color: #ffffff57;
+  border-bottom: var(--border-width) solid var(--colour-border);
+}
+
+.terminal-content {
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+}
+
+.terminal-line::before {
+  content: "➜";
+  margin-right: 7px;
+}
+
+.cursor {
+  content: "_";
+  color: var(--colour-text);
+  position: relative;
+  top: 1x;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  49% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

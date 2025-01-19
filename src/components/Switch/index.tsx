@@ -7,7 +7,7 @@ interface Location {
   offsetX: number;
 }
 
-const Switch = () => {
+const Switch = ({ onChange }: { onChange: (val: number) => void }) => {
   const refs = useRef<any[]>([]);
   const options = useRef(["Version1", "Version2"]).current;
   const [locations, setLocations] = useState<Location[] | null>([]);
@@ -33,6 +33,10 @@ const Switch = () => {
     }),
     [selectedIndex, locations]
   );
+
+  useEffect(() => {
+    if (typeof onChange === "function") onChange(selectedIndex);
+  }, [selectedIndex]);
 
   return (
     <div className="switch">
