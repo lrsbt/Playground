@@ -22,20 +22,22 @@ const Toolbar = ({ handeSetCellData, selectedCell }: Props) => {
   );
 
   return (
-    <animated.div className="toolbar" style={style}>
-      {Object.entries(ICONS).map(([name, icon], v) => {
-        const handleSelect = () => {
-          const [x, y] = selectedCell;
-          handeSetCellData(x, y, name, icon);
-        };
+    <div className="toolbar-container">
+      <animated.div className="toolbar" style={style}>
+        {Object.entries(ICONS).map(([name, icon], v) => {
+          const handleSelect = () => {
+            const [x, y] = selectedCell;
+            handeSetCellData(x, y, name, icon);
+          };
 
-        return (
-          <a className="toolbar-icon" key={name} onClick={handleSelect}>
-            <img src={icon} />
-          </a>
-        );
-      })}
-    </animated.div>
+          return (
+            <a className="toolbar-icon" key={name} onClick={handleSelect}>
+              <img src={icon} />
+            </a>
+          );
+        })}
+      </animated.div>
+    </div>
   );
 };
 

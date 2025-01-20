@@ -67,10 +67,15 @@
   background: black;
 }
 
-.toolbar {
+.toolbar-container {
+  left: 50%;
   position: absolute;
   bottom: 20px;
-  left: calc(50% - 50px);
+  transform: translateX(-50%);
+}
+
+.toolbar {
+  position: relative;
   background: white;
   padding: 8px;
   border-radius: 10px;
