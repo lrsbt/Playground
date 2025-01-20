@@ -12,10 +12,21 @@
   --colour-dark: #272b3b;
   --colour-text: #949dcb;
   --colour-border: #ffffff1c;
+  /* Text */
+  --text-prompt: "➜";
+  --text-cursor: "_";
 }
 
 .red {
   color: #ef766d;
+}
+
+.white {
+  color: white;
+}
+
+.yellow {
+  color: #fecb6b;
 }
 
 .canvasWrap {
@@ -38,7 +49,8 @@
   background: rgb(from var(--colour-dark) r g b / 0.7);
   backdrop-filter: blur(4px);
   color: var(--colour-text);
-  width: 420px;
+  /* width: 420px; */
+  width: 530px;
   height: 190px;
   max-width: 600px;
   max-height: 270px;
@@ -68,17 +80,23 @@
 .terminal-content {
   padding: var(--spacing-xl);
   overflow-y: auto;
+  height: calc(100% - 50px);
+  scrollbar-color: #545875 #545875;
+  scrollbar-width: thin;
 }
 
-.terminal-line--active::before,
-.terminal-line--done::before {
-  content: "➜";
+.terminal-line--active:not(.terminal-line--noPrompt)::before,
+.terminal-line--done:not(.terminal-line--noPrompt)::before {
+  content: var(--text-prompt);
   margin-right: 7px;
 }
 
+.terminal-line--noPrompt {
+  padding-left: 14px;
+}
+
 .terminal-line--active::after {
-  content: "_";
-  /* color: #ffcc02; */
+  content: var(--text-cursor);
   color: var(--colour-text);
   position: relative;
   animation: blink 1.2s infinite;
