@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 
 const HIDE_TIME = 3000;
@@ -7,7 +7,9 @@ const LOCATIONS = {
   hidden: 100
 };
 
-const Toast = ({ text }: { text: string }) => {
+const Toast = ({ text }: { text: string | null }) => {
+  const timer = useRef<number>(0);
+
   const [props, api] = useSpring(
     () => ({
       translateY: text ? LOCATIONS.visible : LOCATIONS.hidden,
@@ -22,7 +24,8 @@ const Toast = ({ text }: { text: string }) => {
     const hide = () => {
       api.start({ translateY: LOCATIONS.hidden });
     };
-    setTimeout(hide, HIDE_TIME);
+    timer.current = setTimeout(hide, HIDE_TIME);
+    return () => window.clearTimeout(timer.current);
   }, [text]);
 
   return (
