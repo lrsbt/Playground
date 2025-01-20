@@ -7,15 +7,17 @@ import React, {
   useRef,
   useState
 } from "react";
+import { CopyThis } from "@app/components/Icons";
 
 interface Props extends React.ComponentProps<"div"> {
+  mode?: "bright" | "dark";
   title?: string;
   children: React.ReactNode;
 }
 
 type ChildProps = ReactElement<PropsWithChildren<TerminalLineProps>>;
 
-const Terminal = ({ title, className, children }: Props) => {
+const Terminal = ({ title, mode, className, children }: Props) => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const [currentLine, setCurrentLine] = useState(0);
 
@@ -24,13 +26,28 @@ const Terminal = ({ title, className, children }: Props) => {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
   };
 
+  const copyToClipboard = () => {
+    if (terminalRef.current)
+      navigator.clipboard.writeText(terminalRef.current.innerText);
+  };
+
+  const classes = classNames("terminal", className, {
+    "terminal--dark": mode === "dark",
+    "terminal--bright": mode === "bright"
+  });
+
   useEffect(() => {
     scrollToEnd();
   }, [currentLine]);
 
   return (
-    <div className={classNames("terminal", className)}>
-      <div className="terminal-header">{title}</div>
+    <div className={classes}>
+      <div className="terminal-header">
+        {title}
+        <a className="terminal-copyThis" onClick={copyToClipboard}>
+          <CopyThis />
+        </a>
+      </div>
       <div className="terminal-content" ref={terminalRef}>
         {React.Children.map(children, (child, i) =>
           React.cloneElement(child as ChildProps, {

@@ -19,18 +19,18 @@ import "./styles.css";
   [x] Show and hide prompt Icon
   [x] Overflow handing and scroll to bottom
   [x] ▋▋▋▋▋▋▋ 44% Loading Component
-  [ ] DarkMode and light mode using the switch
+  [x] DarkMode and light mode using the switch
   [ ] ability to copy all text + icon to copy
   [ ] toast confirmation message
 */
 
 const Playground = () => {
-  const [version, setVersion] = useState(0);
-  const switchChange = (val: number) => setVersion(val);
+  const [mode, setMode] = useState<"dark" | "bright">("dark");
+  const switchChange = (val: number) => setMode(val === 0 ? "dark" : "bright");
 
   return (
     <FullScreen centerContent info={info} stretch>
-      <Switch onChange={switchChange} />
+      <Switch options={["Dark", "Bright"]} onChange={switchChange} />
 
       <div className="canvasWrap">
         <Canvas camera={{ position: [0, 0, 1] }}>
@@ -39,7 +39,7 @@ const Playground = () => {
       </div>
 
       <div className="contentWrap">
-        <Terminal>
+        <Terminal mode={mode}>
           <TerminalLine>
             <span className="red">npm </span>
             <span>install </span>

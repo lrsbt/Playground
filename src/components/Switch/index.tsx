@@ -7,9 +7,14 @@ interface Location {
   offsetX: number;
 }
 
-const Switch = ({ onChange }: { onChange: (val: number) => void }) => {
+const Switch = ({
+  onChange,
+  options = ["Version1", "Version2"]
+}: {
+  onChange: (val: number) => void;
+  options: string[];
+}) => {
   const refs = useRef<any[]>([]);
-  const options = useRef(["Version1", "Version2"]).current;
   const [locations, setLocations] = useState<Location[] | null>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
