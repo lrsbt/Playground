@@ -8,6 +8,7 @@ import { Stars } from "./Stars";
 
 import info from "./info.md";
 import "./styles.css";
+import { Toast } from "./Toast";
 
 /*
   [x] Code a switch
@@ -20,16 +21,22 @@ import "./styles.css";
   [x] Overflow handing and scroll to bottom
   [x] ▋▋▋▋▋▋▋ 44% Loading Component
   [x] DarkMode and light mode using the switch
-  [ ] ability to copy all text + icon to copy
+  [x] ability to copy all text + icon to copy
   [ ] toast confirmation message
 */
 
 const Playground = () => {
+  const [toast, setToast] = useState<null | string>(null);
   const [mode, setMode] = useState<"dark" | "bright">("dark");
   const switchChange = (val: number) => setMode(val === 0 ? "dark" : "bright");
 
+  const afterCopy = () => {
+    setToast("Text Copied.");
+  };
+
   return (
     <FullScreen centerContent info={info} stretch>
+      <Toast text={toast} />
       <Switch options={["Dark", "Bright"]} onChange={switchChange} />
 
       <div className="canvasWrap">
@@ -39,7 +46,7 @@ const Playground = () => {
       </div>
 
       <div className="contentWrap">
-        <Terminal mode={mode}>
+        <Terminal mode={mode} afterCopy={afterCopy}>
           <TerminalLine>
             <span className="red">npm </span>
             <span>install </span>

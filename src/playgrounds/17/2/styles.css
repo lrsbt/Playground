@@ -156,3 +156,15 @@
     opacity: 0;
   }
 }
+
+.toast {
+  position: fixed;
+  background: #ffffff;
+  z-index: 1000;
+  bottom: 15px;
+  right: 15px;
+  border-radius: 5px;
+  padding: 14px 20px;
+  border: 1px solid #909090;
+  width: 250px;
+}

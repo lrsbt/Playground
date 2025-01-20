@@ -13,11 +13,12 @@ interface Props extends React.ComponentProps<"div"> {
   mode?: "bright" | "dark";
   title?: string;
   children: React.ReactNode;
+  afterCopy: () => void;
 }
 
 type ChildProps = ReactElement<PropsWithChildren<TerminalLineProps>>;
 
-const Terminal = ({ title, mode, className, children }: Props) => {
+const Terminal = ({ title, mode, className, afterCopy, children }: Props) => {
   const terminalRef = useRef<HTMLDivElement>(null);
   const [currentLine, setCurrentLine] = useState(0);
 
@@ -29,6 +30,8 @@ const Terminal = ({ title, mode, className, children }: Props) => {
   const copyToClipboard = () => {
     if (terminalRef.current)
       navigator.clipboard.writeText(terminalRef.current.innerText);
+
+    if (typeof afterCopy === "function") afterCopy();
   };
 
   const classes = classNames("terminal", className, {
