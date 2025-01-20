@@ -8,9 +8,6 @@
   --border-radius: 10px;
   --border-width: 1px;
   /* Colour */
-  /* --colour-darker: #282a37;
-  --colour-dark: #3034444f;
-  --colour-text: #c3e88d; */
   --colour-darker: #1c1e2c;
   --colour-dark: #272b3b;
   --colour-text: #949dcb;
@@ -73,17 +70,18 @@
   overflow-y: auto;
 }
 
-.terminal-line::before {
+.terminal-line--active::before,
+.terminal-line--done::before {
   content: "➜";
   margin-right: 7px;
 }
 
-.cursor {
+.terminal-line--active::after {
   content: "_";
+  /* color: #ffcc02; */
   color: var(--colour-text);
   position: relative;
-  top: 1x;
-  animation: blink 1s infinite;
+  animation: blink 1.2s infinite;
 }
 
 @keyframes blink {

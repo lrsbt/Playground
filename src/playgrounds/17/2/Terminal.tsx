@@ -20,6 +20,7 @@ const Terminal = ({ title, className, children }: Props) => {
         {React.Children.map(children, (child, i) => {
           return React.cloneElement(child, {
             isActive: currentLine === i,
+            isDone: currentLine > i,
             onFinish: () => {
               setCurrentLine((l) => (l += 1));
             }
@@ -37,45 +38,43 @@ interface TerminalLineProps {
   prompt?: string;
   //
   isActive?: boolean;
+  isDone?: boolean;
   onFinish?: () => void;
   preDelay?: number;
+  postDelay?: number;
   typeDelay?: number;
 }
 
 const TerminalLine = ({
   isActive,
+  isDone,
   children,
-  onFinish = () => {},
-  preDelay = 600,
-  typeDelay = 30
+  preDelay = 0,
+  postDelay = 2000,
+  typeDelay = 25,
+  onFinish = () => {}
 }: TerminalLineProps) => {
   const [text, setText] = useState("");
-
-  useEffect(() => {
-    if (isActive) run();
-  }, [isActive]);
 
   const wait = (time: number) =>
     new Promise((resolve) => setTimeout(resolve, time));
 
   const run = async () => {
+    await wait(preDelay);
+
     if (typeof children === "string") {
-      await typeString(children, preDelay, typeDelay, onFinish);
+      await typeString(children, typeDelay);
     } else if (typeof children === "object") {
       await typeChildren(children);
-    } else {
-      onFinish();
     }
+
+    await wait(postDelay);
+    onFinish();
   };
 
   // Writes out a "string" of text
 
-  const typeString = async (
-    text: string,
-    preDelay: number,
-    typeDelay: number,
-    callback: () => void
-  ) => {
+  const typeString = async (text: string, typeDelay: number) => {
     const runIt = async () => {
       for (const char of text) {
         setText((t) => `${t}${char}`);
@@ -83,9 +82,7 @@ const TerminalLine = ({
       }
     };
 
-    await wait(preDelay);
     await runIt();
-    callback();
   };
 
   // Handles <span>myText</span>
@@ -95,17 +92,28 @@ const TerminalLine = ({
       for (let i = 0; i < children.length; i++) {
         const { type, props } = children[i];
         setText((t) => `${t}<${type} class="${props.className}">`);
-        await typeString(props.children, 0, typeDelay, () => {});
+        await typeString(props.children, props.typeDelay || typeDelay);
         setText((t) => `${t}</${type}>`);
       }
     };
 
-    await wait(preDelay);
     await runIt();
-    onFinish();
   };
 
-  return <div className="terminal-line">{ReactHtmlParser(text)}</div>;
+  useEffect(() => {
+    if (isActive) run();
+  }, [isActive]);
+
+  return (
+    <div
+      className={classNames("terminal-line", {
+        "terminal-line--active": isActive && text,
+        "terminal-line--done": isDone
+      })}
+    >
+      {ReactHtmlParser(text)}
+    </div>
+  );
 };
 
 export { Terminal, TerminalLine };

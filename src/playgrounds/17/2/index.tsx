@@ -28,17 +28,17 @@ const Playground = () => {
           <TerminalLine type="input">
             <span className="red">npm </span>
             <span>install </span>
-            <span>react</span>
+            <span>react 🥺</span>
           </TerminalLine>
           {/* <TerminalLine type="progress" data-ty-progressChar="·"></TerminalLine>  */}
-          <TerminalLine type="input" preDelay={2000}>
+          <TerminalLine type="input">
             Are you sure you want to uninstall 'react'?
           </TerminalLine>
           <TerminalLine type="input" prompt="(y/n)">
             yyyyyy1234
           </TerminalLine>
           <TerminalLine type="input" prompt="(y/n)">
-            oh yes it's typing
+            oh yes it's typing 🌴🌴🚤🐑
           </TerminalLine>
         </Terminal>
       </div>
