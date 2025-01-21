@@ -1,0 +1,71 @@
+:root {
+  --border-radius: 6px;
+  --colour-primary: #ffae32;
+}
+
+.curve {
+  display: grid;
+  grid-template: auto 34px / 125px 34px;
+  font-family: monospace;
+  gap: 6px;
+  font-family: monospace;
+  gap: 6px;
+}
+
+.curve-canvas {
+  border-radius: var(--border-radius);
+  background: #ffffff0f;
+  border: 1px solid #ffffff0d;
+}
+
+.curve-value {
+  border-radius: var(--border-radius);
+  background: #ffffff0f;
+  border: 1px solid #ffffff0d;
+  color: var(--colour-primary);
+  padding: 6px;
+  text-align: right;
+  cursor: pointer;
+  user-select: none;
+}
+
+.curve-value:focus {
+  outline: none;
+}
+
+.curve-slider {
+  border-radius: var(--border-radius);
+  background: #ffffff0f;
+  border: 1px solid #ffffff0d;
+}
+
+.slider {
+  padding: 0px;
+}
+
+.slider-track {
+  background-color: #ffffff14;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+
+.slider-handle {
+  width: 100%;
+  height: 20px;
+  border-radius: 4px;
+  background-color: var(--colour-primary);
+  box-shadow: 0px 4px 5px 0px #0000003d;
+  position: relative;
+}
+
+.slider-handle:before {
+  content: "---------";
+  line-height: 4px;
+  width: 80%;
+  position: absolute;
+  top: 17%;
+  left: 13%;
+  color: #ffe7c5;
+  letter-spacing: -1px;
+}
