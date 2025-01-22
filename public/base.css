@@ -212,4 +212,23 @@ body {
   color: #1f202b;
 }
 
-/* /switch */
+/* Toast */
+
+.toast-container {
+  display: flex;
+  flex-direction: row-reverse;
+  position: fixed;
+  z-index: 1000;
+  bottom: 15px;
+  width: 250px;
+  flex-direction: column;
+  right: 15px;
+}
+
+.toast {
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 14px 20px;
+  border: 1px solid #909090;
+  margin-bottom: 6px;
+}

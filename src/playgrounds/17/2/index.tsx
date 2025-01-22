@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 
 import { Stars } from "./Stars";
-import { Toast } from "./Toast";
 import { FullScreen } from "@app/components";
 import { Switch } from "@app/components/Switch";
 import { Terminal, TerminalLine } from "./Terminal";
+import { showToast } from "@app/utils/emitters/toastEmitter";
 
 import info from "./info.md";
 import "./styles.css";
@@ -22,18 +22,19 @@ import "./styles.css";
   [x] ▋▋▋▋▋▋▋ 44% Loading Component
   [x] DarkMode and light mode using the switch
   [x] ability to copy all text + icon to copy
-  [x] toast confirmation message
+  [x] toast confirmation message fake
+  [ ] toast implementation message real
   [ ] possibilty to delay the start (for scrolled in view func)
 */
 
 const Playground = () => {
-  const [toast, setToast] = useState<null | string>(null);
+  // const [toast, setToast] = useState<null | string>(null);
+  // const { toasts, setToasts } = useToast();
   const [mode, setMode] = useState<"dark" | "bright">("dark");
   const switchChange = (val: number) => setMode(val === 0 ? "dark" : "bright");
 
   return (
     <FullScreen centerContent info={info} stretch>
-      <Toast text={toast} />
       <Switch options={["Dark", "Bright"]} onChange={switchChange} />
 
       <div className="canvasWrap">
@@ -43,7 +44,7 @@ const Playground = () => {
       </div>
 
       <div className="contentWrap">
-        <Terminal mode={mode} afterCopy={() => setToast("Text Copied.")}>
+        <Terminal mode={mode} afterCopy={() => showToast("Text Copied.")}>
           <TerminalLine>
             <span className="red">npm </span>
             <span>install </span>

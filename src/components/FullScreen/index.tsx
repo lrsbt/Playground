@@ -4,8 +4,10 @@ import Markdown from "react-markdown";
 import { animated, useSpring } from "@react-spring/web";
 
 import { padInt } from "@app/utils";
-import { Next, Sidebar } from "@app/components/Icons";
 import { PLAYGROUNDS } from "@app/App";
+import { Toast } from "@app/components";
+import { Next, Sidebar } from "@app/components/Icons";
+import { useToast } from "@app/utils/emitters/toastEmitter";
 
 interface Props extends React.ComponentProps<"div"> {
   centerContent?: boolean;
@@ -20,10 +22,12 @@ const FullScreen = ({
   stretch,
   className
 }: Props) => {
+  const { toasts } = useToast();
+  const [showSidebar, setShowSidebar] = useState(false);
+
   const id = useRef(window.location.pathname.replace(/\D/g, "")).current;
   const prevId = Number(id) > 1 && Number(id) - 1;
   const nextId = Number(id) < PLAYGROUNDS.length && Number(id) + 1;
-  const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = (e: any) => {
     e.preventDefault();
@@ -36,6 +40,7 @@ const FullScreen = ({
 
   return (
     <div className="page">
+      <Toast toasts={toasts} />
       <animated.div className="sidebar" style={sidebarStyles}>
         <header className="sidebar-header">
           <div className="sidebar-name">Playground {padInt(Number(id))}</div>

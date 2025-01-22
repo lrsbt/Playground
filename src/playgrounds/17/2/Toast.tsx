@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 
-const HIDE_TIME = 3000;
+const HIDE_TIME = 5000;
 const LOCATIONS = {
   visible: 0,
   hidden: 100
