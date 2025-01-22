@@ -1,17 +1,19 @@
 import mitt from "mitt";
 import { useEffect, useRef, useState } from "react";
 
-const EVENTS = { SHOW: "SHOW", HIDE: "HIDE" } as const;
-const TIMEOUT = 2000;
-const emitter = mitt();
-
-export const showToast = (text: string) => emitter.emit(EVENTS.SHOW, text);
-export const hideToast = () => emitter.emit(EVENTS.HIDE);
-
 export interface Toast {
   id: number;
   text: string;
+  done: boolean;
 }
+
+const EVENTS = { SHOW: "SHOW", HIDE: "HIDE" } as const;
+const TIMEOUT = 4000;
+const emitter = mitt();
+
+export const showToast = (text: Toast["text"]) =>
+  emitter.emit(EVENTS.SHOW, text);
+export const hideToast = (id: Toast["id"]) => emitter.emit(EVENTS.HIDE, id);
 
 export const useToast = () => {
   const index = useRef(0);
@@ -20,16 +22,27 @@ export const useToast = () => {
   const show = (text: string) => {
     setToasts((t) => {
       const id = index.current++;
+      const newState = [...t, { id, text, done: false }];
       setTimeout(remove, TIMEOUT, id);
-      return [...t, { id, text }];
+      return newState;
     });
   };
 
   const remove = (id: Toast["id"]) => {
-    setToasts((t) => t.filter((tt) => tt.id !== id));
+    setToasts((state) =>
+      state.map((toast) => {
+        if (toast.id === id) {
+          return { ...toast, done: true };
+        } else {
+          return toast;
+        }
+      })
+    );
   };
 
-  const hide = () => setToasts([]); // todo
+  const hide = (id: Toast["id"]) => {
+    remove(id);
+  };
 
   useEffect(() => {
     emitter.on(EVENTS.SHOW, show as any);

@@ -40,7 +40,6 @@ const FullScreen = ({
 
   return (
     <div className="page">
-      <Toast toasts={toasts} />
       <animated.div className="sidebar" style={sidebarStyles}>
         <header className="sidebar-header">
           <div className="sidebar-name">Playground {padInt(Number(id))}</div>
@@ -79,6 +78,7 @@ const FullScreen = ({
           {children}
         </div>
       </div>
+      <Toast toasts={toasts} />
     </div>
   );
 };

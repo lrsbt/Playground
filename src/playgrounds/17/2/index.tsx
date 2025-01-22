@@ -23,13 +23,11 @@ import "./styles.css";
   [x] DarkMode and light mode using the switch
   [x] ability to copy all text + icon to copy
   [x] toast confirmation message fake
-  [ ] toast implementation message real
+  [x] toast implementation message real
   [ ] possibilty to delay the start (for scrolled in view func)
 */
 
 const Playground = () => {
-  // const [toast, setToast] = useState<null | string>(null);
-  // const { toasts, setToasts } = useToast();
   const [mode, setMode] = useState<"dark" | "bright">("dark");
   const switchChange = (val: number) => setMode(val === 0 ? "dark" : "bright");
 

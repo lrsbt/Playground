@@ -216,7 +216,7 @@ body {
 
 .toast-container {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   position: fixed;
   z-index: 1000;
   bottom: 15px;
@@ -231,4 +231,22 @@ body {
   padding: 14px 20px;
   border: 1px solid #909090;
   margin-bottom: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.toast-hide {
+  display: none;
+  position: absolute;
+  right: 10px;
+  top: 12px;
+  cursor: pointer;
+}
+
+.toast-hide svg {
+  opacity: 0.3;
+}
+
+.toast:hover .toast-hide {
+  display: block;
 }
