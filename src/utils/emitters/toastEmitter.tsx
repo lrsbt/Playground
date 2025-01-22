@@ -46,11 +46,11 @@ export const useToast = () => {
 
   useEffect(() => {
     emitter.on(EVENTS.SHOW, show as any);
-    emitter.on(EVENTS.HIDE, hide);
+    emitter.on(EVENTS.HIDE, hide as any);
 
     return () => {
       emitter.off(EVENTS.SHOW, show as any);
-      emitter.off(EVENTS.HIDE, hide);
+      emitter.off(EVENTS.HIDE, hide as any);
     };
   }, []);
 

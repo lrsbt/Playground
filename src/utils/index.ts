@@ -3,4 +3,3 @@ export * from "./getDistance";
 export * from "./getRandomNumber";
 export * from "./lerp";
 export * from "./padInt";
-export * from "./useDelayedUnmount";

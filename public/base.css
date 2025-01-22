@@ -250,3 +250,14 @@ body {
 .toast:hover .toast-hide {
   display: block;
 }
+
+@media (max-width: 500px) {
+  .toast-container {
+    position: fixed;
+    bottom: auto;
+    top: 0px;
+    width: 100%;
+    left: 0;
+    padding: 15px;
+  }
+}

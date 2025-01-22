@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { animated, useSpring, useSpringRef } from "@react-spring/web";
 
 import { X } from "@app/components/Icons";
-import { useDelayedUnmout } from "@app/utils";
+import { useIsMobile } from "@app/utils/hooks";
+import { useDelayedUnmout } from "@app/utils/hooks";
 import { hideToast } from "@app/utils/emitters/toastEmitter";
 import { Toast as ToastType } from "@app/utils/emitters/toastEmitter";
 
 const ToastBox = ({ id, text, done }: ToastType) => {
   const api = useSpringRef();
+  const isMobile = useIsMobile(567);
 
   const style = useSpring({
     ref: api,
-    translateY: 50,
+    translateY: isMobile ? -50 : 50,
     translateX: 0
   });
 
