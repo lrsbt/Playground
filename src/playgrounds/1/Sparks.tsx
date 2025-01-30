@@ -3,7 +3,7 @@ import { animated, useSpring } from "@react-spring/web";
 
 const SPARKS_AMOUNT = 10;
 const SPARK_SIZE = 4; // px. Sync in css
-const SPARK_RANGE_Y = 170;
+const SPARK_RANGE_Y = 150;
 const SPARK_RANGE_X = 50;
 const BAR_HEIGHT = 50;
 
@@ -33,13 +33,13 @@ const Spark = ({ offsetX }: { offsetX: number }) => {
         translateX: offsetX,
         translateY: translateY_from,
         opacity: 1,
-        scale: 1
+        scale: Math.random() * 1 + 0.5
       },
       to: {
         translateX: translateX_to,
         translateY: translateY_to,
         opacity: 0,
-        scale: Math.random() + 0.25
+        scale: 0.5
       },
       delay: 125,
       config: {
