@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSpring, animated, useSpringRef } from "@react-spring/web";
 import { FullScreen } from "@app/components";
+import { Sparks } from "./Sparks";
 
 import "./styles.css";
 import info from "./info.md";
@@ -9,11 +10,9 @@ const Playground = () => {
   const apiFill = useSpringRef();
   const apiWob = useSpringRef();
   const config = { friction: 20 };
-  const fillStyle = useSpring({
-    ref: apiFill,
-    width: 0,
-    config
-  });
+  const [value, setValue] = useState(0);
+
+  const fillStyle = useSpring({ ref: apiFill, width: 0, config });
 
   const wobbleStyle = useSpring({
     ref: apiWob,
@@ -24,11 +23,9 @@ const Playground = () => {
     }
   });
 
-  const handleClick = (e: any) => {
-    const rect = e.target.getBoundingClientRect();
-    const offsetX = e.clientX - rect.left;
+  const animateTo = (offsetX: number) => {
     const difference =
-      (offsetX - fillStyle.width.animation.fromValues?.[0]) / 50;
+      (offsetX - fillStyle.width.animation.fromValues?.[0] || 100) / 50;
     apiFill.start({ width: offsetX, config });
     apiWob.start({
       from: { translateY: -difference, scale: 1 + difference / 100 },
@@ -37,10 +34,18 @@ const Playground = () => {
         friction: 8
       }
     });
+    setValue(offsetX);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    const offsetX = e.clientX - rect.left;
+    animateTo(offsetX);
   };
 
   useEffect(() => {
-    apiFill.start({ width: Math.random() * 100 });
+    animateTo(Math.random() * 200);
   }, []);
 
   return (
@@ -50,6 +55,7 @@ const Playground = () => {
         <animated.div className="content">
           {fillStyle.width.to((x) => x.toFixed(0))}
         </animated.div>
+        <Sparks offsetX={value} />
       </animated.div>
     </FullScreen>
   );
