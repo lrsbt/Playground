@@ -5,9 +5,8 @@
 
 .curve {
   display: grid;
-  grid-template: auto 34px / 125px 34px;
-  font-family: monospace;
-  gap: 6px;
+  /* grid-template: auto 34px / 125px 34px; */
+  grid-template: auto 34px / 34px 125px 34px;
   font-family: monospace;
   gap: 6px;
 }
@@ -27,6 +26,7 @@
   text-align: right;
   cursor: pointer;
   user-select: none;
+  grid-column-start: 2;
 }
 
 .curve-value:focus {

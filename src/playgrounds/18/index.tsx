@@ -15,9 +15,9 @@ interface CurveProps extends React.ComponentProps<"canvas"> {
 
 const Playground = () => {
   const valueInputRef = useRef<HTMLInputElement>(null);
-  const sliderHandleRef = useRef<HTMLDivElement>(null);
   const value = useRef(0);
   const offsetValue = useRef(0);
+  const threshValue = useRef(0);
 
   const updateValue = () => {
     if (valueInputRef.current)
@@ -47,6 +47,7 @@ const Playground = () => {
     const triggerDraw = (dt: number) => {
       offset.current += speed;
       drawCurve(amplitude, frequency, offset.current);
+      drawThreshold(threshValue.current);
       updateValue();
     };
 
@@ -85,6 +86,15 @@ const Playground = () => {
       context.current.stroke();
     };
 
+    const drawThreshold = (val: number) => {
+      context.current.beginPath();
+      context.current.strokeStyle = "#ffffff14";
+      context.current.lineWidth = 2;
+      context.current.moveTo(0, val + 60);
+      context.current.lineTo(canvasRef.current?.width, val + 60);
+      context.current.stroke();
+    };
+
     useAnimationFrame(triggerDraw);
 
     useEffect(() => {
@@ -94,8 +104,15 @@ const Playground = () => {
     return <canvas ref={canvasRef} className={className} />;
   };
 
-  const Slider = () => {
-    const startY = useRef(50);
+  const SliderOffset = ({
+    start = 0,
+    onPointerMoveCb
+  }: {
+    start: number;
+    onPointerMoveCb: (val: number) => void;
+  }) => {
+    const sliderHandleRef = useRef<HTMLDivElement>(null);
+    const startY = useRef(start);
     const currentY = useRef(0);
     const lastRot = useRef(startY.current);
 
@@ -119,7 +136,7 @@ const Playground = () => {
       if (sliderHandleRef.current) {
         sliderHandleRef.current.style.cssText = `transform: translateY(${currentY.current}px)`;
       }
-      offsetValue.current = currentY.current - 50;
+      onPointerMoveCb(currentY.current);
     };
 
     const OnPointerUp = (event: any) => {
@@ -149,6 +166,12 @@ const Playground = () => {
   return (
     <FullScreen centerContent info={info}>
       <div className="curve">
+        <SliderOffset
+          start={50}
+          onPointerMoveCb={(v) => {
+            threshValue.current = v - 50;
+          }}
+        />
         <Curve
           width={125}
           height={125}
@@ -157,7 +180,12 @@ const Playground = () => {
           speed={10}
           frequency={0.01}
         />
-        <Slider />
+        <SliderOffset
+          start={50}
+          onPointerMoveCb={(v) => {
+            offsetValue.current = v - 50;
+          }}
+        />
         <input type="text" ref={valueInputRef} className="curve-value" />
       </div>
     </FullScreen>
