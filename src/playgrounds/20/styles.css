@@ -13,14 +13,17 @@
 }
 
 :root {
+  --space-ssm: calc(var(--space-md) / 3);
+  --space-sm: calc(var(--space-md) / 2);
   --space-md: 5px;
   --space-lg: calc(var(--space-md) * 2);
   --space-xl: calc(var(--space-md) * 3);
   --space-xxl: calc(var(--space-md) * 4);
+  --border-radius: 8px;
 }
 
 :root {
-  --border-radius: 8px;
+  --animation-timing: 0.25s;
 }
 
 .container {
@@ -35,11 +38,48 @@
   width: 100%;
   background-color: var(--color-grey800);
   height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.player-video {
+  flex: 1;
+}
+
+.player-controls {
+}
+
+.player-controls:hover .player-settings {
+  transform: translateY(0%);
 }
 
 .player-settings {
   background-color: rgb(from var(--color-grey900) r g b / 0.6);
+  transform: translateY(100%);
+  transition: transform var(--animation-timing);
+  height: 38px;
+  display: flex;
+  align-items: center;
+  padding: var(--space-lg);
 }
+
+.player-settings svg {
+  fill: var(--color-grey200);
+}
+
 .player-progress {
   background-color: var(--color-grey900);
+  position: relative;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  cursor: pointer;
+  padding: var(--space-lg);
+}
+
+.progress-chapter {
+  height: 6px;
+  background: var(--color-grey700);
+  border-radius: 6px;
 }

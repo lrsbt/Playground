@@ -1,4 +1,5 @@
 export * from "./ChevronRight";
+export * from "./Play";
 export * from "./Next";
 export * from "./Sidebar";
 export * from "./CopyThis";
