@@ -1,0 +1,45 @@
+:root {
+  --color-primary: #7c69ff;
+  --color-secondary: #2fe2b8;
+  --color-grey100: #fefefe;
+  --color-grey200: #e8e8e8;
+  --color-grey300: #c9c9c9;
+  --color-grey400: #9b9b9b;
+  --color-grey500: #626262;
+  --color-grey600: #444444;
+  --color-grey700: #313131;
+  --color-grey800: #202020;
+  --color-grey900: #0b0b0b;
+}
+
+:root {
+  --space-md: 5px;
+  --space-lg: calc(var(--space-md) * 2);
+  --space-xl: calc(var(--space-md) * 3);
+  --space-xxl: calc(var(--space-md) * 4);
+}
+
+:root {
+  --border-radius: 8px;
+}
+
+.container {
+  width: 500px;
+  aspect-ratio: 16 / 9;
+  color: var(--color-grey100);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.player {
+  width: 100%;
+  background-color: var(--color-grey800);
+  height: 100%;
+}
+
+.player-settings {
+  background-color: rgb(from var(--color-grey900) r g b / 0.6);
+}
+.player-progress {
+  background-color: var(--color-grey900);
+}
