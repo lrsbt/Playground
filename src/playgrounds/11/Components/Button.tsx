@@ -14,8 +14,6 @@ const Button = ({ label, isConnected }: Props) => {
     setIsActive(!isActive);
   };
 
-  console.log(isActive);
-
   return (
     <div className="button-container">
       <div

@@ -10,7 +10,7 @@ const Playground = () => {
   const apiFill = useSpringRef();
   const apiWob = useSpringRef();
   const config = { friction: 20 };
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0); // Used as a trigger for the sparks
 
   const fillStyle = useSpring({ ref: apiFill, width: 0, config });
 
@@ -24,14 +24,18 @@ const Playground = () => {
   });
 
   const animateTo = (offsetX: number) => {
-    const difference =
-      (offsetX - fillStyle.width.animation.fromValues?.[0] || 100) / 50;
+    const movedBy = Math.abs(offsetX - value) / 25;
     apiFill.start({ width: offsetX, config });
     apiWob.start({
-      from: { translateY: -difference, scale: 1 + difference / 100 },
-      to: { translateY: 0, scale: 1 },
+      from: {
+        translateY: -movedBy,
+        scale: 1 + movedBy / 100,
+        translateX: -movedBy
+      },
+      to: { translateY: Math.random(), scale: 1, translateX: Math.random() },
       config: {
-        friction: 8
+        friction: 8,
+        tension: 350
       }
     });
     setValue(offsetX);
@@ -40,6 +44,7 @@ const Playground = () => {
   const handleClick = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
     const rect = target.getBoundingClientRect();
+    // Bug innerwidth is 196px not 200px;
     const offsetX = e.clientX - rect.left;
     animateTo(offsetX);
   };
