@@ -1,6 +1,16 @@
 export interface Chapter {
   name: string;
-  length: number; // seconds
-  elapsed: number; // seconds
-  width: number; // % width
+  duration: number;
+  percent: number;
+  beginsAt: number;
+  endsAt: number;
+}
+
+export interface PlayerData {
+  duration: number;
+  currentTime: number;
+  currentChapterIndex: number;
+  currentChapterPercent: number;
+  chapters: Chapter[];
+  initialized: boolean;
 }

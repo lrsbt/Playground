@@ -67,24 +67,30 @@
 }
 
 .player-settings {
-  background-color: rgb(from var(--color-grey900) r g b / 0.6);
-  transform: translateY(100%);
+  /* background-color: rgb(from var(--color-grey900) r g b / 0.6); */
+  background: linear-gradient(
+    to top,
+    var(--color-grey900),
+    rgb(from var(--color-grey900) r g b / 0.2)
+  );
+  /* transform: translateY(100%); */
   transition: transform var(--animation-timing);
   height: 38px;
   display: flex;
   align-items: center;
-  padding: var(--space-lg);
+  padding: var(--space-xl);
   position: absolute;
   bottom: 28px;
   left: 0;
   right: 0;
+  gap: var(--space-lg);
 }
 
 .player-settings svg {
   fill: var(--color-grey200);
 }
 
-.player-progress {
+.player-chapters {
   background-color: var(--color-grey900);
   position: relative;
   height: 28px;
@@ -95,19 +101,33 @@
   padding: var(--space-lg);
 }
 
-.progress-chapter {
+.chapter {
   height: 6px;
   background: var(--color-grey700);
   border-radius: 6px;
   overflow: hidden;
 }
 
-.progress-chapter--done {
+.chapter--done {
   background-color: var(--color-secondary);
 }
 
-.progress-chapter-current {
-  background-color: var(--color-primary);
+.chapter--current {
+  background: var(--color-grey700);
+}
+
+.chapter-progress {
   height: 100%;
   border-radius: var(--border-radius);
+  background-color: var(--color-primary);
+}
+
+.player-currentTime-digit {
+  width: 0.58em;
+  display: inline-block;
+  text-align: center;
+}
+
+.player-totalTime {
+  letter-spacing: 0.08em;
 }

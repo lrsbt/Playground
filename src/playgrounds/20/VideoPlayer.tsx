@@ -1,103 +1,155 @@
+import classNames from "classNames";
 import React, { useEffect, useRef, useState } from "react";
 import { Play } from "@app/components/Icons";
 
 import { CHAPTERS } from "./data";
-import { Chapter } from "./types";
-import classNames from "classNames";
+import { PlayerData } from "./types";
 
 const VideoPlayer = () => {
   const playerRef = useRef<HTMLDivElement>(null);
-  const totalTime = useRef<number>(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const [chapters, setChapters] = useState<Chapter[] | null>(null);
+  const [isInitialized, setIsinitialized] = useState(false);
 
-  const getTotalTime = (stopIndex = 1000) => {
-    const add = (acc, a, i) => {
-      if (i > stopIndex) return acc;
-      return acc + a.length;
+  const playerData = useRef<PlayerData>({
+    duration: 0,
+    currentTime: 0,
+    currentChapterIndex: 0,
+    currentChapterPercent: 0,
+    chapters: [],
+    initialized: false
+  });
+
+  // Get elapsed time in total or for after each {index} chapter
+
+  const getEndsAt = (index?: number) => {
+    const add = (acc, { duration }, i) => {
+      if (typeof index === "number" && i > index) return acc;
+      return acc + duration;
     };
     return CHAPTERS.reduce(add, 0);
   };
 
-  const getChapterWidths = async () => {
-    totalTime.current = getTotalTime();
-    const chapterWidths = CHAPTERS.map((c, i) => ({
-      ...c,
-      width: (100 * c["length"]) / totalTime.current,
-      elapsed: getTotalTime(i)
-    }));
-    setChapters(chapterWidths);
+  // Gets current chapter for a time in seconds
+
+  const getCurrentChapterIndex = (time: number) => {
+    const traverse = (acc, a, i) => {
+      if (time > a.beginsAt && time < a.endsAt) return i;
+      return acc;
+    };
+    return playerData.current.chapters.reduce(traverse, 0);
   };
 
-  useEffect(() => {
-    if (playerRef.current) getChapterWidths();
-  }, [playerRef]);
+  // Initialise total duration and chapters
 
-  const advance = () => {
+  const initPlayerData = () => {
+    playerData.current.duration = getEndsAt();
+    const chapters = CHAPTERS.map((c, i) => ({
+      ...c,
+      beginsAt: getEndsAt(i - 1),
+      endsAt: getEndsAt(i),
+      percent: (100 * c.duration) / playerData.current.duration
+    }));
+    playerData.current.chapters = chapters;
+    setIsinitialized(true);
+  };
+
+  const formatTime = (s) => {
+    return new Date(s * 1000).toISOString().substr(11, 8);
+  };
+
+  // Update the player on each tick
+
+  const updatePlayerData = (time) => {
+    // work out currentChapterIndex
+    const currentChapterIndex = getCurrentChapterIndex(time);
+    playerData.current.currentChapterIndex = currentChapterIndex;
+
+    // work out current chapter progress in %
+    const currentChapter = playerData.current.chapters[currentChapterIndex];
+    playerData.current.currentChapterPercent =
+      100 - (100 * (currentChapter.endsAt - time)) / currentChapter.duration;
+  };
+
+  // Faking time passing
+
+  const advanceTime = () => {
     setCurrentTime((c) => {
-      const isFinished = c > totalTime.current;
-      if (!isFinished) setTimeout(advance, 10);
-      return (c += 1);
+      const newTime = (c += 1);
+      updatePlayerData(newTime);
+      return newTime;
     });
   };
 
-  const handleSetTime = (e: React.MouseEvent<HTMLElement>) => {
-    const target = e.target as HTMLDivElement;
-    const myTarget = target
-      .closest(".player-progress")
-      ?.getBoundingClientRect();
+  // Toggle Playing
 
-    console.log({ target: e.target.dataset.index });
-
-    if (myTarget) {
-      const x =
-        (totalTime.current * (e.pageX - myTarget.left)) / myTarget.width;
-      setCurrentTime(x);
-    }
-  };
-
-  const togglePlaying = () => {
-    setIsPlaying(!isPlaying);
+  const toggleIsPlaying = () => {
+    setIsPlaying((val) => !val);
   };
 
   useEffect(() => {
-    if (isPlaying) advance();
-  }, [isPlaying]);
+    initPlayerData();
+  }, [playerData]);
+
+  useEffect(() => {
+    if (isPlaying) {
+      const intervalId = setTimeout(advanceTime, 10);
+      return () => clearTimeout(intervalId);
+    }
+  }, [isPlaying, currentTime]);
+
+  // console.log(playerData.current);
 
   return (
     <div className="player" ref={playerRef}>
       <div className="player-video"></div>
       <div className="player-controls">
         <div className="player-settings">
-          <Play onClick={togglePlaying} />
+          <Play onClick={toggleIsPlaying} />
+          <span className="player-currentTime">
+            {formatTime(currentTime)
+              .split("")
+              .map((char) => (
+                <span
+                  className={classNames({
+                    "player-currentTime-digit": !isNaN(Number(char))
+                  })}
+                >
+                  {char}
+                </span>
+              ))}
+          </span>
+          <span className="player-totalTime">
+            / {formatTime(playerData.current.duration)}
+          </span>
         </div>
-        <div className="player-progress" onClick={handleSetTime}>
-          {chapters?.map(({ length, elapsed, width }, i) => {
-            const isDone = currentTime > elapsed;
-            const isCurrent =
-              currentTime < elapsed && currentTime > chapters?.[i - 1]?.elapsed;
-            const currentPercentage =
-              isCurrent && 100 - (100 * (elapsed - currentTime)) / length;
+        <div className="player-chapters" onClick={() => {}}>
+          {isInitialized &&
+            playerData.current.chapters.map(({ percent }, i) => {
+              const isDone = i < playerData.current.currentChapterIndex;
+              const isCurrent = i === playerData.current.currentChapterIndex;
 
-            return (
-              <div
-                key={i}
-                data-index={i}
-                className={classNames("progress-chapter", {
-                  "progress-chapter--done": isDone
-                })}
-                style={{ width: `${width}%` }}
-              >
-                {isCurrent && (
-                  <div
-                    className="progress-chapter-current"
-                    style={{ width: `${currentPercentage}%` }}
-                  />
-                )}
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={i}
+                  data-index={i}
+                  style={{ width: `${percent}%` }}
+                  className={classNames("chapter", {
+                    "chapter--done": isDone,
+                    "chapter--current": isCurrent
+                  })}
+                >
+                  {isCurrent && (
+                    <div
+                      className="chapter-progress"
+                      style={{
+                        width: `${playerData.current.currentChapterPercent}%`
+                      }}
+                    />
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
     </div>
