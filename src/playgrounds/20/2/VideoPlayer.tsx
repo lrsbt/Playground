@@ -1,7 +1,10 @@
 import classNames from "classNames";
 import React, { useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
+
 import { Paused, Play } from "@app/components/Icons";
+import { Select } from "./Select";
+import { Button } from "./Button";
 
 import { CHAPTERS } from "./data";
 import { PlayerData } from "./types";
@@ -180,29 +183,44 @@ const VideoPlayer = () => {
                   </span>
                 ))}
             </span>
-
-            <span className="player-timeSeperator">/</span>
-            <span className="player-totalTime">
+            <span className="player-timeSeperator text--lg">/</span>
+            <span className="player-totalTime text--lg">
               {formatTime(playerData.current.duration)}
             </span>
           </div>
           <div className="player-speed">
             <span
-              className="player-speed-decrease"
+              className="player-speed-decrease fillAnimation"
               onClick={decreasePlaybackSpeed}
             >
               -
             </span>
-            <span className="player-speed-current" onClick={resetPlaybackSpeed}>
-              SPEED - {playbackSpeed}x
+            <span
+              className="player-speed-current fillAnimation"
+              onClick={resetPlaybackSpeed}
+            >
+              <span className="select-text text--lg">SPEED -</span>
+              {playbackSpeed}x
             </span>
             <span
-              className="player-speed-increase"
+              className="player-speed-increase fillAnimation"
               onClick={increasePlaybackSpeed}
             >
               +
             </span>
           </div>
+          <Select
+            className="_mla"
+            selected="auto"
+            shortName="SIZE"
+            options={["auto", "1920×1080", "1280×720", "854×480", "480×270"]}
+          />
+          <Select
+            selected="SUBTITLES"
+            shortName="SUBS"
+            options={["auto", "1920×1080", "1280×720", "854×480", "480×270"]}
+          />
+          <Button text="SHORTCUTS" shortText="KEYS" onClick={() => {}} />
         </div>
         <div className="player-chapters" onClick={() => {}}>
           {isInitialized &&

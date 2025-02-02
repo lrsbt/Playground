@@ -1,6 +1,7 @@
 export * from "./ChevronRight";
 export * from "./CopyThis";
 export * from "./Next";
+export * from "./Option";
 export * from "./Paused";
 export * from "./Play";
 export * from "./Sidebar";
