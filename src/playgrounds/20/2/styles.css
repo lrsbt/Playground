@@ -67,12 +67,12 @@
 }
 
 .player-settings {
-  /* background-color: rgb(from var(--color-grey900) r g b / 0.6); */
-  background: linear-gradient(
+  background-color: rgb(from var(--color-grey900) r g b / 0.6);
+  /* background: linear-gradient(
     to top,
     var(--color-grey900),
     rgb(from var(--color-grey900) r g b / 0.2)
-  );
+  ); */
   /* transform: translateY(100%); */
   transition: transform var(--animation-timing);
   height: 32px;
@@ -152,4 +152,61 @@
 .player-timeSeperator {
   margin: 0px 2px;
   opacity: 0.3;
+}
+
+.player-speed {
+  display: flex;
+  border-radius: 5px;
+  overflow: hidden;
+  background-color: var(--color-grey800);
+  align-items: center;
+  height: 22px;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--color-grey300);
+}
+
+.player-speed-current {
+  padding: 0 8px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+}
+
+.player-speed-decrease,
+.player-speed-increase {
+  padding: 0 8px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  position: relative;
+}
+
+.player-speed-current,
+.player-speed-decrease,
+.player-speed-increase {
+  background: linear-gradient(
+      to left,
+      var(--color-grey800) 50%,
+      var(--color-grey700) 50%
+    )
+    right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
+}
+.player-speed-current:hover,
+.player-speed-decrease:hover,
+.player-speed-increase:hover {
+  background-position: left;
+}
+
+@keyframes fill {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
 }

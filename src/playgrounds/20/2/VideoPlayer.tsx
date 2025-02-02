@@ -45,6 +45,7 @@ const VideoPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isInitialized, setIsinitialized] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
 
   const playerData = useRef<PlayerData>({
     duration: 0,
@@ -89,15 +90,17 @@ const VideoPlayer = () => {
     setIsinitialized(true);
   };
 
-  const formatTime = (s) => {
-    return s < 3600
-      ? new Date(s * 1000).toISOString().substr(14, 5)
-      : new Date(s * 1000).toISOString().substr(11, 8);
+  // Format seconds into hh:mm:ss, omit hh if it's 0
+
+  const formatTime = (sec: number) => {
+    return sec < 3600
+      ? new Date(sec * 1000).toISOString().substr(14, 5)
+      : new Date(sec * 1000).toISOString().substr(11, 8);
   };
 
   // Update the player on each tick
 
-  const updatePlayerData = (time) => {
+  const updatePlayerData = (time: number) => {
     // work out currentChapterIndex
     const currentChapterIndex = getCurrentChapterIndex(time);
     playerData.current.currentChapterIndex = currentChapterIndex;
@@ -112,7 +115,7 @@ const VideoPlayer = () => {
 
   const advanceTime = () => {
     setCurrentTime((c) => {
-      const newTime = (c += 1);
+      const newTime = (c += playbackSpeed / 100);
       updatePlayerData(newTime);
       return newTime;
     });
@@ -124,9 +127,31 @@ const VideoPlayer = () => {
     setIsPlaying((val) => !val);
   };
 
+  // Playback-speed
+
+  const increasePlaybackSpeed = () => {
+    setPlaybackSpeed((v) => {
+      return v < 16 ? v * 2 : v;
+    });
+  };
+
+  const decreasePlaybackSpeed = () => {
+    setPlaybackSpeed((v) => {
+      return v > 0.25 ? v / 2 : v;
+    });
+  };
+
+  const resetPlaybackSpeed = () => {
+    setPlaybackSpeed(1);
+  };
+
+  // Initialize
+
   useEffect(() => {
     initPlayerData();
   }, [playerData]);
+
+  // Play-loop
 
   useEffect(() => {
     if (isPlaying) {
@@ -134,8 +159,6 @@ const VideoPlayer = () => {
       return () => clearTimeout(intervalId);
     }
   }, [isPlaying, currentTime]);
-
-  // console.log(playerData.current);
 
   return (
     <div className="player" ref={playerRef}>
@@ -161,6 +184,23 @@ const VideoPlayer = () => {
             <span className="player-timeSeperator">/</span>
             <span className="player-totalTime">
               {formatTime(playerData.current.duration)}
+            </span>
+          </div>
+          <div className="player-speed">
+            <span
+              className="player-speed-decrease"
+              onClick={decreasePlaybackSpeed}
+            >
+              -
+            </span>
+            <span className="player-speed-current" onClick={resetPlaybackSpeed}>
+              SPEED - {playbackSpeed}x
+            </span>
+            <span
+              className="player-speed-increase"
+              onClick={increasePlaybackSpeed}
+            >
+              +
             </span>
           </div>
         </div>
