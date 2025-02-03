@@ -43,20 +43,20 @@
 
 /* Shorter Text Option for small screens*/
 
-@container (inline-size > 550px) {
-  .text--lg {
+@container (inline-size > 600px) {
+  .display--lg {
     display: block;
   }
-  .text--sm {
+  .display--sm {
     display: none;
   }
 }
 
-@container (inline-size < 550px) {
-  .text--lg {
+@container (inline-size < 600px) {
+  .display--lg {
     display: none;
   }
-  .text--sm {
+  .display--sm {
     display: block;
   }
 }
@@ -100,7 +100,7 @@
     var(--color-grey900),
     rgb(from var(--color-grey900) r g b / 0.2)
   ); */
-  /* transform: translateY(100%); */
+  transform: translateY(100%);
   transition: transform var(--animation-timing);
   height: 40px;
   display: flex;
@@ -263,7 +263,7 @@
   position: absolute;
   left: 0;
   bottom: 24px;
-  width: min-content;
+  width: max-content;
   height: 0px;
   overflow: hidden;
   border-radius: var(--border-radius);
@@ -294,4 +294,14 @@
 
 .select-option--selected a {
   color: var(--color-primary);
+}
+
+.player-fullscreen,
+.player-volume {
+  cursor: pointer;
+}
+
+.player-fullscreen:hover,
+.player-volume:hover {
+  fill: var(--color-grey100);
 }

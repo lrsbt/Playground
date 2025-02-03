@@ -8,7 +8,6 @@ export interface Chapter {
 
 export interface PlayerData {
   duration: number;
-  currentTime: number;
   currentChapterIndex: number;
   currentChapterPercent: number;
   chapters: Chapter[];

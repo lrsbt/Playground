@@ -2,7 +2,7 @@ import classNames from "classNames";
 import React, { useEffect, useRef, useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 
-import { Paused, Play } from "@app/components/Icons";
+import { FullScreen, Paused, Play, Speaker } from "@app/components/Icons";
 import { Select } from "./Select";
 import { Button } from "./Button";
 
@@ -49,10 +49,11 @@ const VideoPlayer = () => {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isInitialized, setIsinitialized] = useState(false);
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [size, setSize] = useState("auto");
+  const [sublang, setSublang] = useState("SUBTITLES");
 
   const playerData = useRef<PlayerData>({
     duration: 0,
-    currentTime: 0,
     currentChapterIndex: 0,
     currentChapterPercent: 0,
     chapters: [],
@@ -148,6 +149,25 @@ const VideoPlayer = () => {
     setPlaybackSpeed(1);
   };
 
+  // Jumping to a time
+
+  const jumpTo = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLDivElement;
+    const totalDuration = playerData.current.duration;
+    const transportRect = target
+      .closest(".player-chapters")
+      ?.getBoundingClientRect();
+    if (!transportRect) return;
+
+    // What time is it?
+    const jumoToTime =
+      (totalDuration * (e.pageX - transportRect.left)) / transportRect.width;
+
+    // Update time
+    setCurrentTime(jumoToTime);
+    advanceTime();
+  };
+
   // Initialize
 
   useEffect(() => {
@@ -173,8 +193,9 @@ const VideoPlayer = () => {
             <span className="player-currentTime">
               {formatTime(currentTime)
                 .split("")
-                .map((char) => (
+                .map((char, i) => (
                   <span
+                    key={i}
                     className={classNames({
                       "player-currentTime-digit": !isNaN(Number(char))
                     })}
@@ -183,8 +204,8 @@ const VideoPlayer = () => {
                   </span>
                 ))}
             </span>
-            <span className="player-timeSeperator text--lg">/</span>
-            <span className="player-totalTime text--lg">
+            <span className="player-timeSeperator display--lg">/</span>
+            <span className="player-totalTime display--lg">
               {formatTime(playerData.current.duration)}
             </span>
           </div>
@@ -199,7 +220,7 @@ const VideoPlayer = () => {
               className="player-speed-current fillAnimation"
               onClick={resetPlaybackSpeed}
             >
-              <span className="select-text text--lg">SPEED -</span>
+              <span className="select-text display--lg">SPEED -</span>
               {playbackSpeed}x
             </span>
             <span
@@ -211,18 +232,27 @@ const VideoPlayer = () => {
           </div>
           <Select
             className="_mla"
-            selected="auto"
+            selected={size}
             shortName="SIZE"
             options={["auto", "1920×1080", "1280×720", "854×480", "480×270"]}
+            onSelect={(v) => setSize(v)}
           />
           <Select
-            selected="SUBTITLES"
+            selected={sublang}
             shortName="SUBS"
-            options={["auto", "1920×1080", "1280×720", "854×480", "480×270"]}
+            options={["none", "HI (auto)", "FR (auto)", "ES (auto)", "EN"]}
+            onSelect={(v) => setSublang(v)}
           />
-          <Button text="SHORTCUTS" shortText="KEYS" onClick={() => {}} />
+          <Button
+            text="SHORTCUTS"
+            shortText="KEYS"
+            onClick={() => {}}
+            className="display--lg"
+          />
+          <FullScreen className="player-fullscreen" />
+          <Speaker className="player-volume" />
         </div>
-        <div className="player-chapters" onClick={() => {}}>
+        <div className="player-chapters" onClick={jumpTo}>
           {isInitialized &&
             playerData.current.chapters.map(({ percent }, i) => {
               const isDone = i < playerData.current.currentChapterIndex;
