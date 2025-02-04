@@ -144,7 +144,7 @@
   height: 6px;
   background: var(--color-grey700);
   border-radius: 6px;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .chapter--done {
@@ -159,6 +159,7 @@
   height: 100%;
   border-radius: var(--border-radius);
   background-color: var(--color-primary);
+  position: relative;
 }
 
 .player-time {
@@ -304,4 +305,18 @@
 .player-fullscreen:hover,
 .player-volume:hover {
   fill: var(--color-grey100);
+}
+
+.spark-container {
+  position: relative;
+  right: 6px;
+  pointer-events: none;
+}
+
+.spark {
+  width: 4px;
+  height: 4px;
+  border-radius: 5px;
+  background-color: var(--color-secondary);
+  position: absolute;
 }

@@ -1,47 +1,15 @@
 import classNames from "classNames";
 import React, { useEffect, useRef, useState } from "react";
-import { animated, useSpring } from "@react-spring/web";
 
-import { FullScreen, Paused, Play, Speaker } from "@app/components/Icons";
+import { FullScreen, Speaker } from "@app/components/Icons";
+
 import { Select } from "./Select";
 import { Button } from "./Button";
+import { Sparks } from "./Sparks";
+import { PlayButton } from "./PlayButton";
 
 import { CHAPTERS } from "./data";
 import { PlayerData } from "./types";
-
-const PlayButton = ({
-  isPaused,
-  onPress
-}: {
-  isPaused: boolean;
-  onPress: () => void;
-}) => {
-  const [styles] = useSpring(
-    () => ({
-      scale: isPaused ? 0 : 1,
-      config: {
-        tension: 300
-      }
-    }),
-    [isPaused]
-  );
-
-  return (
-    <div className="player-settings-playButton">
-      <animated.div style={{ position: "absolute", ...styles }}>
-        <Paused onClick={onPress} />
-      </animated.div>
-      <animated.div
-        style={{
-          position: "absolute",
-          scale: styles.scale.to((v) => 1 - v)
-        }}
-      >
-        <Play onClick={onPress} />
-      </animated.div>
-    </div>
-  );
-};
 
 const VideoPlayer = () => {
   const playerRef = useRef<HTMLDivElement>(null);
@@ -51,6 +19,9 @@ const VideoPlayer = () => {
   const [playbackSpeed, setPlaybackSpeed] = useState(1);
   const [size, setSize] = useState("auto");
   const [sublang, setSublang] = useState("SUBTITLES");
+
+  const prevChapterPercent = useRef(0);
+  const [spark, setSpark] = useState(0);
 
   const playerData = useRef<PlayerData>({
     duration: 0,
@@ -115,11 +86,24 @@ const VideoPlayer = () => {
       100 - (100 * (currentChapter.endsAt - time)) / currentChapter.duration;
   };
 
+  const checkForSparkle = () => {
+    const endOfChapterReached =
+      Math.round(playerData.current.currentChapterPercent) == 0 &&
+      Math.round(prevChapterPercent.current) != 0;
+
+    if (endOfChapterReached) {
+      setSpark(Math.floor(Math.random() * 100));
+      setTimeout(setSpark, 4000, 0);
+    }
+    prevChapterPercent.current = playerData.current.currentChapterPercent;
+  };
+
   // Faking time passing
 
   const advanceTime = () => {
     setCurrentTime((c) => {
       const newTime = (c += playbackSpeed / 100);
+      checkForSparkle();
       updatePlayerData(newTime);
       return newTime;
     });
@@ -274,7 +258,9 @@ const VideoPlayer = () => {
                       style={{
                         width: `${playerData.current.currentChapterPercent}%`
                       }}
-                    />
+                    >
+                      <Sparks trigger={spark} />
+                    </div>
                   )}
                 </div>
               );
