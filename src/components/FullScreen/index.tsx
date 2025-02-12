@@ -26,6 +26,8 @@ const FullScreen = ({
   const [showSidebar, setShowSidebar] = useState(false);
 
   const id = useRef(window.location.pathname.replace(/\D/g, "")).current;
+  const isTutorial = window.location.pathname.indexOf("tut") > 0;
+  const prefix = isTutorial ? "tut/" : "";
   const prevId = Number(id) > 1 && Number(id) - 1;
   const nextId = Number(id) < PLAYGROUNDS.length && Number(id) + 1;
 
@@ -62,12 +64,12 @@ const FullScreen = ({
         </a>
         <nav className="page-nav">
           {prevId && (
-            <a href={`/${prevId}`} className="iconButton _flip-h">
+            <a href={`/${prefix}${prevId}`} className="iconButton _flip-h">
               <Next />
             </a>
           )}
           {nextId && (
-            <a href={`/${nextId}`} className="iconButton">
+            <a href={`/${prefix}${nextId}`} className="iconButton">
               <Next />
             </a>
           )}
