@@ -26,7 +26,8 @@ export const PLAYGROUNDS = [
 
 export const TUTORIALS = [
   lazy(() => import("./tutorials/1")),
-  lazy(() => import("./tutorials/2"))
+  lazy(() => import("./tutorials/2")),
+  lazy(() => import("./tutorials/3"))
 ];
 
 const p = PLAYGROUNDS.map((Playground, i) => (
