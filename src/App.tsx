@@ -21,13 +21,14 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/17/3")),
   lazy(() => import("./playgrounds/18")),
   lazy(() => import("./playgrounds/19")),
-  lazy(() => import("./playgrounds/20/2"))
+  lazy(() => import("./playgrounds/20/2")),
+  lazy(() => import("./playgrounds/21")),
 ];
 
 export const TUTORIALS = [
   lazy(() => import("./tutorials/1")),
   lazy(() => import("./tutorials/2")),
-  lazy(() => import("./tutorials/3"))
+  lazy(() => import("./tutorials/3")),
 ];
 
 const p = PLAYGROUNDS.map((Playground, i) => (
@@ -45,7 +46,7 @@ const App = () => {
     <BrowserRouter
       future={{
         v7_startTransition: true,
-        v7_relativeSplatPath: true
+        v7_relativeSplatPath: true,
       }}
     >
       <Routes>{...Pages}</Routes>
