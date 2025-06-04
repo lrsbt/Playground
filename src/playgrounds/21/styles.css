@@ -1,29 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("./util");
+
 :root {
   --padding-sm: 6px;
   --padding-md: 12px;
   --padding-xl: 18px;
   --padding-xxl: 24px;
+
   --border-radius-md: 12px;
   --border-radius-xl: 24px;
   --animation-duration: 0.25s;
-  --font-size-xxl: 20px;
-  --font-size-xl: 18px;
+  --font-size-xxl: 19px;
+  --font-size-xl: 17px;
   --font-size-md: 14px;
+
+  --color-white: #ffffff;
+  --color-50: #f2f2f2; /* argh */
+  --color-100: #ebebeb;
+  --color-200: #e1e1e1;
+  --color-300: #dadada;
+  --color-400: #bababa;
+  --color-500: #9f9f9f;
+  --color-600: #525252;
+  --color-700: #373737;
+  --color-800: #292929;
+  --color-black: #000000;
+
+  --ui-border-color: var(--color-100);
 }
 
-body {
+.page {
   cursor: url(./assets/cursor1.svg) 2 2, auto;
+  font-family: "Inter";
 }
 
 .text--h1 {
   font-size: var(--font-size-xxl);
-  font-weight: 400;
+  font-weight: 500;
+  color: var(--color-700);
 }
 
 .text--h2 {
   font-size: var(--font-size-xl);
-  font-weight: 300;
-  color: #00000094;
+  font-weight: 400;
+  color: var(--color-500);
 }
 
 .text--h3 {
@@ -32,7 +52,7 @@ body {
 }
 
 .page {
-  background-color: #ebebeb;
+  background-color: var(--color-100);
   line-height: 1.3;
   font-size: var(--font-size-xl);
 }
@@ -41,7 +61,7 @@ body {
 
 .section:not(:last-of-type) {
   margin-bottom: 24px;
-  padding-bottom: 26px;
+  padding-bottom: 28px;
   background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMiIgdmlld0JveD0iMCAwIDIwIDIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0zIDAuNVYySDBWMC41SDNaIiBmaWxsPSIjRDdEN0Q3Ii8+CjxwYXRoIGQ9Ik0xMyAwLjVWMkg4VjAuNUgxM1oiIGZpbGw9IiNEN0Q3RDciLz4KPHBhdGggZD0iTTIwIDAuNVYySDE4VjAuNUgyMFoiIGZpbGw9IiNEN0Q3RDciLz4KPC9zdmc+Cg==);
   background-repeat: repeat-x;
   background-position: bottom left;
@@ -50,15 +70,16 @@ body {
 .box {
   display: flex;
   flex-direction: column;
-  background: #ffffff;
+  background: var(--color-white);
   box-shadow: 0px 10px 16px -10px rgb(0 0 0 / 22%),
     inset 0px -2px 0px -1px #b4b4b4;
   border-radius: var(--border-radius-xl);
   padding: var(--padding-xxl);
-  border-left: 1px solid;
-  border-right: 1px solid;
-  border-top: 1px solid;
-  border-color: #e3e3e3;
+  border-left: 2px solid;
+  border-right: 2px solid;
+  border-top: 2px solid;
+  border-color: var(--color-200);
+  width: 520px;
 }
 
 .button {
@@ -66,39 +87,178 @@ body {
   justify-content: center;
   align-items: center;
   padding: var(--padding-md) var(--padding-xl);
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  box-shadow: 0px 3px 4px -2px rgb(0 0 0 / 7%),
-    inset 0px -1px 1px rgba(171, 171, 171, 0.6);
+  background: var(--color-white);
+  border: 1.5px solid var(--ui-border-color);
+  /* box-shadow: 0px 3px 4px -2px rgb(0 0 0 / 7%), */
+  /* inset 0px -1px 0px rgba(171, 171, 171, 0.6); */
   border-radius: var(--border-radius-md);
   font-size: var(--font-size-xl);
   line-height: 21px;
-  color: rgba(94, 94, 94, 0.9);
+  color: var(--color-500);
   transition: var(--animation-duration) color;
 }
 
 .button:hover {
-  color: rgba(70, 70, 70, 1);
+  color: var(--color-600);
 }
 
 .badge {
   width: 56px;
   height: 56px;
-  background: #ffffff;
-  border: 1px solid #eeeeee;
-  box-shadow: 0px 2px 4px -10px rgba(0, 0, 0, 0.05),
-    inset 0px -1px 2px rgba(171, 171, 171, 0.6);
+  background: var(--color-white);
+  border: 1px solid var(--color-300);
   border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.avatar {
+  width: 50px;
+  height: 50px;
+  background-color: var(--color-200);
+  border-radius: 100%;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.input-label {
+  margin-bottom: 4px;
+  display: block;
+}
+
+.input-label p {
+  display: flex;
+}
+
+.input-label svg {
+  fill: var(--color-300);
+  stroke: white;
+  width: 22px;
+  margin-left: 3px;
+}
+
+.input-wrap {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  background: var(--color-white);
+  border: 1.5px solid var(--ui-border-color);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-xl);
+  flex: 1;
+  transition: border-color var(--animation-duration);
+}
+
+.input-wrap:hover {
+  border-color: #bc6415;
+}
+
+.input-value {
+  background: var(--color-50);
+  border: 1px solid var(--color-200);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: var(--font-size-md);
+  height: 100%;
+  color: var(--color-600);
+  box-shadow: inset 0px 0px 1px 1px #ffffff9e;
+}
+
+.input-value:hover {
+  border: 1px solid var(--color-300);
+  color: var(--color-800);
+  opacity: 0.8;
+}
+
+.input-value svg {
+  width: 15px;
+  stroke: var(--color-500);
+  margin-left: 6px;
+  margin-right: -3px;
+}
+
+.input-input {
+  height: 100%;
+  padding: 4px;
+  border: none;
+  width: 0px;
+  font-size: var(--font-size-md);
+  padding-left: 9px;
+}
+
+.input-input:focus {
+  outline: none;
+}
+
+.input-permissions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-right: 5px;
+}
+
+.input-permissions-globe {
+  width: 20px;
+  opacity: 0.4;
+}
+
+.input-permissions-chev {
+  stroke: #cd6b26;
+  width: 17px;
+  stroke-width: 3px;
+}
+
+.member-list {
+  margin-top: 24px;
+  list-style: none;
+  margin-left: -6px;
+  margin-right: -6px;
+}
+
+.member {
+  display: flex;
+  gap: 12px;
+  padding: 6px 6px;
+  margin-bottom: 2px;
+  align-items: center;
+  border-radius: var(--border-radius-md);
+  transition: var(--animation-duration) background-color;
+}
+
+.member:hover {
+  background: var(--color-50);
+}
+
+.member-cols {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  align-self: normal;
+  padding: 3px 0px;
+}
+
+.member-name {
+}
+
+.member-email {
+  font-size: var(--font-size-md);
+  color: var(--color-500);
+}
+
+.member-permissions {
+  margin-right: 15px;
+}
+
 /* Modulators */
 
 .page-header {
   display: flex;
-  gap: 12px;
+  gap: 17px;
   padding-top: 3px;
 }
 
@@ -106,6 +266,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 3px 0px;
 }
 
 .page-header-badge svg {

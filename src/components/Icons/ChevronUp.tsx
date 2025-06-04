@@ -2,7 +2,7 @@ import { type SVGProps } from "react";
 
 interface IProps extends SVGProps<SVGSVGElement> {}
 
-export const X = (props: IProps) => {
+export const ChevronUp = (props: IProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,7 +16,7 @@ export const X = (props: IProps) => {
       strokeWidth="2"
       {...props}
     >
-      <path d="M18 6 6 18M6 6l12 12" />
+      <path d="m18 15-6-6-6 6" />
     </svg>
   );
 };
