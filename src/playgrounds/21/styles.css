@@ -191,6 +191,8 @@
   stroke: white;
   width: 22px;
   margin-left: 3px;
+  position: relative;
+  top: -2px;
 }
 
 .input-wrap {
@@ -327,6 +329,15 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 6px 0px;
+}
+
+.header-title svg {
+  width: 17px;
+  stroke-width: 3px;
+  margin-left: 3px;
+  transform: rotate(180deg);
+  top: 1px;
+  position: relative;
 }
 
 .header--wide {

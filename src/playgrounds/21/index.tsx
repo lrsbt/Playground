@@ -9,7 +9,7 @@ import info from "./info.md";
 import { MEMBERS } from "./const";
 import { Member } from "./types";
 import { FullScreen } from "@app/components";
-import { AddUser, ExternalLink } from "@app/components/Icons";
+import { AddUser, ChevronUp, ExternalLink } from "@app/components/Icons";
 
 import { Box } from "./Components/Box";
 import { Section } from "./Components/Section";
@@ -40,7 +40,9 @@ const Playground = () => {
         <Section className="header header--tight">
           <Badge icon={<ExternalLink />} />
           <div className="header-titles">
-            <Text.H1 size="xl">Members with link</Text.H1>
+            <Text.H1 size="xl" className="flex header-title">
+              Members with link <ChevronUp />
+            </Text.H1>
             <Text.P>
               Members who have the link have access to this project.
             </Text.P>
