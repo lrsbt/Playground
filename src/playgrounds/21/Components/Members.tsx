@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Member } from "../types";
 import { Avatar } from "./Avatar";
+import { PermissionSelect } from "./PermissionSelect";
 
 interface Props extends React.ComponentProps<"a"> {
   members: Member[];
@@ -16,9 +17,7 @@ const Members = ({ members }: Props) => {
             <span className="member-name">{member.name}</span>
             <span className="member-email">{member.email}</span>
           </div>
-          <div className="member-permissions">
-            <span>{member.permission}</span>
-          </div>
+          <PermissionSelect grey />
         </li>
       ))}
     </ul>

@@ -7,6 +7,7 @@ import "./styles.css";
 import info from "./info.md";
 
 import { MEMBERS } from "./const";
+import { Member } from "./types";
 import { FullScreen } from "@app/components";
 import { AddUser, ExternalLink } from "@app/components/Icons";
 
@@ -16,7 +17,6 @@ import { Text } from "./Components/Text";
 import { Badge } from "./Components/Badge";
 import { Input } from "./Components/Input";
 import { Members } from "./Components/Members";
-import { Member } from "./types";
 
 const Playground = () => {
   const [members, setMembers] = useState<Member[]>(MEMBERS);
@@ -24,19 +24,27 @@ const Playground = () => {
   return (
     <FullScreen centerContent info={info}>
       <Box className="page">
-        <Section className="page-header">
-          <Badge icon={<AddUser />} className="page-header-badge" />
-          <div className="page-header-titles">
-            <Text variant="h1">Invite to Project</Text>
-            <Text variant="h2">Collaborate with members on this project.</Text>
+        <Section className="header header--wide">
+          <Badge icon={<AddUser />} />
+          <div className="header-titles">
+            <Text.H1>Invite to Project</Text.H1>
+            <Text.H2>Collaborate with members on this project.</Text.H2>
           </div>
         </Section>
+
         <Section>
           <Input />
           <Members members={members} />
         </Section>
-        <Section className="page-header">
-          <Badge icon={<ExternalLink />} className="page-header-badge" />
+
+        <Section className="header header--tight">
+          <Badge icon={<ExternalLink />} />
+          <div className="header-titles">
+            <Text.H1 size="xl">Members with link</Text.H1>
+            <Text.P>
+              Members who have the link have access to this project.
+            </Text.P>
+          </div>
         </Section>
       </Box>
     </FullScreen>

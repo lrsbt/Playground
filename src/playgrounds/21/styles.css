@@ -10,9 +10,9 @@
   --border-radius-md: 12px;
   --border-radius-xl: 24px;
   --animation-duration: 0.25s;
-  --font-size-xxl: 19px;
-  --font-size-xl: 17px;
   --font-size-md: 14px;
+  --font-size-xl: 17px;
+  --font-size-xxl: 19px;
 
   --color-white: #ffffff;
   --color-50: #f2f2f2; /* argh */
@@ -49,6 +49,51 @@
 .text--h3 {
   font-size: var(--font-size-xl);
   font-weight: 400;
+}
+
+.text--p {
+  font-size: var(--font-size-md);
+  color: var(--color-500);
+}
+
+.text-size--md {
+  font-size: var(--font-size-md);
+}
+.text-size--xl {
+  font-size: var(--font-size-xl);
+}
+.text-size--xxl {
+  font-size: var(--font-size-xxl);
+}
+.text-color--white {
+  color: var(--color-white);
+}
+.text-color--100 {
+  color: var(--color-100);
+}
+.text-color--200 {
+  color: var(--color-200);
+}
+.text-color--300 {
+  color: var(--color-300);
+}
+.text-color--400 {
+  color: var(--color-400);
+}
+.text-color--500 {
+  color: var(--color-500);
+}
+.text-color--600 {
+  color: var(--color-600);
+}
+.text-color--700 {
+  color: var(--color-700);
+}
+.text-color--800 {
+  color: var(--color-800);
+}
+.text-color--black {
+  color: var(--color-black);
 }
 
 .page {
@@ -111,6 +156,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.badge svg {
+  position: relative;
+  left: 1px;
+  top: -1px;
+  opacity: 0.5;
 }
 
 .avatar {
@@ -212,6 +264,18 @@
   stroke-width: 3px;
 }
 
+.input-permissions--grey .text--p {
+  color: var(--color-500);
+}
+
+.input-permissions--grey .input-permissions-globe {
+  opacity: 0.22;
+}
+
+.input-permissions--grey .input-permissions-chev {
+  stroke: var(--color-500);
+}
+
 .member-list {
   margin-top: 24px;
   list-style: none;
@@ -250,28 +314,25 @@
   color: var(--color-500);
 }
 
-.member-permissions {
-  margin-right: 15px;
-}
-
 /* Modulators */
 
-.page-header {
+.header {
   display: flex;
-  gap: 17px;
+  gap: 12px;
   padding-top: 3px;
 }
 
-.page-header-titles {
+.header-titles {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 3px 0px;
+  padding: 6px 0px;
 }
 
-.page-header-badge svg {
-  position: relative;
-  left: 1px;
-  top: -1px;
-  opacity: 0.6;
+.header--wide {
+  gap: 16px;
+}
+
+.header--wide .header-titles {
+  padding: 3px 0px;
 }

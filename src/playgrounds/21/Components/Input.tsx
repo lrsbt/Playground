@@ -7,6 +7,7 @@ import { SOUNDS } from "../const";
 
 import { Text } from "./Text";
 import { Button } from "./Button";
+import { PermissionSelect } from "./PermissionSelect";
 
 interface Props extends React.ComponentProps<"input"> {}
 
@@ -66,9 +67,9 @@ const Input = ({ children }: Props) => {
   return (
     <div>
       <label className="input-label" htmlFor="email">
-        <Text>
+        <Text.P>
           Invite Members <Info />
-        </Text>
+        </Text.P>
       </label>
 
       <div className="input-row">
@@ -90,11 +91,7 @@ const Input = ({ children }: Props) => {
             {children}
           </input>
 
-          <div className="input-permissions">
-            <Globe className="input-permissions-globe" />
-            <span>can view</span>
-            <ChevronUp className="input-permissions-chev" />
-          </div>
+          <PermissionSelect />
         </div>
         <Button>Invite</Button>
       </div>
