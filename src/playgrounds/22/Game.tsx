@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { GameState } from "./types";
+import React, { useEffect, useState } from "react";
+import { Direction, GameState } from "./types";
+import { Tile } from "./Tile";
 
 const initialGameState: GameState = {
+  grid: {
+    rows: 10,
+    cols: 10,
+  },
   people: [
-    { id: 1, x: 1, y: 1, type: "hero" },
-    { id: 2, x: 4, y: 3, type: "npc" },
+    { id: 1, x: 1, y: 1, type: "hero", moveDir: "down" },
+    { id: 2, x: 4, y: 3, type: "npc", moveDir: "down" },
   ],
   walls: new Set(["3:1", "4:1", "2:2"]),
-};
-
-const initGrid = (rows: number, cols: number) => {
-  return [...Array(rows)].map(() => [...Array(cols)].map(() => null));
 };
 
 const getCellType = (
@@ -23,28 +24,83 @@ const getCellType = (
   if (gameState.walls.has(coord)) return "wall";
 
   const person = gameState.people.find((p) => p.x === x && p.y === y);
-  if (person) return person.type;
-
-  return "cell";
+  return person ? person.type : "cell";
 };
 
-const Tile = ({
-  type,
-  children,
-}: {
-  type: "hero" | "npc" | "wall" | "cell";
-  children: React.ReactNode;
-}) => <span className={`tile tile--${type}`}>{children}</span>;
+const chance = (n: number) => Math.random() < 1 / n;
+
+const randomDirection = (current?: Direction): Direction => {
+  const opposites: Record<Direction, Direction> = {
+    up: "down",
+    down: "up",
+    left: "right",
+    right: "left",
+  };
+
+  const allDirections: Direction[] = ["up", "down", "left", "right"];
+  const filtered = current
+    ? allDirections.filter((d) => d !== opposites[current])
+    : allDirections;
+
+  return filtered[Math.floor(Math.random() * filtered.length)];
+};
+
+const moveHero = (prev: GameState): GameState => {
+  const { rows, cols } = prev.grid;
+
+  const updatedPeople = prev.people.map((p) => {
+    if (!p.moveDir || p.moveDir === "none") return p;
+
+    let moveDir = p.moveDir;
+
+    if (chance(2)) {
+      moveDir = randomDirection(moveDir);
+    }
+
+    const [dx, dy] = {
+      up: [0, -1],
+      down: [0, 1],
+      left: [-1, 0],
+      right: [1, 0],
+    }[moveDir];
+
+    const nextX = p.x + dx;
+    const nextY = p.y + dy;
+    const nextCoord = `${nextY}:${nextX}`;
+
+    const outOfBounds =
+      nextX < 0 || nextX >= cols || nextY < 0 || nextY >= rows;
+    const hitsWall = prev.walls.has(nextCoord);
+
+    if (outOfBounds || hitsWall) {
+      // pick a new random direction
+      return { ...p, moveDir: randomDirection() };
+    }
+
+    return { ...p, x: nextX, y: nextY };
+  });
+
+  return { ...prev, people: updatedPeople };
+};
 
 const Game = () => {
+  const { rows, cols } = initialGameState.grid;
   const [gameState, setGameState] = useState<GameState>(initialGameState);
-  const [grid, setGrid] = useState(initGrid(10, 10));
+
+  // inside your <Game> component
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setGameState((prev) => moveHero(prev));
+    }, 100); // 500ms per tick
+
+    return () => clearInterval(interval); // cleanup
+  }, []);
 
   return (
     <div className="game">
-      {grid.map((row, rowIndex) => (
+      {[...Array(rows)].map((_, rowIndex) => (
         <div key={rowIndex}>
-          {row.map((cell, colIndex) => {
+          {[...Array(cols)].map((_, colIndex) => {
             const key = `${rowIndex}:${colIndex}`;
             const cellType = getCellType(colIndex, rowIndex, gameState);
             return (
