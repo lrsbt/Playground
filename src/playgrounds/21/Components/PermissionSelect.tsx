@@ -1,6 +1,6 @@
 import React from "react";
 import { ChevronUp, Globe } from "@app/components/Icons";
-import { Text } from "./Text";
+import { Text } from "./Base/Text";
 
 interface Props extends React.ComponentProps<"div"> {
   grey?: boolean;
@@ -17,7 +17,7 @@ const PermissionSelect = ({ grey }: Props) => {
       <Text.P color="black" size="xl">
         can view
       </Text.P>
-      <ChevronUp className="input-permissions-chev" />
+      <ChevronUp className="input-permissions-chev flip-v" />
     </div>
   );
 };

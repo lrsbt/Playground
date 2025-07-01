@@ -5,8 +5,7 @@ import { Values } from "@app/hooks/values";
 
 import { SOUNDS } from "../const";
 
-import { Text } from "./Text";
-import { Button } from "./Button";
+import { Button, Text } from "./Base";
 import { PermissionSelect } from "./PermissionSelect";
 
 interface Props extends React.ComponentProps<"input"> {}

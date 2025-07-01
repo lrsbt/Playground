@@ -1,6 +1,15 @@
 // Radix: https://github.com/radix-ui/primitives/tree/main/apps/storybook/stories
 // Picsum: https://picsum.photos/id/1005/400/400
 
+// TODO:
+// [ ] LOADING MEMBERS DELAY
+// [ ] LOADING SPINER FOR MEMBERS
+// [ ] INTIVE ADDS USER TO LIST ( only temp, no local storage )
+// [ ] Invite cleas the members field
+// [ ] Show pop up to select permissions
+// [ ] Members with link can: ... popup
+// [ ] email validation
+
 import React, { useState } from "react";
 
 import "./styles.css";
@@ -11,10 +20,7 @@ import { Member } from "./types";
 import { FullScreen } from "@app/components";
 import { AddUser, ChevronUp, ExternalLink } from "@app/components/Icons";
 
-import { Box } from "./Components/Box";
-import { Section } from "./Components/Section";
-import { Text } from "./Components/Text";
-import { Badge } from "./Components/Badge";
+import { Badge, Box, Modal, Section, Text } from "./Components/Base";
 import { Input } from "./Components/Input";
 import { Members } from "./Components/Members";
 
@@ -49,6 +55,12 @@ const Playground = () => {
           </div>
         </Section>
       </Box>
+      <Modal
+        isShowing={true}
+        // onClose={() => setShowEmailModal(false)}
+      >
+        <Text.P>TEST</Text.P>
+      </Modal>
     </FullScreen>
   );
 };

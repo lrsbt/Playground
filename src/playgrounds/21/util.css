@@ -35,3 +35,10 @@
 .flex-justify-around {
   justify-content: space-between;
 }
+
+.flip-h {
+  transform: rotateY(180deg);
+}
+.flip-v {
+  transform: rotate(180deg);
+}

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Member } from "../types";
-import { Avatar } from "./Avatar";
+import { Avatar } from "./Base/Avatar";
 import { PermissionSelect } from "./PermissionSelect";
 
 interface Props extends React.ComponentProps<"a"> {

@@ -1,0 +1,23 @@
+.game {
+  font-family: "monospace";
+  line-height: 1;
+}
+
+.tile {
+}
+
+.tile--cell {
+  opacity: 0.2;
+}
+
+.tile--wall {
+  opacity: 0.5;
+}
+
+.tile--hero {
+  opacity: 1;
+}
+
+.tile--npc {
+  opacity: 0.1;
+}
