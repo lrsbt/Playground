@@ -1,9 +1,14 @@
+type PersonType = "hero" | "npc" | "enemy";
+
 export type Person = {
   id: number;
-  type: "hero" | "npc";
-  moveDir: "up" | "down" | "left" | "right" | "none";
   x: number;
   y: number;
+  type: PersonType;
+  moveDir: Direction | "none";
+  hp: number;
+  att: number;
+  def: number;
 };
 
 export type GameState = {

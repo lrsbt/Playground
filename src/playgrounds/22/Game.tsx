@@ -8,10 +8,39 @@ const initialGameState: GameState = {
     cols: 10,
   },
   people: [
-    { id: 1, x: 1, y: 1, type: "hero", moveDir: "down" },
-    { id: 2, x: 4, y: 3, type: "npc", moveDir: "down" },
+    {
+      id: 1,
+      x: 1,
+      y: 1,
+      type: "hero",
+      moveDir: "down",
+      hp: 10,
+      att: 3,
+      def: 1,
+    },
+    { id: 2, x: 3, y: 4, type: "npc", moveDir: "none", hp: 6, att: 2, def: 0 },
+    {
+      id: 3,
+      x: 6,
+      y: 6,
+      type: "enemy",
+      moveDir: "left",
+      hp: 6,
+      att: 2,
+      def: 0,
+    },
   ],
-  walls: new Set(["3:1", "4:1", "2:2"]),
+  walls: new Set([
+    "3:1",
+    "4:1",
+    "5:1",
+    "2:3",
+    "2:2",
+    "2:4",
+    "3:5",
+    "4:5",
+    "5:5",
+  ]),
 };
 
 const getCellType = (
