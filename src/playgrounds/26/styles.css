@@ -1,0 +1,22 @@
+.quiz {
+  color: white;
+  max-width: 240px;
+}
+
+.quiz_question {
+  font-weight: 100;
+}
+
+.quiz_answers {
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.quiz_feedback {
+  display: block;
+  height: 100px;
+  margin-top: 12px;
+  font-weight: 100;
+}
