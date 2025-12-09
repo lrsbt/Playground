@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./styles.css";
 import info from "./info.md";
 import { FullScreen } from "@app/components";
+import { getRandomNumber } from "@app/utils";
+
 import { frequencies } from "./data";
 
 const Playground = () => {
@@ -11,7 +13,11 @@ const Playground = () => {
   const getBandNames = () => frequencies.map((b) => b.name);
 
   const getRandomQuizQuestion = () => {
-    const freq = Math.floor(Math.random() * (20000 - 20 + 1)) + 20;
+    // Bandwise
+    const randomBand =
+      frequencies[Math.floor(Math.random() * frequencies.length)];
+    const freq = Math.floor(getRandomNumber(randomBand.start, randomBand.end));
+
     const index = getBandByFrequency(freq);
     const name = frequencies[index]?.name || null;
     return { frequency: freq, correctIndex: index, correctName: name };
@@ -50,22 +56,22 @@ const Playground = () => {
           Which frequency band does {question.frequency} Hz belong to?
         </h2>
         <div className="quiz_answers">
-          {getBandNames().map((name, idx) => (
+          {getBandNames().map((name, i) => (
             <button
-              key={idx}
-              onClick={() => handleChoice(idx)}
+              key={i}
+              onClick={() => handleChoice(i)}
               disabled={selected !== null}
               style={{
                 padding: "10px 15px",
                 border: "1px solid #333",
                 borderRadius: "5px",
                 backgroundColor:
-                  selected === idx
-                    ? idx === question.correctIndex
+                  selected === i
+                    ? i === question.correctIndex
                       ? "#4caf50"
                       : "#f44336"
-                    : frequencies?.[idx].color,
-                color: selected === idx ? "#fff" : "#000",
+                    : frequencies?.[i].color,
+                color: selected === i ? "#fff" : "#000",
                 cursor: selected === null ? "pointer" : "default"
               }}
             >
