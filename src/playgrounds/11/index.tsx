@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { FullScreen } from "@app/components";
 
 import { Curve } from "./Components/Curve";
@@ -12,7 +12,9 @@ import "./styles.css";
 import info from "./info.md";
 
 const Playground = () => {
-  const [wowRate, setWowRate] = useState(50);
+  const frequency = useRef(10);
+  const speed = useRef(2);
+  const mix = useRef(0);
 
   return (
     <FullScreen centerContent info={info}>
@@ -21,19 +23,19 @@ const Playground = () => {
           width={120}
           height={90}
           amplitude={20}
-          frequency={30}
-          speed={2}
+          frequency={frequency}
+          speed={speed}
           className="effect-osc"
         />
         <div className="effect-settings">
           <Slider />
           <div className="effect-rate-container">
-            <Knob label="RATE" isConnected />
-            <Knob label="RATE" isConnected />
+            <Knob label="RATE" isConnected set={frequency} />
+            <Knob label="SPEED" isConnected set={speed} />
           </div>
           <div className="effect-mix-container">
             <Button label="STEREO" />
-            <Knob label="MIX" />
+            <Knob label="MIX" set={mix} />
           </div>
           <div className="effect-flux-container">
             <Flux />

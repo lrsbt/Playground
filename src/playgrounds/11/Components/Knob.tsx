@@ -4,9 +4,10 @@ import classNames from "classNames";
 interface Props {
   label?: string;
   isConnected?: boolean;
+  set: React.MutableRefObject<number>;
 }
 
-const Knob = ({ label, isConnected }: Props) => {
+const Knob = ({ label, isConnected, set }: Props) => {
   const valueRef = useRef<HTMLDivElement | null>(null);
 
   const startY = useRef(160);
@@ -28,10 +29,12 @@ const Knob = ({ label, isConnected }: Props) => {
     currentY.current = lastRot.current + delta * speed;
 
     if (currentY.current > maxRot) currentY.current = maxRot;
-    if (currentY.current < -maxRot) currentY.current = -maxRot;
+    if (currentY.current < 0.001) currentY.current = 0.001;
     if (valueRef.current) {
       valueRef.current.style = `background: conic-gradient(from -160deg, #ffae1f ${currentY.current}deg, #5a3e27 0deg)`;
     }
+
+    set.current = 2 - currentY.current / 100;
   };
 
   const OnPointerUp = (event: any) => {

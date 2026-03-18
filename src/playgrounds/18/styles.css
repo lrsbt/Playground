@@ -59,7 +59,7 @@
   position: relative;
 }
 
-.slider-handle:before {
+/* .slider-handle:before {
   content: "---------";
   line-height: 4px;
   width: 80%;
@@ -68,4 +68,4 @@
   left: 13%;
   color: #ffe7c5;
   letter-spacing: -1px;
-}
+} */

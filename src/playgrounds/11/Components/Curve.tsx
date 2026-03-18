@@ -5,8 +5,8 @@ interface Props extends React.ComponentProps<"canvas"> {
   width: number;
   height: number;
   amplitude: number;
-  frequency: number;
-  speed: number;
+  frequency: React.MutableRefObject<number>;
+  speed: React.MutableRefObject<number>;
 }
 
 const Curve = ({
@@ -35,8 +35,8 @@ const Curve = ({
   };
 
   const triggerDraw = (dt: number) => {
-    offset.current += speed;
-    drawCurve(amplitude, frequency, offset.current);
+    offset.current += speed.current;
+    drawCurve(amplitude, frequency.current, offset.current);
   };
 
   const drawCurve = (amplitude: number, frequency: number, offset: number) => {
