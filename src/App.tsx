@@ -27,7 +27,9 @@ export const PLAYGROUNDS = [
   lazy(() => import("./playgrounds/23")),
   lazy(() => import("./playgrounds/24")),
   lazy(() => import("./playgrounds/25")),
-  lazy(() => import("./playgrounds/26"))
+  lazy(() => import("./playgrounds/26")),
+  lazy(() => import("./playgrounds/27")),
+  lazy(() => import("./playgrounds/28"))
 ];
 
 export const TUTORIALS = [

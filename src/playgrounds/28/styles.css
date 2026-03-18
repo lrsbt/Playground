@@ -1,0 +1,188 @@
+:root {
+  --bg: #f3f3f3;
+  --maxWidth: 355px;
+  --toastBg: #ffffff;
+  --toastRadius: 18px;
+  --primary: #44cc99;
+}
+
+.bold {
+  font-weight: 500;
+}
+
+.arr-bg {
+  background: var(--bg);
+  width: 100%;
+  height: 100%;
+  padding: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.toastt {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--toastRadius);
+  width: 100%;
+  max-width: var(--maxWidth);
+  overflow: hidden;
+  box-shadow: 0px 3px 11px #0000001a;
+  background:
+    linear-gradient(white, #fff) padding-box,
+    linear-gradient(to bottom, #ececec, #e1e1e1, #e5e5e5) border-box;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.toastt-wrap {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 16px 12px 16px;
+}
+
+/* Header */
+
+.toastt-header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.toastt-icon {
+  width: 28px;
+}
+
+.toastt-icon--chev {
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border: 2px solid var(--primary);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-left: -2px;
+}
+
+.toastt-title {
+  flex: 1;
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.toastt-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toastt-actions a svg {
+  stroke: #888;
+  width: 20px;
+  stroke-width: 2px;
+}
+
+.toastt-actions a:hover svg {
+  stroke: #444;
+}
+
+.toastt-actionExpand {
+  transition: transform 0.2s;
+  transform: rotate(180deg);
+  transition-delay: 10ms;
+}
+
+.toast--expanded .toastt-actionExpand {
+  transform: rotate(0deg);
+}
+
+.toastt-actionClose {
+  transition: 0.25s transform;
+}
+
+.toastt-actionClose:hover {
+  transform: rotate(90deg);
+}
+
+/* Content */
+
+.toastt-content {
+  overflow: hidden;
+}
+
+.toastt-content-inner {
+  padding-left: 28px;
+  padding-top: 10px;
+}
+
+.toastt-message {
+  font-size: 1.5em;
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.toastt-buttons {
+  display: flex;
+  margin-top: 12px;
+  gap: 6px;
+}
+
+.toastt-button {
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 1.4em;
+  text-decoration: none;
+  color: black;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2px;
+}
+
+/* Footer */
+
+.toastt-footer {
+  background-color: #f5faf5;
+  transition: 0.25s height;
+  height: 28px;
+}
+
+.toast--paused .toastt-footer {
+  height: 0px;
+}
+
+.toastt-closingMessage {
+  padding: 3px;
+  font-weight: 300;
+  padding-left: 16px;
+  font-size: 1.3em;
+  display: flex;
+  gap: 4px;
+}
+
+.toastt-closingText {
+  opacity: 0.5;
+}
+
+.toastt-closingAction {
+  opacity: 1;
+  text-decoration: none;
+  color: black;
+}
+
+.toastt-closingAction:hover {
+  text-decoration: underline;
+}
+
+.toastt-closingTimeout {
+  height: 4px;
+  position: relative;
+}
+
+.toastt-closingTimeout::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary);
+}
