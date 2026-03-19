@@ -94,13 +94,13 @@ const Toast = ({ id, title, type, message }: ToastType) => {
               <a href="#" className="toastt-button" onClick={handleClose}>
                 Okay
               </a>
-              <a
+              {/* <a
                 href="#"
                 className="toastt-button"
                 onClick={() => addToast(STUBTOAST)}
               >
                 Add 1 more
-              </a>
+              </a> */}
             </div>
           </div>
         </animated.div>

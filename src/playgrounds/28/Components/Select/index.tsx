@@ -18,7 +18,7 @@ const Select = ({ value, setValue }: Props) => {
         });
         const onClick = () => setValue(c);
 
-        return <div className={className} onClick={onClick}></div>;
+        return <div key={c} className={className} onClick={onClick}></div>;
       })}
     </div>
   );

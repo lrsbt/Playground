@@ -2,14 +2,14 @@
   --bg: #eef2f3;
   --maxWidth: 355px;
   --toastBg: #ffffff;
-  --toastRadius: 18px;
+  --toastRadius: 8px;
   --buttonRadius: 8px;
   --primary: #44cc99;
 
   --color-success: #42b273;
   --color-warning: #f1bc37;
   --color-info: #3bb7d5;
-  --color-error: #d10f35;
+  --color-error: #f15a37;
 
   --toastColor: var(--primary: #44cc99);
 }
@@ -40,6 +40,7 @@
   padding: 20px;
   background-color: white;
   border-radius: var(--toastRadius);
+  box-shadow: 0px 23px 51px #0000001a;
 }
 
 /* BUTTON */
@@ -98,7 +99,7 @@
   width: 100%;
   max-width: var(--maxWidth);
   overflow: hidden;
-  box-shadow: 0px 3px 11px #0000001a;
+  box-shadow: 0px 11px 11px #0000000a;
   background:
     linear-gradient(white, #fff) padding-box,
     linear-gradient(to bottom, #ececec, #e1e1e1, #e5e5e5) border-box;
@@ -126,7 +127,7 @@
 .toastt-wrap {
   display: flex;
   flex-direction: column;
-  padding: 16px 16px 12px 16px;
+  padding: 16px 16px 16px 16px;
 }
 
 /* Header */
@@ -138,7 +139,7 @@
 }
 
 .toastt-icon {
-  width: 28px;
+  width: 30px;
 }
 
 .toastt-icon svg {
@@ -226,7 +227,7 @@
 /* Footer */
 
 .toastt-footer {
-  background-color: #f5faf5;
+  background-color: hsl(from var(--toastColor) h 20% 60% / 0.05);
   transition: 0.25s height;
   height: 30px;
 }
