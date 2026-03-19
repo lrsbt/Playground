@@ -5,7 +5,7 @@ import "./styles.css";
 import info from "./info.md";
 import { FullScreen } from "@app/components";
 
-import { Toast } from "./Components";
+import { Nav, Toast } from "./Components";
 import { useToast } from "./Context/useToast";
 import { ToastProvider } from ".//Context/ToastProvider";
 
@@ -20,12 +20,12 @@ const Toasts = () => {
 
   const transitions = useTransition(toasts, {
     keys: (toast) => toast.id,
-    from: { opacity: 0, transform: "translateY(-10px)" },
-    enter: { opacity: 1, transform: "translateY(0)" },
-    leave: { opacity: 0, transform: "translateX(10px)" },
+    from: { opacity: 0, maxHeight: 0, transform: "translateY(-10px)" },
+    enter: { opacity: 1, maxHeight: 300, transform: "translateY(0)" },
+    leave: { opacity: 0, maxHeight: 0, transform: "translateX(10px)" },
     config: (item, index, phase) => {
       return {
-        friction: 14,
+        friction: phase === "leave" ? 24 : 14,
         precision: phase === "enter" ? 0.01 : 0.1
       };
     }
@@ -38,6 +38,7 @@ const Toasts = () => {
           <Toast {...item} />
         </animated.div>
       ))}
+      <Nav />
     </FullScreen>
   );
 };

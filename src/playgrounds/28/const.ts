@@ -8,7 +8,7 @@ export const DATA: ToastType[] = [
   {
     id: 0,
     title: "Changes saved",
-    type: "success",
+    type: "warning",
     message:
       "Are you sure you would like to remove this user? If the user is an active member of your team, their account will be deleted. This action cannot be undone."
   }

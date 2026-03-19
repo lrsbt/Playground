@@ -1,9 +1,17 @@
 :root {
-  --bg: #f3f3f3;
+  --bg: #eef2f3;
   --maxWidth: 355px;
   --toastBg: #ffffff;
   --toastRadius: 18px;
+  --buttonRadius: 8px;
   --primary: #44cc99;
+
+  --color-success: #42b273;
+  --color-warning: #f1bc37;
+  --color-info: #3bb7d5;
+  --color-error: #d10f35;
+
+  --toastColor: var(--primary: #44cc99);
 }
 
 .bold {
@@ -20,6 +28,69 @@
   align-items: center;
 }
 
+/* NAV */
+
+.nav {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  bottom: 50px;
+  padding: 20px;
+  background-color: white;
+  border-radius: var(--toastRadius);
+}
+
+/* BUTTON */
+
+.button {
+  padding: 8px 20px;
+  background-color: black;
+  color: white;
+  border-radius: var(--buttonRadius);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* SELECT */
+
+.selectWrap {
+  display: flex;
+  gap: 2px;
+}
+
+.select {
+  padding: 16px 8px;
+  flex: 1;
+  border-radius: 8px;
+  opacity: 0.25;
+}
+
+.select:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.select--selected {
+  opacity: 1;
+}
+
+.select--success {
+  background-color: var(--color-success);
+}
+.select--warning {
+  background-color: var(--color-warning);
+}
+.select--info {
+  background-color: var(--color-info);
+}
+.select--error {
+  background-color: var(--color-error);
+}
+
+/* TOAST */
+
 .toastt {
   display: flex;
   flex-direction: column;
@@ -34,6 +105,22 @@
   border: 1px solid transparent;
   font-size: 1rem;
   margin-bottom: 12px;
+}
+
+.toast--success {
+  --toastColor: var(--color-success);
+}
+
+.toast--error {
+  --toastColor: var(--color-error);
+}
+
+.toast--warning {
+  --toastColor: var(--color-warning);
+}
+
+.toast--info {
+  --toastColor: var(--color-info);
 }
 
 .toastt-wrap {
@@ -54,15 +141,11 @@
   width: 28px;
 }
 
-.toastt-icon--chev {
-  width: 20px;
-  height: 20px;
-  border-radius: 100%;
-  border: 2px solid var(--primary);
-  display: flex;
-  align-content: center;
-  justify-content: center;
-  margin-left: -2px;
+.toastt-icon svg {
+  position: relative;
+  left: -2px;
+  stroke-width: 2.5px;
+  stroke: var(--toastColor);
 }
 
 .toastt-title {
@@ -74,7 +157,8 @@
 .toastt-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  margin-right: -2px;
 }
 
 .toastt-actions a svg {
@@ -144,7 +228,7 @@
 .toastt-footer {
   background-color: #f5faf5;
   transition: 0.25s height;
-  height: 28px;
+  height: 30px;
 }
 
 .toast--paused .toastt-footer {
@@ -152,7 +236,7 @@
 }
 
 .toastt-closingMessage {
-  padding: 3px;
+  padding: 4px;
   font-weight: 300;
   padding-left: 16px;
   font-size: 1.3em;
@@ -184,5 +268,5 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: var(--primary);
+  background-color: var(--toastColor);
 }

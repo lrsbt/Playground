@@ -8,6 +8,7 @@ import { useToast } from "../../Context/useToast";
 import { ChevronUp, X } from "../../../../components/Icons";
 
 import type { ToastType } from "../../types";
+import { Success, Info, Error, Warning } from "../Icons";
 
 const Toast = ({ id, title, type, message }: ToastType) => {
   const { addToast, removeToast } = useToast();
@@ -46,6 +47,17 @@ const Toast = ({ id, title, type, message }: ToastType) => {
     [toastWidth, isPaused]
   );
 
+  const Icon = ({ type }: { type: ToastType["type"] }) => {
+    const Component = {
+      success: Success,
+      error: Error,
+      warning: Warning,
+      info: Info
+    }[type];
+
+    return <Component size={22} height={22} />;
+  };
+
   return (
     <div
       key={id}
@@ -58,9 +70,7 @@ const Toast = ({ id, title, type, message }: ToastType) => {
       <div className="toastt-wrap">
         <div className="toastt-header">
           <div className="toastt-icon">
-            <div className="toastt-icon--chev">
-              <ChevronUp stroke="#44cc99" strokeWidth={3} width={15} />
-            </div>
+            <Icon type={type} />
           </div>
           <div className="toastt-title">{title}</div>
           <div className="toastt-actions">
