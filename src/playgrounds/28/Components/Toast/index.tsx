@@ -3,7 +3,7 @@ import useMeasure from "react-use-measure";
 import { useState } from "react";
 import { animated, useSpring } from "@react-spring/web";
 
-import { CONFIG, STUBTOAST } from "../../const";
+import { CONFIG } from "../../const";
 import { useToast } from "../../Context/useToast";
 import { ChevronUp, X } from "../../../../components/Icons";
 
@@ -11,7 +11,7 @@ import type { ToastType } from "../../types";
 import { Success, Info, Error, Warning } from "../Icons";
 
 const Toast = ({ id, title, type, message }: ToastType) => {
-  const { addToast, removeToast } = useToast();
+  const { removeToast } = useToast();
 
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -94,13 +94,6 @@ const Toast = ({ id, title, type, message }: ToastType) => {
               <a href="#" className="toastt-button" onClick={handleClose}>
                 Okay
               </a>
-              {/* <a
-                href="#"
-                className="toastt-button"
-                onClick={() => addToast(STUBTOAST)}
-              >
-                Add 1 more
-              </a> */}
             </div>
           </div>
         </animated.div>

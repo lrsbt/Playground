@@ -21,8 +21,8 @@ const Toasts = () => {
   const transitions = useTransition(toasts, {
     keys: (toast) => toast.id,
     from: { opacity: 0, maxHeight: 0, transform: "translateY(-10px)" },
-    enter: { opacity: 1, maxHeight: 300, transform: "translateY(0)" },
-    leave: { opacity: 0, maxHeight: 0, transform: "translateX(10px)" },
+    enter: { opacity: 1, maxHeight: 300, transform: "translateY(0px)" },
+    leave: { opacity: 0, maxHeight: 0, transform: "translateY(-10px)" },
     config: (item, index, phase) => {
       return {
         friction: phase === "leave" ? 24 : 14,

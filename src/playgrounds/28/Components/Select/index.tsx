@@ -1,13 +1,12 @@
 import classNames from "classNames";
+import { ToastType } from "../../types";
 
 interface Props {
   value: string;
-  setValue: React.Dispatch<
-    React.SetStateAction<"success" | "error" | "warning" | "info">
-  >;
+  setValue: React.Dispatch<React.SetStateAction<ToastType["type"]>>;
 }
 
-const COLORS = ["success", "warning", "info", "error"];
+const COLORS = ["success", "warning", "info", "error"] as ToastType["type"][];
 
 const Select = ({ value, setValue }: Props) => {
   return (
