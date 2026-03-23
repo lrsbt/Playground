@@ -1,6 +1,7 @@
 import { animated, easings, useSpring } from "@react-spring/web";
 import { Page } from "../../types";
 import { Play } from "../../Components/Icons";
+import { useEffect } from "react";
 
 interface Props {
   pageData: Page;
@@ -18,16 +19,16 @@ const PlayButton = ({
   const [contentStyle] = useSpring(
     (i) => ({
       pageProgress: currentPage,
-      delay: i * 60 + title.length * 150,
+      // delay: 200,
       config: {
-        duration: 1400,
+        duration: 1200,
         easing: easings.easeInOutCubic
       }
     }),
     [currentPage]
   );
 
-  console.log("rendering");
+  useEffect(() => {}, [currentPage]);
 
   const animatedProps = {
     backgroundColor: color,

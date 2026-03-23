@@ -23,7 +23,7 @@ const Info = ({
       pageProgress: currentPage,
       delay: i * 60 + title.length * 50,
       config: {
-        duration: 1200,
+        duration: 700,
         easing: easings.easeInOutCubic
       }
     }),

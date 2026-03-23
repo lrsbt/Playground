@@ -19,7 +19,7 @@ const Title = ({
     (i) => ({
       pageProgress: currentPage,
       config: {
-        duration: 1200 + i * 100,
+        duration: 700 + i * 100,
         easing: easings.easeInOutCubic
       }
     }),

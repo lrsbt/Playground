@@ -12,7 +12,7 @@ export const DATA: Item[] = [
     info: ["written by", "William Hernandez, April 06, 2017"],
     link: "Part 1",
     socials: {
-      likes: 30,
+      likes: 1,
       views: 349,
       comments: 40
     },
@@ -25,7 +25,7 @@ export const DATA: Item[] = [
     info: ["written by", "William Hernandez, April 06, 2017"],
     link: "Part 2",
     socials: {
-      likes: 30,
+      likes: 2,
       views: 349,
       comments: 40
     },
@@ -38,7 +38,7 @@ export const DATA: Item[] = [
     info: ["written by", "William Hernandez, April 06, 2017"],
     link: "Part 3",
     socials: {
-      likes: 30,
+      likes: 3,
       views: 349,
       comments: 40
     },
@@ -51,7 +51,7 @@ export const DATA: Item[] = [
     info: ["written by", "William Hernandez, April 06, 2017"],
     link: "Part 4",
     socials: {
-      likes: 30,
+      likes: 4,
       views: 349,
       comments: 40
     },

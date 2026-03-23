@@ -1,13 +1,16 @@
 import { useRef, useState } from "react";
 import useMeasure from "react-use-measure";
+import { animated, easings, useSpring } from "@react-spring/web";
 
 import { DATA as PAGEDATA } from "../../const";
-import { SideBar } from "./Socials";
-import { animated, easings, useSpring, useTransition } from "@react-spring/web";
-import { LongArrow, Navigation, Search } from "../../Components/Icons";
-import { Title } from "./Title";
+import { Navigation, Search } from "../../Components/Icons";
+
+import { Pager } from "./Pager";
 import { Info } from "./Info";
+import { Title } from "./Title";
+import { SideBar } from "./Socials";
 import { PlayButton } from "./PlayButton";
+import { Interactions } from "./Interactions";
 
 const Main = () => {
   const totalPages = useRef(PAGEDATA.length).current;
@@ -19,19 +22,14 @@ const Main = () => {
     () => ({
       pageProgress: currentPage,
       // config: { tension: 100, friction: 25, mass: 1.5 }
-      delay: 350,
+      delay: 450,
       config: {
-        duration: 800,
+        duration: 600,
         easing: easings.easeInOutCubic
       }
     }),
     [currentPage]
   );
-
-  const transitions = useTransition(currentPage, {
-    from: { opacity: 0, transform: "translate3d(-100%,0,0)" },
-    enter: { opacity: 1, transform: "translate3d(0,0,0)" }
-  });
 
   const goToNextPage = () => setCurrentPage((v) => (v + 1) % totalPages);
 
@@ -94,16 +92,20 @@ const Main = () => {
             </div>
 
             <div className="mainContent-footer">
-              {transitions((style) => (
-                <animated.div style={style}>
-                  <span className="_mr5">
-                    {currentPage + 1} of {totalPages}{" "}
-                  </span>
-                  <a href="#" onClick={goToNextPage}>
-                    <LongArrow />
-                  </a>
-                </animated.div>
-              ))}
+              <Pager
+                currentPage={currentPage}
+                totalPages={totalPages}
+                goToNextPage={goToNextPage}
+              />
+              <div className="mainContent-footer-socials">
+                {PAGEDATA.map((pageData, i) => (
+                  <Interactions
+                    {...pageData.socials}
+                    i={i}
+                    currentPage={currentPage}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
