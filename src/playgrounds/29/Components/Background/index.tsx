@@ -1,6 +1,6 @@
-import { Circle } from "../Circle";
 import { getRandomNumber } from "@app/utils";
 import { pickOne } from "@app/utils";
+import { Circle } from "./Circle";
 
 type Location = [number, number];
 

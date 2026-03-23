@@ -4,3 +4,4 @@ export * from "./LongArrow";
 export * from "./Navigation";
 export * from "./Twitter";
 export * from "./Search";
+export * from "./Play";

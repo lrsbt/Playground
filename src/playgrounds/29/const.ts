@@ -2,8 +2,9 @@ import image1 from "./Assets/Images/01.jpg";
 import image2 from "./Assets/Images/02.jpg";
 import image3 from "./Assets/Images/03.jpg";
 import image4 from "./Assets/Images/04.jpg";
+import { Item } from "./types";
 
-export const DATA = [
+export const DATA: Item[] = [
   {
     id: 1,
     color: "#724421",
@@ -22,7 +23,7 @@ export const DATA = [
     color: "#f4b800",
     title: ["Design is a journey of", "Discovery"],
     info: ["written by", "William Hernandez, April 06, 2017"],
-    link: "Part 1",
+    link: "Part 2",
     socials: {
       likes: 30,
       views: 349,
@@ -35,7 +36,7 @@ export const DATA = [
     color: "#f03f37",
     title: ["Design is a journey of", "Discovery"],
     info: ["written by", "William Hernandez, April 06, 2017"],
-    link: "Part 1",
+    link: "Part 3",
     socials: {
       likes: 30,
       views: 349,
@@ -48,7 +49,7 @@ export const DATA = [
     color: "#82aaa9",
     title: ["Design is a journey of", "Discovery"],
     info: ["written by", "William Hernandez, April 06, 2017"],
-    link: "Part 1",
+    link: "Part 4",
     socials: {
       likes: 30,
       views: 349,

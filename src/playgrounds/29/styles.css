@@ -90,6 +90,7 @@
   flex-direction: column;
   flex: 1;
   padding-left: 48px;
+  position: relative;
 }
 
 .mainContent-header {
@@ -113,13 +114,58 @@
 }
 
 .mainContent-content {
-  flex: 1;
-  align-items: center;
+}
+
+.mainContent-h1 {
+  padding-top: 150px;
+}
+
+.mainContent-info {
+  display: grid;
+  grid-template-columns: max-content max-content;
+  grid-template-rows: 1fr 1fr;
+  margin-top: 16px;
+  gap: 0px 24px;
+}
+
+.mainContent-byLabel {
+  font-size: 1.2rem;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.mainContent-byAuthor {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.mainContent-link {
+  grid-column: 2 / 2;
+  grid-row: 1 / span 2;
+  align-content: center;
+  text-align: end;
+  font-size: 1.2rem;
+  border: 1px solid #000;
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.mainContent-play {
+  opacity: 1;
+  transform: none;
+  background: #e1e1e1;
+  width: 60px;
+  aspect-ratio: 1;
+  border-radius: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
 }
 
 .mainContent-footer {
   padding-bottom: 32px;
+  position: absolute;
+  bottom: 0px;
 }
 
 .image {
