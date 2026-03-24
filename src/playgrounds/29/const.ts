@@ -12,7 +12,7 @@ export const DATA: Item[] = [
     info: ["written by", "William Hernandez, April 06, 2017"],
     link: "Part 1",
     socials: {
-      likes: 1,
+      likes: 223,
       views: 349,
       comments: 40
     },
@@ -21,21 +21,21 @@ export const DATA: Item[] = [
   {
     id: 2,
     color: "#f4b800",
-    title: ["Design is a journey of", "Discovery"],
-    info: ["written by", "William Hernandez, April 06, 2017"],
-    link: "Part 2",
+    title: ["I believe more in the", "scissors than I do in the", "pencil"],
+    info: ["written by", "John Smith, April 06, 2017"],
+    link: "Part 1",
     socials: {
-      likes: 2,
-      views: 349,
-      comments: 40
+      likes: 12,
+      views: 1232,
+      comments: 2
     },
     image: image2
   },
   {
     id: 3,
     color: "#f03f37",
-    title: ["Design is a journey of", "Discovery"],
-    info: ["written by", "William Hernandez, April 06, 2017"],
+    title: ["I don't design clothes", "I design", "dreams"],
+    info: ["written by", "Vikram Andrarasha, April 06, 2017"],
     link: "Part 3",
     socials: {
       likes: 3,

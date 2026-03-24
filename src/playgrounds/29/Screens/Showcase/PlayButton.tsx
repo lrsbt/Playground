@@ -44,7 +44,7 @@ const PlayButton = ({
   };
 
   return (
-    <animated.div className="mainContent-play" style={animatedProps}>
+    <animated.div className="showcase__playButton" style={animatedProps}>
       <Play />
     </animated.div>
   );

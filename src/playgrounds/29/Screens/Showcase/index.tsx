@@ -15,13 +15,11 @@ import { Interactions } from "./Interactions";
 const Main = () => {
   const totalPages = useRef(PAGEDATA.length).current;
   const [currentPage, setCurrentPage] = useState(0);
-
   const [containerRef, { height: containerHeight }] = useMeasure();
 
   const [springStyle] = useSpring(
     () => ({
       pageProgress: currentPage,
-      // config: { tension: 100, friction: 25, mass: 1.5 }
       delay: 450,
       config: {
         duration: 600,
@@ -35,73 +33,55 @@ const Main = () => {
 
   return (
     <div className="wrapper">
-      <div className="main" ref={containerRef}>
-        <div className="column column--text">
+      <div className="showcase" ref={containerRef}>
+        <div className="showcase__panel">
           <SideBar />
-          <div className="mainContent">
-            <div className="mainContent-header">
-              <div className="mainContent-header-logo">
+          <div className="showcase__content">
+            <div className="showcase__header">
+              <div className="showcase__nav">
                 <span className="_bold _fs-xl">Design.</span>
                 <a href="#">
                   <Navigation />
                 </a>
               </div>
-              <div className="mainContent-header-search">
+              <div className="showcase__search">
                 <Search />
-                <span className="">Search</span>
+                <span>Search</span>
               </div>
             </div>
 
-            <div className="mainContent-content">
-              <div
-                style={{
-                  position: "absolute",
-                  width: "75%",
-                  top: -currentPage * containerHeight
-                }}
-              >
-                {PAGEDATA.map((pageData, ii) => {
-                  const { title, color, info, link } = pageData;
-
-                  return (
-                    <div key={ii} style={{ height: containerHeight }}>
-                      <Title
-                        pageData={pageData}
-                        currentPage={currentPage}
-                        renderPage={ii}
-                        containerHeight={containerHeight}
-                      />
-
-                      <Info
-                        pageData={pageData}
-                        currentPage={currentPage}
-                        renderPage={ii}
-                        containerHeight={containerHeight}
-                      />
-
-                      <PlayButton
-                        pageData={pageData}
-                        currentPage={currentPage}
-                        renderPage={ii}
-                        containerHeight={containerHeight}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <div
+              className="showcase__body"
+              style={{ top: -currentPage * containerHeight }}
+            >
+              {PAGEDATA.map((pageData, i) => {
+                const props = {
+                  pageData: pageData,
+                  currentPage: currentPage,
+                  renderPage: i,
+                  containerHeight: containerHeight
+                };
+                return (
+                  <div key={i} style={{ height: containerHeight }}>
+                    <Title {...props} />
+                    <Info {...props} />
+                    <PlayButton {...props} />
+                  </div>
+                );
+              })}
             </div>
 
-            <div className="mainContent-footer">
+            <div className="showcase__footer">
               <Pager
                 currentPage={currentPage}
                 totalPages={totalPages}
                 goToNextPage={goToNextPage}
               />
-              <div className="mainContent-footer-socials">
+              <div className="showcase__interactions">
                 {PAGEDATA.map((pageData, i) => (
                   <Interactions
                     {...pageData.socials}
-                    i={i}
+                    pageIndex={i}
                     currentPage={currentPage}
                   />
                 ))}
@@ -110,7 +90,7 @@ const Main = () => {
           </div>
         </div>
 
-        <animated.div className="column column--image">
+        <animated.div className="showcase__media">
           {PAGEDATA.map(({ image }, i) => {
             const translateY = springStyle.pageProgress.to(
               [i - 1, i, i + 1],
@@ -121,7 +101,7 @@ const Main = () => {
               <animated.img
                 key={i}
                 src={image}
-                className="image"
+                className="showcase__media-image"
                 style={{ position: "absolute", translateY: translateY }}
               />
             );

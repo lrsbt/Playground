@@ -1,4 +1,4 @@
-import { animated, easings, useSprings, useTrail } from "@react-spring/web";
+import { animated, easings, useSprings } from "@react-spring/web";
 import { Page } from "../../types";
 
 interface Props {
@@ -27,7 +27,7 @@ const Title = ({
   );
 
   return (
-    <h1 className="mainContent-h1">
+    <h1 className="showcase__headline">
       {title.map((line, i) => {
         const isLast = i === title.length - 1;
         const colorStyle = isLast ? { color } : {};

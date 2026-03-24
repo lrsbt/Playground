@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Info = ({
-  pageData: { title, info, link },
+  pageData: { info, link },
   currentPage,
   renderPage,
   containerHeight
@@ -21,7 +21,8 @@ const Info = ({
     numberOfItems,
     (i) => ({
       pageProgress: currentPage,
-      delay: i * 60 + title.length * 50,
+      // Using delay causes bugs
+      // delay: i * 60 + title.length * 50,
       config: {
         duration: 700,
         easing: easings.easeInOutCubic
@@ -45,14 +46,14 @@ const Info = ({
   });
 
   return (
-    <div className="mainContent-info">
-      <animated.div className="mainContent-byLabel" style={animatedProps[0]}>
+    <div className="showcase__author">
+      <animated.div className="showcase__author-by" style={animatedProps[0]}>
         {info[0]}
       </animated.div>
-      <animated.div className="mainContent-byAuthor" style={animatedProps[1]}>
+      <animated.div className="showcase__author-name" style={animatedProps[1]}>
         {info[1]}
       </animated.div>
-      <animated.div className="mainContent-link" style={animatedProps[2]}>
+      <animated.div className="showcase__author-link" style={animatedProps[2]}>
         {link}
       </animated.div>
     </div>
