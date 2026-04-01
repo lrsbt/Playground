@@ -6,6 +6,7 @@ export * from "./ExternalLink";
 export * from "./FullScreen";
 export * from "./Globe";
 export * from "./Info";
+export * from "./InfoInverted";
 export * from "./Next";
 export * from "./Option";
 export * from "./Paused";

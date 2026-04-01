@@ -17,6 +17,7 @@
     "classnames": "^2.5.1",
     "colord": "^2.9.3",
     "dat.gui": "^0.7.9",
+    "formik": "^2.4.9",
     "html-react-parser": "^5.2.0",
     "leva": "^0.9.35",
     "math-random": "^2.0.1",
@@ -31,7 +32,8 @@
     "tweakpane": "^4.0.5",
     "use-sound": "^4.0.3",
     "usehooks-ts": "^3.1.0",
-    "vite-plugin-css-injected-by-js": "^3.5.2"
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "yup": "^1.7.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

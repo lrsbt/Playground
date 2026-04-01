@@ -1,0 +1,130 @@
+@import "./util.raw.css";
+
+:root {
+  --unit: 12px;
+  --border-radius: 4px;
+  --padding-md: 20px;
+  --color-primary: #39ab46;
+  --timing: 0.15s;
+}
+
+.arr-bg {
+  background: #eaeae6;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reset */
+
+h1,
+h2,
+h3 {
+  font-weight: 400;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+/* Basics */
+
+.button {
+  background-color: var(--color-primary);
+  color: white;
+  padding: var(--unit);
+  border-radius: var(--border-radius);
+  text-align: center;
+  transition: background var(--timing);
+}
+
+.button:hover {
+  background-color: hsl(from var(--color-primary) h calc(s + 20) l);
+  cursor: pointer;
+}
+
+.toggle {
+  background-color: #888;
+  border-radius: 20px;
+  width: 45px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.toggle--isActive .toggle__knob {
+  transform: translateX(21px);
+}
+
+.toggle--isActive {
+  background-color: var(--color-primary);
+}
+
+.toggle__knob {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 100%;
+  transition:
+    transform var(--timing) ease,
+    background-color var(--timing) ease;
+}
+
+/* Form biz */
+
+.container {
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  font-size: 1.25em;
+  line-height: 1.2;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 24px 0;
+}
+
+.form {
+  background-color: white;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form__headline {
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.form__footer {
+  font-size: 1.4rem;
+}
+
+.form-select {
+  appearance: none;
+  border: 0px;
+  background: white;
+  padding: 6px 0px;
+  border-bottom: 1px solid black;
+  background-image: url("data:image/svg+xml,%3Csvg width=%2213%22 height=%228%22 viewBox=%220 0 13 8%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22%3E %3Cpath d=%22M12.3535 0.353516L6.35355 6.35352L0.353546 0.353516%22 stroke=%22black%22/%3E %3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center right;
+  cursor: pointer;
+}
+
+.form-select:has(option[value=""]:checked) {
+  color: #888;
+}
+
+.form-input {
+  appearance: none;
+  background: white;
+  padding: 6px 0px;
+  border: 0px;
+  border-bottom: 1px solid black;
+  min-width: 1px; /* Firefox */
+}
