@@ -8,6 +8,7 @@ interface Option<T> {
 interface Props<T> extends React.ComponentProps<"select"> {
   options: Option<T>[];
   placeholder?: string;
+  isInvalid?: boolean;
 }
 
 const Dropdown = <T extends string | number>({
@@ -16,9 +17,12 @@ const Dropdown = <T extends string | number>({
   value,
   onChange,
   placeholder = "Select",
-  className
+  className,
+  isInvalid
 }: Props<T>) => {
-  const cssClasses = classNames("form-control form-select", className);
+  const cssClasses = classNames("form-select", className, {
+    "form--isInvalid": isInvalid
+  });
 
   return (
     <select

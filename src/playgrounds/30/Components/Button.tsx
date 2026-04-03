@@ -1,12 +1,20 @@
 import classNames from "classNames";
 
-interface Props extends React.ComponentProps<"a"> {}
+interface Props extends React.ComponentProps<"a"> {
+  variant: "primary" | "outline";
+}
 
-const Button = ({ children, onClick, className }: Props) => {
-  const cssClass = classNames("button", className);
+const Button = ({
+  variant = "primary",
+  children,
+  onClick,
+  className,
+  ...props
+}: Props) => {
+  const cssClass = classNames("button", className, `button--${variant}`);
 
   return (
-    <a className={cssClass} onClick={onClick}>
+    <a className={cssClass} onClick={onClick} {...props}>
       {children}
     </a>
   );

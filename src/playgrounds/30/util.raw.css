@@ -11,6 +11,7 @@
 
 ._flex { display: flex; }
 ._flex-1 { flex: 1; }
+._flex-jc { justify-content: center; }
 
 ._gap { gap: var(--unit-md); }
 

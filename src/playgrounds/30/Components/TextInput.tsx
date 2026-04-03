@@ -5,15 +5,19 @@ interface Props extends React.ComponentProps<"input"> {
   required?: boolean;
   placeholder?: string;
   value?: string;
+  isInvalid?: boolean;
 }
 
 const TextInput = ({
   name,
   placeholder = "Enter",
   className,
-  onChange
+  onChange,
+  isInvalid
 }: Props) => {
-  const cssClasses = classNames("form-control form-input", className);
+  const cssClasses = classNames("form-input", className, {
+    "form--isInvalid": isInvalid
+  });
 
   return (
     <input

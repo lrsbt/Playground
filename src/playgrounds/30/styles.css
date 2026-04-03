@@ -29,20 +29,44 @@ a {
   color: var(--color-primary);
 }
 
+hr {
+  position: relative;
+  left: -24px;
+  width: calc(100% + 48px);
+  border-top: 0px;
+  border-bottom: 1px solid #00000026;
+  margin-top: 12px;
+  margin-bottom: -12px;
+}
+
 /* Basics */
 
 .button {
-  background-color: var(--color-primary);
   color: white;
   padding: var(--unit);
   border-radius: var(--border-radius);
   text-align: center;
   transition: background var(--timing);
+  cursor: pointer;
 }
 
-.button:hover {
+.button--primary {
+  background-color: var(--color-primary);
+}
+
+.button--primary:hover {
   background-color: hsl(from var(--color-primary) h calc(s + 20) l);
-  cursor: pointer;
+}
+
+.button--outline {
+  background-color: white;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.button--outline:hover {
+  border-color: hsl(from var(--color-primary) h calc(s + 20) l);
+  color: hsl(from var(--color-primary) h calc(s + 20) l);
 }
 
 .toggle {
@@ -79,10 +103,10 @@ a {
   flex-direction: column;
   gap: 2rem;
   font-size: 1.25em;
-  line-height: 1.2;
+  line-height: 1.3;
   height: 100%;
   overflow-y: scroll;
-  padding: 24px 0;
+  padding: 24px;
 }
 
 .form {
@@ -109,6 +133,7 @@ a {
   border: 0px;
   background: white;
   padding: 6px 0px;
+  width: 100%;
   border-bottom: 1px solid black;
   background-image: url("data:image/svg+xml,%3Csvg width=%2213%22 height=%228%22 viewBox=%220 0 13 8%22 fill=%22none%22 xmlns=%22http://www.w3.org/2000/svg%22%3E %3Cpath d=%22M12.3535 0.353516L6.35355 6.35352L0.353546 0.353516%22 stroke=%22black%22/%3E %3C/svg%3E");
   background-repeat: no-repeat;
@@ -116,7 +141,7 @@ a {
   cursor: pointer;
 }
 
-.form-select:has(option[value=""]:checked) {
+.form-select:not(.form--isInvalid):has(option[value=""]:checked) {
   color: #888;
 }
 
@@ -125,6 +150,17 @@ a {
   background: white;
   padding: 6px 0px;
   border: 0px;
+  width: 100%;
   border-bottom: 1px solid black;
   min-width: 1px; /* Firefox */
+}
+
+.form--isInvalid,
+.form__error {
+  color: #d24242;
+}
+
+.form__error {
+  font-size: 1.4rem;
+  padding-top: 8px;
 }

@@ -4,97 +4,15 @@ import "./styles.css";
 import info from "./info.md";
 import { FullScreen } from "@app/components";
 
-import * as yup from "yup";
 import { useFormik } from "formik";
 import { useFormOptions } from "./useFormOptions";
 import { InfoInverted as Info } from "../../components/Icons";
 import { Toggle, Button, Dropdown, TextInput } from "./Components";
+import { validationSchema } from "./schema";
+import { FormControl } from "./Components/FormControl";
 
 const Playground = () => {
   const { optionsUse, optionsSmall, optionsLarge } = useFormOptions();
-
-  const validationSchema = yup.object().shape({
-    use: yup.string().oneOf(["reading", "distance"]).required(),
-    sphereLeft: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(-12)
-      .max(6)
-      .required(),
-    sphereRight: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(-12)
-      .max(6)
-      .required(),
-    cylinderLeft: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(-12)
-      .max(6)
-      .required(),
-    cylinderRight: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(-12)
-      .max(6)
-      .required(),
-    axisLeft: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(1)
-      .max(180)
-      .required(),
-    axisRight: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(1)
-      .max(180)
-      .required(),
-    addLeft: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(0)
-      .max(3)
-      .required(),
-    addRight: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(0)
-      .max(3)
-      .required(),
-    pdLeft: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(1)
-      .max(180)
-      .required(),
-    pdRight: yup
-      .number()
-      .transform((_, original) => Number(original))
-      .min(1)
-      .max(180)
-      .required(),
-    date: yup.object({
-      dd: yup
-        .number()
-        .transform((_, original) => Number(original))
-        .min(1)
-        .max(31)
-        .required(),
-      mm: yup
-        .number()
-        .transform((_, original) => Number(original))
-        .min(1)
-        .max(12)
-        .required(),
-      yyyy: yup
-        .number()
-        .transform((_, original) => Number(original))
-        .min(1900)
-        .required()
-    })
-  });
 
   const formik = useFormik({
     enableReinitialize: true,
@@ -108,6 +26,7 @@ const Playground = () => {
       axisRight: "",
       addLeft: "",
       addRight: "",
+      pdValues: 1,
       pdLeft: "",
       pdRight: "",
       date: {
@@ -119,10 +38,6 @@ const Playground = () => {
     validationSchema: validationSchema,
     async onSubmit(values, { resetForm }) {
       console.log("onSubmit", values, { isValid: formik.isValid });
-      // await axios.post(`${API_URL}/contact`, values).then(() => {
-      //   console.log("sent");
-      //   resetForm();
-      // });
     }
   });
 
@@ -133,12 +48,14 @@ const Playground = () => {
       <section className="container">
         <div className="form">
           <h2 className="form__headline">What do you use your glasses for?</h2>
-          <Dropdown
-            name="use"
-            options={optionsUse}
-            value={formik.values.use}
-            onChange={(e) => formik.setFieldValue("use", e.target.value)}
-          />
+          <FormControl error={formik.errors.use} touched={formik.touched.use}>
+            <Dropdown
+              name="use"
+              options={optionsUse}
+              value={formik.values.use}
+              onChange={(e) => formik.setFieldValue("use", e.target.value)}
+            />
+          </FormControl>
           <p className="form__footer">
             <b>Please note:</b> varifocals, bi-focals and occupationals are not
             currently available to purchase online. <a href="#">Find a store</a>
@@ -153,24 +70,32 @@ const Playground = () => {
             </a>
           </h2>
           <div className="_flex _gap">
-            <Dropdown
-              name="sphere-left"
-              className="_flex-1"
-              options={optionsLarge}
-              value={formik.values.sphereLeft}
-              onChange={(e) =>
-                formik.setFieldValue("sphereLeft", e.target.value)
-              }
-            />
-            <Dropdown
-              name="sphere-right"
-              className="_flex-1"
-              options={optionsLarge}
-              value={formik.values.sphereRight}
-              onChange={(e) =>
-                formik.setFieldValue("sphereRight", e.target.value)
-              }
-            />
+            <FormControl
+              error={formik.errors.sphereLeft}
+              touched={formik.touched.sphereLeft}
+            >
+              <Dropdown
+                name="sphere-left"
+                options={optionsLarge}
+                value={formik.values.sphereLeft}
+                onChange={(e) =>
+                  formik.setFieldValue("sphereLeft", e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl
+              error={formik.errors.sphereRight}
+              touched={formik.touched.sphereRight}
+            >
+              <Dropdown
+                name="sphere-right"
+                options={optionsLarge}
+                value={formik.values.sphereRight}
+                onChange={(e) =>
+                  formik.setFieldValue("sphereRight", e.target.value)
+                }
+              />
+            </FormControl>
           </div>
         </div>
 
@@ -187,26 +112,36 @@ const Playground = () => {
               blank if they're not on your prescription card.
             </p>
             <div className="_flex _gap">
-              <Dropdown
-                name="cylinder-left"
-                className="_flex-1"
-                options={optionsLarge}
-                value={formik.values.cylinderLeft}
-                onChange={(e) =>
-                  formik.setFieldValue("cylinderLeft", e.target.value)
-                }
-              />
-              <Dropdown
-                name="cylinder-right"
-                options={optionsLarge}
-                className="_flex-1"
-                value={formik.values.cylinderRight}
-                onChange={(e) =>
-                  formik.setFieldValue("cylinderRight", e.target.value)
-                }
-              />
+              <FormControl
+                error={formik.errors.cylinderLeft}
+                touched={formik.touched.cylinderLeft}
+              >
+                <Dropdown
+                  name="cylinder-left"
+                  options={optionsLarge}
+                  value={formik.values.cylinderLeft}
+                  onChange={(e) =>
+                    formik.setFieldValue("cylinderLeft", e.target.value)
+                  }
+                />
+              </FormControl>
+              <FormControl
+                error={formik.errors.cylinderRight}
+                touched={formik.touched.cylinderRight}
+              >
+                <Dropdown
+                  name="cylinder-right"
+                  options={optionsLarge}
+                  value={formik.values.cylinderRight}
+                  onChange={(e) =>
+                    formik.setFieldValue("cylinderRight", e.target.value)
+                  }
+                />
+              </FormControl>
             </div>
           </>
+
+          <hr />
 
           <>
             <h2 className="form__headline _mt-xl">
@@ -220,24 +155,32 @@ const Playground = () => {
               values, so please check your prescription card.
             </p>
             <div className="_flex _gap">
-              <TextInput
-                name="axis-left"
-                className="_flex-1"
-                placeholder="1 - 180"
-                value={formik.values.axisRight}
-                onChange={(e) =>
-                  formik.setFieldValue("axisRight", e.target.value)
-                }
-              />
-              <TextInput
-                name="axis-right"
-                className="_flex-1"
-                placeholder="1 - 180"
-                value={formik.values.axisRight}
-                onChange={(e) =>
-                  formik.setFieldValue("axisRight", e.target.value)
-                }
-              />
+              <FormControl
+                error={formik.errors.axisLeft}
+                touched={formik.touched.axisLeft}
+              >
+                <TextInput
+                  name="axis-left"
+                  placeholder="1 - 180"
+                  value={formik.values.axisLeft}
+                  onChange={(e) =>
+                    formik.setFieldValue("axisLeft", e.target.value)
+                  }
+                />
+              </FormControl>
+              <FormControl
+                error={formik.errors.axisRight}
+                touched={formik.touched.axisRight}
+              >
+                <TextInput
+                  name="axis-right"
+                  placeholder="1 - 180"
+                  value={formik.values.axisRight}
+                  onChange={(e) =>
+                    formik.setFieldValue("axisRight", e.target.value)
+                  }
+                />
+              </FormControl>
             </div>
           </>
         </div>
@@ -254,20 +197,32 @@ const Playground = () => {
             so please check your prescription card.
           </p>
           <div className="_flex _gap">
-            <Dropdown
-              name="add-left"
-              className="_flex-1"
-              options={optionsSmall}
-              value={formik.values.addLeft}
-              onChange={(e) => formik.setFieldValue("addLeft", e.target.value)}
-            />
-            <Dropdown
-              name="add-right"
-              className="_flex-1"
-              options={optionsSmall}
-              value={formik.values.addRight}
-              onChange={(e) => formik.setFieldValue("addRight", e.target.value)}
-            />
+            <FormControl
+              error={formik.errors.addLeft}
+              touched={formik.touched.addLeft}
+            >
+              <Dropdown
+                name="add-left"
+                options={optionsSmall}
+                value={formik.values.addLeft}
+                onChange={(e) =>
+                  formik.setFieldValue("addLeft", e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl
+              error={formik.errors.addRight}
+              touched={formik.touched.addRight}
+            >
+              <Dropdown
+                name="add-right"
+                options={optionsSmall}
+                value={formik.values.addRight}
+                onChange={(e) =>
+                  formik.setFieldValue("addRight", e.target.value)
+                }
+              />
+            </FormControl>
           </div>
         </div>
 
@@ -279,26 +234,54 @@ const Playground = () => {
             or follow <a href="#">this guide</a>. The average adult PD is
             between 58-64mm, but varies by person.
           </p>
-          <div className="_flex _mr5">
-            <Toggle className="_mr-sm" />I have two PD values
+          <div className="_flex _mr5 _flex-jc">
+            <Toggle
+              className="_mr-sm"
+              isEnabled={formik.values.pdValues == 2}
+              onChange={(e) =>
+                formik.setFieldValue(
+                  "pdValues",
+                  formik.values.pdValues === 1 ? 2 : 1
+                )
+              }
+            />
+            I have two PD values
           </div>
-          <Button onClick={() => {}}>Measure PD</Button>
+          <Button
+            onClick={() => {}}
+            // variant="outline"
+            style={{ width: 240, alignSelf: "center", margin: 12 }}
+          >
+            Measure PD
+          </Button>
 
           <div className="_flex _gap">
-            <TextInput
-              name="sphere-left"
-              className="_flex-1"
-              placeholder="1 - 180"
-              value={formik.values.pdLeft}
-              onChange={(e) => formik.setFieldValue("pdLeft", e.target.value)}
-            />
-            <TextInput
-              name="sphere-right"
-              className="_flex-1"
-              placeholder="1 - 180"
-              value={formik.values.pdRight}
-              onChange={(e) => formik.setFieldValue("pdRight", e.target.value)}
-            />
+            <FormControl
+              error={formik.errors.pdLeft}
+              touched={formik.touched.pdLeft}
+            >
+              <TextInput
+                name="sphere-left"
+                placeholder="1 - 180"
+                value={formik.values.pdLeft}
+                onChange={(e) => formik.setFieldValue("pdLeft", e.target.value)}
+              />
+            </FormControl>
+            {formik.values.pdValues === 2 && (
+              <FormControl
+                error={formik.errors.pdRight}
+                touched={formik.touched.pdRight}
+              >
+                <TextInput
+                  name="sphere-right"
+                  placeholder="1 - 180"
+                  value={formik.values.pdRight}
+                  onChange={(e) =>
+                    formik.setFieldValue("pdRight", e.target.value)
+                  }
+                />
+              </FormControl>
+            )}
           </div>
           <p className="form__footer">
             <Info fill="#333" width={16} /> Please note: We'll round down your
@@ -310,29 +293,45 @@ const Playground = () => {
         <div className="form">
           <h2 className="form__headline">Prescription test date</h2>
           <div className="_flex _gap">
-            <TextInput
-              name="sphere-left"
-              className="_flex-1"
-              placeholder="DD"
-              value={formik.values.date.dd}
-              onChange={(e) => formik.setFieldValue("date.dd", e.target.value)}
-            />
-            <TextInput
-              name="sphere-right"
-              className="_flex-1"
-              placeholder="MM"
-              value={formik.values.date.mm}
-              onChange={(e) => formik.setFieldValue("date.mm", e.target.value)}
-            />
-            <TextInput
-              name="sphere-right"
-              className="_flex-1"
-              placeholder="YYYY"
-              value={formik.values.date.yyyy}
-              onChange={(e) =>
-                formik.setFieldValue("date.yyyy", e.target.value)
-              }
-            />
+            <FormControl
+              error={formik.errors.date?.dd}
+              touched={formik.touched.date?.dd}
+            >
+              <TextInput
+                name="sphere-left"
+                placeholder="DD"
+                value={formik.values.date.dd}
+                onChange={(e) =>
+                  formik.setFieldValue("date.dd", e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl
+              error={formik.errors.date?.mm}
+              touched={formik.touched.date?.mm}
+            >
+              <TextInput
+                name="sphere-right"
+                placeholder="MM"
+                value={formik.values.date.mm}
+                onChange={(e) =>
+                  formik.setFieldValue("date.mm", e.target.value)
+                }
+              />
+            </FormControl>
+            <FormControl
+              error={formik.errors.date?.yyyy}
+              touched={formik.touched.date?.yyyy}
+            >
+              <TextInput
+                name="sphere-right"
+                placeholder="YYYY"
+                value={formik.values.date.yyyy}
+                onChange={(e) =>
+                  formik.setFieldValue("date.yyyy", e.target.value)
+                }
+              />
+            </FormControl>
           </div>
         </div>
 
