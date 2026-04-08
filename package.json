@@ -19,6 +19,7 @@
     "dat.gui": "^0.7.9",
     "formik": "^2.4.9",
     "html-react-parser": "^5.2.0",
+    "html2canvas": "^1.4.1",
     "leva": "^0.9.35",
     "math-random": "^2.0.1",
     "mitt": "^3.0.1",

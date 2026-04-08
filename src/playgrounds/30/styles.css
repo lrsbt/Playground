@@ -115,6 +115,8 @@ hr {
   display: flex;
   flex-direction: column;
   gap: 14px;
+  box-shadow: 0px 4px 16px #112d1508;
+  border-radius: 6px;
 }
 
 .form__headline {
